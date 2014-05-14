@@ -8,6 +8,7 @@ $tableCountry = "country";
 $content = "";
 
 // Initialize fields variables
+$countryId          = "";
 $countryName        = "";
 $countryPopulation  = "";
 
@@ -27,19 +28,19 @@ if(!empty($_POST)) {
         || $countryPopulation == "") {
 
         $content .= "<p>Please fill out all the fields.</p>";
-        $content .= getForm($countryName, $countryPopulation);
+        $content .= getForm($countryName, $countryPopulation, $countryId);
 
     } else {
 
         if($_FILES['countryGeometry']['error'] > 0 || $_FILES["countryGeometry"]["type"] != "application/json") {
 
             $content .= "<p>Please try again and verify that your file is JSON.</p>";
-            $content .= getForm($countryName, $countryPopulation);
+            $content .= getForm($countryName, $countryPopulation, $countryId);
 
         } else if($_FILES['countryFlag']['error'] > 0 || $_FILES["countryFlag"]["type"] != "image/png") {
 
             $content .= "<p>Please try again and verify that your file is PNG.</p>";
-            $content .= getForm($countryName, $countryPopulation);
+            $content .= getForm($countryName, $countryPopulation, $countryId);
 
         } else {
 
@@ -59,14 +60,14 @@ if(!empty($_POST)) {
 
             if(isset($_GET['cid'])) {
 
-                $cid = $_GET['cid'];
+                $countryId = $_GET['cid'];
                 $query = <<<END
                 --
                 -- Updates the country in database
                 --
                 UPDATE {$tableCountry}
                 SET countryName = '{$countryName}', countryPopulation = '{$countryPopulation}', countryFlag = '{$flagName}', countryGeometry = GeomFromText('{$wkt}')
-                WHERE countryId = {$cid};
+                WHERE countryId = {$countryId};
 END;
 
             } else {
@@ -88,7 +89,7 @@ END;
 
             // Informs the user of the success and invite him to send new data
             $content .= "<p>$countryName has been successfully added to the database.</p>";
-            $content .= getForm("", "");
+            $content .= getForm("", "", "");
 
         }
 
@@ -98,15 +99,15 @@ END;
 
     include_once("inc/connstring.php");
 
-    $cid = $_GET["cid"];
+    $countryId = $_GET["cid"];
 
     $query = <<<END
     --
     -- Gets the country in the database
     --
-    SELECT countryName
+    SELECT countryName, countryPopulation
     FROM {$tableCountry}
-    WHERE countryId = {$cid};
+    WHERE countryId = {$countryId};
 END;
 
     // Performs query
@@ -115,16 +116,17 @@ END;
     if($res->num_rows < 1) {
 
         $content .= "<p>The country you're looking for does not exist in database.</p>";
-        $content .= getForm($countryName, $countryPopulation);
+        $content .= getForm($countryName, $countryPopulation, $countryId);
 
     } else {
 
         // Fetch the data
         $row = $res->fetch_object();
-        $countryName = $row->countryName;
+        $countryName        = $row->countryName;
+        $countryPopulation  = $row->countryPopulation;
 
         $content .= "<p>Edit the data for $countryName.</p>";
-        $content .= getForm($countryName, $countryPopulation);
+        $content .= getForm($countryName, $countryPopulation, $countryId);
 
     }
 
@@ -134,25 +136,25 @@ END;
 } else { // POST is empty, the user has not filled in the form yet
 
     $content .= "<p>Fill out the fields bellow to add a new country.</p>";
-    $content .= getForm($countryName, $countryPopulation);
+    $content .= getForm($countryName, $countryPopulation, $countryId);
 
 }
 
 echo $content;
 
-function getForm($countryName, $countryPopulation) {
+function getForm($countryName, $countryPopulation, $countryId) {
 
     $countryName = htmlspecialchars($countryName);
 
     $html = <<<END
-    <form action="edit-country.php" method="post" enctype="multipart/form-data">
-        <label for="countryName">Name (*):</label>
+    <form action="edit-country.php?cid={$countryId}" method="post" enctype="multipart/form-data">
+        <label for="countryName">Name:</label>
         <input type="text" name="countryName" id="countryName" value="{$countryName}"><br>
-        <label for="countryPopulation">Population (*):</label>
+        <label for="countryPopulation">Population:</label>
         <input type="number" name="countryPopulation" id="countryPopulation" value="{$countryPopulation}"><br>
-        <label for="countryGeometry">Geometry (*):</label>
+        <label for="countryGeometry">Geometry:</label>
         <input type="file" name="countryGeometry" id="countryGeometry"><br>
-        <label for="countryFlag">Flag (*):</label>
+        <label for="countryFlag">Flag:</label>
         <input type="file" name="countryFlag" id="countryFlag"><br>
         <input type="submit" name="submit" value="Submit">
     </form>
