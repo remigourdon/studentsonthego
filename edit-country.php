@@ -7,37 +7,62 @@
 $tableCountry = "country";
 $content = "";
 
+// Initialize fields variables
+$countryName        = "";
+$countryPopulation  = "";
+
 // No country is selected, thus the user intends to add a new one
 if(!isset($_GET['cid'])) {
+
     // There is data in POST, the form has been filled in
     if(!empty($_POST)) {
-        $query = "";
-        $countryName   = isset($_POST['countryName']) ? $_POST['countryName'] : "";
 
-        if(!file_exists($_FILES['map']['tmp_name']) || $countryName == "") {
+        $query = "";
+        $countryName        = isset($_POST['countryName']) ? $_POST['countryName'] : "";
+        $countryPopulation  = isset($_POST['countryPopulation']) ? $_POST['countryPopulation'] : "";
+
+        // Check if the fields are filled in
+        if(!file_exists($_FILES['countryGeometry']['tmp_name'])
+            || !file_exists($_FILES['countryFlag']['tmp_name'])
+            || $countryName == ""
+            || $countryPopulation == "") {
+
             $content .= "<p>Please fill out all the fields.</p>";
-            $content .= getForm($countryName);
+            $content .= getForm($countryName, $countryPopulation);
+
         } else {
-            if($_FILES['map']['error'] > 0 || $_FILES["map"]["type"] != "application/json") {
+
+            if($_FILES['countryGeometry']['error'] > 0 || $_FILES["countryGeometry"]["type"] != "application/json") {
+
                 $content .= "<p>Please try again and verify that your file is JSON.</p>";
-                $content .= getForm($countryName);
+                $content .= getForm($countryName, $countryPopulation);
+
+            } else if($_FILES['countryFlag']['error'] > 0 || $_FILES["countryFlag"]["type"] != "image/png") {
+
+                $content .= "<p>Please try again and verify that your file is PNG.</p>";
+                $content .= getForm($countryName, $countryPopulation);
+
             } else {
+
                 include_once("inc/conversions.php");
                 include_once("inc/connstring.php");
 
                 // Avoid SQL injections and encode UTF-8 characters
                 $countryName = utf8_encode($mysqli->real_escape_string($countryName));
 
-                $json = file_get_contents($_FILES['map']['tmp_name']);
-
+                // Get WKT string
+                $json = file_get_contents($_FILES['countryGeometry']['tmp_name']);
                 $wkt = json_to_wkt($json); // Now we have WKT format
+
+                // Save the flag
+                move_uploaded_file($_FILES["countryFlag"]["tmp_name"], "content/flags/" . $countryName . ".png");
 
                 $query = <<<END
                 --
                 -- Inserts a new country into the database
                 --
-                INSERT INTO {$tableCountry}(countryName, countryMap)
-                VALUES('{$countryName}', GeomFromText('{$wkt}'));
+                INSERT INTO {$tableCountry}(countryName, countryPopulation, countryFlag, countryGeometry)
+                VALUES('{$countryName}', '{$countryPopulation}', ,GeomFromText('{$wkt}'));
 END;
                 // Performs query
                 $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
@@ -46,15 +71,22 @@ END;
 
                 // Informs the user of the success and invite him to send new data
                 $content .= "<p>$countryName has been successfully added to the database.</p>";
-                $content .= getForm("");
+                $content .= getForm($countryName, $countryPopulation);
+
             }
+
         }
+
     // POST is empty, the user has not filled in the form yet
     } else {
+
         $content .= "<p>Fill out the fields bellow to add a new country.</p>";
-        $content .= getForm("");
+        $content .= getForm($countryName, $countryPopulation);
+
     }
+
 } else {    // The country parameter is specified
+
     include_once("inc/connstring.php");
 
     $cid = $_GET["cid"];
@@ -72,37 +104,48 @@ END;
     $res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
     if($res->num_rows < 1) {
+
         $content .= "<p>The country you're looking for does not exist in database.</p>";
-        $content .= getForm("");
+        $content .= getForm($countryName, $countryPopulation);
+
     } else {
+
         // Fetch the data
         $row = $res->fetch_object();
         $countryName = $row->countryName;
 
         $content .= "<p>Edit the data for $countryName.</p>";
-        $content .= getForm($countryName);
+        $content .= getForm($countryName, $countryPopulation);
+
     }
 
     $res->close();
     $mysqli->close();
+
 }
 
 echo $content;
 
-function getForm($countryName) {
+function getForm($countryName, $countryPopulation) {
+
     $countryName = htmlspecialchars($countryName);
 
     $html = <<<END
-    <form action="edit.php" method="post" enctype="multipart/form-data">
-        <label for="countryName">Name:</label>
+    <form action="edit-country.php" method="post" enctype="multipart/form-data">
+        <label for="countryName">Name (*):</label>
         <input type="text" name="countryName" id="countryName" value="{$countryName}"><br>
-        <label for="map">Map:</label>
-        <input type="file" name="map" id="map"><br>
+        <label for="countryPopulation">Population (*):</label>
+        <input type="number" name="countryPopulation" id="countryPopulation" value="{$countryPopulation}"><br>
+        <label for="countryGeometry">Geometry (*):</label>
+        <input type="file" name="countryGeometry" id="countryGeometry"><br>
+        <label for="countryFlag">Flag (*):</label>
+        <input type="file" name="countryFlag" id="countryFlag"><br>
         <input type="submit" name="submit" value="Submit">
     </form>
 END;
 
     return $html;
+
 }
 
 ?>
