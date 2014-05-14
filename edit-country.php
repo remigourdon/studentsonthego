@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Provides interface for editing and adding new countries to the database.
+ */
+
 $tableCountry = "country";
 $content = "";
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file implements convenient methods for conversion of JSON.
+ * Implements convenient methods for conversion of JSON to and from WKT.
  */
 
 function json_to_wkt($json) {

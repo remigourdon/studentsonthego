@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Provides connexion to the database.
+ */
+
 $mysqli = new mysqli('localhost', 'root', '', 'studentsonthego');
 
 if(mysqli_connect_error()) {
