@@ -31,7 +31,7 @@ if(!empty($_POST)) {
     $flag = (!file_exists($_FILES['flag']['tmp_name'])
                 || $_FILES['flag']['error'] > 0
                 || $_FILES["flag"]["type"] != "image/png") ? false : true;
-    $feedback = "Please check the file(s) ";
+    $feedback = "Please check the file(s): ";
     $feedback .= !$geom ? "`geometry` " : "";
     $feedback .= !$flag ? "`flag`" : "";
 

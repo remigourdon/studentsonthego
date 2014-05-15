@@ -69,8 +69,6 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
             }
 
             // Prepare SQL for non mandatory fields
-            //$cptlSQL = ($cptl != "") ? "capitalID = '{$cptl}'" : "capitalID = capitalID";
-            $cptlSQL = "capitalID = capitalID";
             $popuSQL = ($popu != "") ? "population = '{$popu}'" : "population = population";
             $flagSQL = $flag ? "flag = '{$flagName}'" : "flag = flag";
 
@@ -79,7 +77,7 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
             -- Updates country in the database
             --
             UPDATE {$tableCountries}
-            SET name = '{$name}', {$popuSQL}, {$geomSQL}, {$flagSQL}, {$cptlSQL}
+            SET name = '{$name}', {$popuSQL}, {$geomSQL}, {$flagSQL}
             WHERE ID = {$id};
 END;
 
@@ -132,14 +130,16 @@ END;
         // The country has been found
         } else {
 
-            $row    = $res->fetch_object();
-            $name   = utf8_decode($row->name);
-            $popu   = $row->population;
+            $country    = $res->fetch_object();
+            $name       = utf8_decode($country->name);
+            $popu       = $country->population;
 
             $content .= "<p>Fill all the mandatory fields.</p>";
             $content .= getForm($id, $name, $popu);
 
         }
+
+        $res->close();
 
     }
 
