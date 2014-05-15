@@ -171,6 +171,14 @@ function getForm($id = "", $name = "", $desc = "") {
             <label for="desc">Description (*):</label>
             <textarea class="form-control" name="desc" id="desc">{$desc}</textarea>
         </div>
+        <div class="form-group col-xs-6">
+            <label for="lati">Latitude (*):</label>
+            <input type="number" class="form-control" name="lati" id="lati" step="0.0001" min="-90" max="+90" value="{$lati}">
+        </div>
+        <div class="form-group col-xs-6">
+            <label for="long">Longitude (*):</label>
+            <input type="number" class="form-control" name="long" id="long" step="0.0001" min="-180" max="+180" value="{$long}">
+        </div>
         <div class="form-group">
             <label for="pict">Picture:</label>
             <input type="file" name="pict" id="pict">
