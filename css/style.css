@@ -44,6 +44,6 @@ html, body {
 }
 
 #adminButton:hover {
-    color:red;
+    color:#0CE3AC;
     text-decoration:none;
 }
