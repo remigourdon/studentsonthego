@@ -73,7 +73,8 @@ END;
         $mysqli->close();
 
         // Query was successful, we can save the files
-        move_uploaded_file($_FILES['flag']['tmp_name'], "content/flags/" . $flagName);
+        if($flag)
+            move_uploaded_file($_FILES['flag']['tmp_name'], "content/flags/" . $flagName);
 
         // Redirect the user
         header("Location: add-country.php");
