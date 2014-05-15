@@ -3,4 +3,4 @@ content;
 content/*;
 
 # emacs backup file
-*.java~
+*.php~
