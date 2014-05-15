@@ -113,7 +113,7 @@ $footer = <<<END
 
       <!-- SECOND HALF -->
         <div class="col-md-2">
-        <p>Add W3C Validation</p>
+        <p class="text-muted">Add W3C Validation</p>
        </div><!-- col-md-2 -->
 
       </div><!-- container -->
