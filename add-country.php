@@ -49,16 +49,17 @@ if(!empty($_POST)) {
         include_once("inc/conversions.php");
         include_once("inc/connstring.php");
 
+
         // Prepare flag data
         $flagName    = $flag ? $name . ".png" : "";
-
-        // Prepare data and SQL for geometry
-        $wkt        = json_to_wkt(file_get_contents($_FILES['geom']['tmp_name']));
-        $geomSQL    = "GeomFromText('{$wkt}')";
 
         // Prevent SQL injections and encore UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));
         $flagname   = utf8_encode($mysqli->real_escape_string($flagName));
+
+        // Prepare data and SQL for geometry
+        $wkt        = json_to_wkt(file_get_contents($_FILES['geom']['tmp_name']));
+        $geomSQL    = "GeomFromText('{$wkt}')";
 
         $query = <<<END
         --
