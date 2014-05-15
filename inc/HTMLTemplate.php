@@ -65,7 +65,6 @@ $header=<<<END
         <!-- Navigator's buttons  -->
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="calculform.php">Calculate the price of your stay !</a></li>
 
             <li class="active"><a href="about.php">About</a></li>
           </ul>        
