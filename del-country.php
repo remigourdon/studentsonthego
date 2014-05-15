@@ -14,7 +14,7 @@ $tableCities    = "cities";
 $content = <<<END
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">Edit a country</div>
+        <div class="panel-heading">Delete a country</div>
         <div class="panel-body">
 END;
 
