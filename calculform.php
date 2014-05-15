@@ -1,12 +1,42 @@
 <?php
 
-include_once("inc/HTMLTemplate.php");
+include_once("inc/HTMLTemplate.php"); // Site Template
+include_once("inc/connstring.php");   // DB connection
+
+$feedback = "";
+$country = "";
+$months = "";
+
+//if user clicked submit
+if(!empty($_POST) ) {
+
+    // retrieve the two fields of data
+    $country= isset($_POST['country']) ?  $_POST['country'] : '';
+    $months = isset($_POST['months']) ?  $_POST['months'] : '';
+
+    // query DB for related informations (Required to estimate the price)
+
+
+    //dummy algorythm
+    $res = 1000 * $months;
+
+    $feedback=<<<END
+
+<br><br> <!-- ugly  -->
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <p class="text-info">The cost of your stay is estimated to : {$res} €</p>
+   </div>
+
+</div> <!--container -->
+END;
+}
+
 
 $calc_form=<<<END
 
 <div class"container">
-
-<form class="form-horizontal" role="form">
+<form class="form-horizontal" role="form" action="calculform.php" method="post">
 <br> <!-- ugly  -->
     <div class="row">
 
@@ -25,7 +55,7 @@ $calc_form=<<<END
           <label for="select">Country : </label>
       </div>
       <div class="col-md-2">
-      <select id="select" class="form-control">
+      <select id="select" class="form-control" name="country">
         <option>France</option>
         <option>Greece</option>
         <option>Austria</option>
@@ -45,7 +75,7 @@ $calc_form=<<<END
           <label for="select">Duration of the stay (months): </label>
       </div>
       <div class="col-md-2">
-      <select id="select" class="form-control" >
+      <select id="select" class="form-control" name="months">
         <option>1</option>
         <option>1.5</option>
         <option>2</option>
@@ -61,28 +91,11 @@ $calc_form=<<<END
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-           <button type="button" class="btn btn-default">Submit</button>
+           <button type="submit" class="btn btn-default">Submit</button>
         </div>
     </div>
 
 </form>
-END;
-
-$res = 1000;
-
-$feedback=<<<END
-<!-- ADD THE RESULT  -->
-
-<br><br> <!-- ugly  -->
-
-
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <p class="text-info">The cost of your stay is estimated to : {$res} €</p>
-    </div>
-</div>
-
-</div> <!--container -->
 END;
 
 
