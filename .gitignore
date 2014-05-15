@@ -1,3 +1,2 @@
-# Ignore all content files
-content;
-content/*;
+# Ignore content directory
+content/;
