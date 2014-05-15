@@ -6,21 +6,28 @@ $header=<<<END
 <html lang="en">
   <head>
     <meta charset="utf-8">
+
+    <!-- choose what version of IE the page should be rendered as -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <!-- Mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Search engine tags -->
     <meta name="description" content="Students on the go, a place where future travelling students can estimate the price of their stay.">
 
-    <meta name="author" content="">
-    <!--<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">-->
+    <!-- Authors  -->
+    <meta name="author" content="Hichame Moriceau - Rémi Gourdon">
 
-    <title>Starter Template for Bootstrap</title>
+    <!-- Favicon  -->
+    <link rel="icon" type="image/png" href="img/studyabroad.ico">
+
+    <title>Students on the go !</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for the basis template -->
     <link href="starter-template.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -29,8 +36,12 @@ $header=<<<END
       <script src="../../assets/js/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Personnal stylesheet -->
+    <!-- Specific features -->
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- Search engine robots's tags -->
+    <meta name="robots" content="index, follow">
+
   </head>
 
   <body>
@@ -59,24 +70,35 @@ $header=<<<END
             <li><a href="#">Italy</a></li>
             <li><a href="#">Slovakia</a></li>
             <li><a href="#">...</a></li>
+
+<!--
             <li class="divider"></li>
             <li><a href="#">Separated link</a></li>
+
           </ul>
         </li> <!-- dropdown -->
       </ul><!-- nav navbar-nav navbar-right -->
-        </div> <!-- collapse navbar collapse -->
-      </div><!-- nav-bar header -->
+     </div> <!-- collapse navbar collapse -->
+    </div><!-- nav-bar header -->
 
-    </div> <!-- container -->
+  </div> <!-- container -->
 
 </div> <!-- navbar -->
+-->
 END;
 
 
 $footer = <<<END
 
+<div id="footer">
+      <div class="container">
+        <p class="text-muted"><span class="glyphicon glyphicon-copyright-mark"></span> Copyright</p>
+      </div>
+</div>
+
+
     <!-- Bootstrap core JavaScript
-    ================================================== -->
+ ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
