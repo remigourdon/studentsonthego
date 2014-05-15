@@ -5,10 +5,6 @@ include_once("inc/HTMLTemplate.php");
 $content = <<<END
 
 <!-- Fill this up !  -->
-<br><br> <!-- ugly -->
-
-
-
 
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">

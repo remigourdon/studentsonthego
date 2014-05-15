@@ -2,7 +2,7 @@
    include_once("inc/HTMLTemplate.php");
 
 $intro=<<<END
-<br><br><br><br> <!-- fix it, this is ugly -->
+
 
 
 
@@ -16,22 +16,9 @@ $intro=<<<END
 </main>
 
 
-<!--
-
-   </p>
--->
-
 </div>
 
 END;
-
-
-
-
-
-
-
-
 
 
 
