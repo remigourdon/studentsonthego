@@ -15,9 +15,13 @@ $tableCities    = "cities";
 // Open content
 $content = <<<END
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">Add a new country</div>
-        <div class="panel-body">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add a new element</h3>
+            </div>
+            <div class="panel-body">
 END;
 
 // There is no id specified in the post
@@ -138,8 +142,10 @@ END;
 
 // Close content
 $content .= <<<END
+            </div>
         </div>
     </div>
+    <div class="col-md-3"></div>
 </div>
 END;
 
@@ -171,18 +177,17 @@ function getForm($id = "", $name = "", $desc = "") {
             <label for="desc">Description (*):</label>
             <textarea class="form-control" name="desc" id="desc">{$desc}</textarea>
         </div>
-        <div class="form-group col-xs-6">
+        <div class="form-group col-md-6">
             <label for="lati">Latitude (*):</label>
             <input type="number" class="form-control" name="lati" id="lati" step="0.0001" min="-90" max="+90" value="{$lati}">
         </div>
-        <div class="form-group col-xs-6">
+        <div class="form-group col-md-6">
             <label for="long">Longitude (*):</label>
             <input type="number" class="form-control" name="long" id="long" step="0.0001" min="-180" max="+180" value="{$long}">
         </div>
         <div class="form-group">
             <label for="pict">Picture:</label>
             <input type="file" name="pict" id="pict">
-            <p class="help-block">PNG file</p>
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
     </form>

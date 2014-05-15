@@ -12,9 +12,13 @@ $tableCountries = "countries";
 // Open content
 $content = <<<END
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">Add a new country</div>
-        <div class="panel-body">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add a new country</h3>
+            </div>
+            <div class="panel-body">
 END;
 
 // There is data in POST, the form has been filled in
@@ -93,8 +97,10 @@ END;
 
 // Close content
 $content .= <<<END
+            </div>
         </div>
     </div>
+    <div class="col-md-3"></div>
 </div>
 END;
 
@@ -118,15 +124,13 @@ function getForm($name = "", $popu = "") {
             <label for="popu">Population:</label>
             <input type="number" class="form-control" name="popu" id="popu" value="{$popu}">
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="geom">Geometry (*):</label>
             <input type="file" name="geom" id="geom">
-            <p class="help-block">GeoJSON with .json extension</p>
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="flag">Flag:</label>
             <input type="file" name="flag" id="flag">
-            <p class="help-block">PNG file</p>
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
     </form>
