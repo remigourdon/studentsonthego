@@ -7,7 +7,7 @@ html, body {
 
 .col-md-12 , .col-md-3 , .col-md-1 , .col-md-6 , col-md-2{
     text-align:center;
-//    border : 2px solid yellow;
+
 }
 
 .lead {
@@ -26,6 +26,24 @@ html, body {
 
 }
 
-.sub_head {
-    
+#footer {
+    background-color:#191919;
+    margin-top:8%;
+
+    text-align:left;
+}
+
+.text-muted {
+    margin-left:2%;
+}
+
+#adminButton {
+
+    text-align:right;// position : full right
+
+}
+
+#adminButton:hover {
+    color:#0CE3AC;
+    text-decoration:none;
 }

@@ -42,19 +42,27 @@ $header=<<<END
     <!-- Search engine robots's tags -->
     <meta name="robots" content="index, follow">
 
+
+    <style>
+       #adminButton{
+           color:#191919;// Hidden
+       }
+    </style>
+
+
   </head>
 
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">Students on the go</a>
+
+        <a class="navbar-brand" href="index.php">Students on the go</a>
+
         </div> <!-- navbar-header -->
+
+
+        <!-- Navigator's buttons  -->
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="calculform.php">Calculate the price of your stay !</a></li>
@@ -85,20 +93,59 @@ $header=<<<END
 
 </div> <!-- navbar -->
 -->
+<br><br><br><br> <!-- ugly -->
 END;
 
 
 $footer = <<<END
 
-<div id="footer">
+<div id="footer"> <!-- FIRST row of the footer  -->
+<div class="row">
+   <div class="col-md-12">
+
+      <!-- FIRST HALF -->
       <div class="container">
+        <div class="col-md-2">
         <p class="text-muted"><span class="glyphicon glyphicon-copyright-mark"></span> Copyright</p>
-      </div>
-</div>
+        </div><!-- col-md-2 -->
 
+        <div class="col-md-8"></div> <!-- separator -->
 
-    <!-- Bootstrap core JavaScript
- ================================================== -->
+      <!-- SECOND HALF -->
+        <div class="col-md-2">
+        <p>Add W3C Validation</p>
+       </div><!-- col-md-2 -->
+
+      </div><!-- container -->
+
+  </div><!-- col-md-12 -->
+</div> <!-- row -->
+
+<div class="row"><!-- SECOND row of the footer  -->
+  <div class="col-md-12">
+
+ <!-- FIRST HALF -->
+      <div class="container">
+        <div class="col-md-2">
+        <a id="adminButton" href="add-country.php" >Admin</a>
+        </div><!-- col-md-2 -->
+
+        <div class="col-md-8"></div> <!-- separator -->
+
+      <!-- SECOND HALF -->
+        <div class="col-md-2">
+        <p></p>
+       </div><!-- col-md-2 -->
+
+      </div><!-- container -->
+
+     
+  </div><!-- col-md-12 -->
+</div><!-- row  -->
+
+</div><!-- footer -->
+
+    <!-- ===============Bootstrap core JavaScript================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>

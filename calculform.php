@@ -3,7 +3,6 @@
 include_once("inc/HTMLTemplate.php");
 
 $calc_form=<<<END
-<br><br><br><br><br><br>
 
 <div class"container">
 
