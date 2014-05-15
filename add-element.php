@@ -68,6 +68,8 @@ if(!empty($_POST)) {
     $type = isset($_POST['type']) ? $_POST['type'] : "";
     $name = isset($_POST['name']) ? $_POST['name'] : "";
     $desc = isset($_POST['desc']) ? $_POST['desc'] : "";
+    $lati = isset($_POST['lati']) ? $_POST['lati'] : "";
+    $long = isset($_POST['long']) ? $_POST['long'] : "";
 
     // Check for the files
     $pict = (!file_exists($_FILES['pict']['tmp_name'])
@@ -77,12 +79,12 @@ if(!empty($_POST)) {
     $feedback .= !$pict ? "`picture` " : "";
 
     // If some mandatory fields aren't filled in
-    if($name == "" || $desc == "" || !$pict) {
+    if($name == "" || $desc == "" || $lati == "" || $long == "" || !$pict) {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
         $content .= "<p>" . $feedback . "</p><hr>";
-        $content .= getForm($id, $name, $desc);
+        $content .= getForm($id, $name, $desc, $lati, $long);
 
     // If everything is fine, we can proceed to the query
     } else {
@@ -97,7 +99,8 @@ if(!empty($_POST)) {
         $desc       = utf8_encode($mysqli->real_escape_string($desc));
         $pictName   = utf8_encode($mysqli->real_escape_string($pictName));
 
-        //
+        // Prepare coordinates in wkt
+        $wkt = "POINT({$lati} {$long})";
 
         if($type == "city") {
 
@@ -105,8 +108,8 @@ if(!empty($_POST)) {
             --
             -- Inserts a new city in the database
             --
-            INSERT INTO {$tableCities}(name, description, picture, countryID)
-            VALUES('{$name}', '{$desc}', '{$pictName}', '{$id}');
+            INSERT INTO {$tableCities}(name, description, coordinates, picture, countryID)
+            VALUES('{$name}', '{$desc}', PointFromText('{$wkt}'), '{$pictName}', '{$id}');
 END;
 
         } else {
@@ -157,7 +160,7 @@ echo $content;
 echo $footer;
 
 
-function getForm($id = "", $name = "", $desc = "") {
+function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
 
     $name = htmlspecialchars($name);
 
