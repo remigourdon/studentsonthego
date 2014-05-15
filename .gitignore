@@ -1,2 +1,5 @@
 # Ignore content directory
 content/;
+
+# Ignore all emacs backup files
+*~
