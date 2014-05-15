@@ -99,10 +99,9 @@ END;
 
 $footer = <<<END
 
+<div id="footer"> <!-- FIRST row of the footer  -->
 <div class="row">
    <div class="col-md-12">
-
-   <div id="footer">
 
       <!-- FIRST HALF -->
       <div class="container">
@@ -112,17 +111,39 @@ $footer = <<<END
 
         <div class="col-md-8"></div> <!-- separator -->
 
-      <!-- SECOND HALF : contains the admin login button -->
+      <!-- SECOND HALF -->
         <div class="col-md-2">
-        <a id="adminButton" href="add-country.php" >Admin</a>
+        <p>blablabla</p>
        </div><!-- col-md-2 -->
 
       </div><!-- container -->
 
-
-  </div><!-- footer -->
   </div><!-- col-md-12 -->
 </div> <!-- row -->
+
+<div class="row"><!-- SECOND row of the footer  -->
+  <div class="col-md-12">
+
+ <!-- FIRST HALF -->
+      <div class="container">
+        <div class="col-md-2">
+        <a id="adminButton" href="add-country.php" >Admin</a>
+        </div><!-- col-md-2 -->
+
+        <div class="col-md-8"></div> <!-- separator -->
+
+      <!-- SECOND HALF -->
+        <div class="col-md-2">
+        <p></p>
+       </div><!-- col-md-2 -->
+
+      </div><!-- container -->
+
+     
+  </div><!-- col-md-12 -->
+</div><!-- row  -->
+
+</div><!-- footer -->
 
     <!-- ===============Bootstrap core JavaScript================== -->
     <!-- Placed at the end of the document so the pages load faster -->

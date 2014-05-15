@@ -57,18 +57,7 @@ $content = <<<END
       <!-- /END THE FEATURETTES -->
 
 
-
-
-
-    
     <script src="../../assets/js/docs.min.js"></script>
-  
-
-
-
-
-
-
 
 
 
