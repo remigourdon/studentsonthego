@@ -176,6 +176,7 @@ echo $footer;
 function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
 
     $name = htmlspecialchars($name);
+    $desc = htmlspecialchars($desc);
 
     $html = <<<END
     <form role="form" action="mod-city.php?id={$id}" method="post" enctype="multipart/form-data">
