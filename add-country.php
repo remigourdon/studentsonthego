@@ -44,7 +44,7 @@ if(!empty($_POST)) {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
-        $content .= "<p>" . $feedback . "</p>";
+        $content .= "<p>" . $feedback . "</p><hr>";
         $content .= getForm($name, $popu);
 
     // If everything is fine, we can proceed to the query
@@ -90,7 +90,7 @@ END;
 // The user hasn't filled in the form yet
 } else {
 
-    $content .= "<p>Fill all the mandatory fields.</p>";
+    $content .= "<p>Fill all the mandatory fields.</p><hr>";
     $content .= getForm();
 
 }

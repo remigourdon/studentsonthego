@@ -50,7 +50,7 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
 
             // Give information
             $content .= "<p>Please complete all the mandatory fields.</p>";
-            $content .= "<p>" . $feedback . "</p>";
+            $content .= "<p>" . $feedback . "</p><hr>";
             $content .= getForm($id, $name, $popu);
 
         // If everything is fine, we can proceed to the query
@@ -101,7 +101,7 @@ END;
             } else {
 
                 // Provide new form and feedback
-                $content .= "<p>Please try again.</p>";
+                $content .= "<p>Please try again.</p><hr>";
                 $content .= getForm($id, $name, $popu);
 
             }
@@ -138,7 +138,7 @@ END;
             $name       = utf8_decode($country->name);
             $popu       = $country->population;
 
-            $content .= "<p>Fill all the mandatory fields.</p>";
+            $content .= "<p>Fill all the mandatory fields.</p><hr>";
             $content .= getForm($id, $name, $popu);
 
         }
