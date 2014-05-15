@@ -1,7 +1,7 @@
 <?php
 
 include_once("inc/HTMLTemplate.php"); // Site Template
-include_once("inc/connstring.php");   // DB connection
+//include_once("inc/connstring.php");   // DB connection
 
 $feedback = "";
 $country = "";
