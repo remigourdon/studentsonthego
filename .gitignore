@@ -1,3 +1,6 @@
 # Ignore all content files
 content;
 content/*;
+
+# emacs backup file
+*.java~
