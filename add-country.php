@@ -12,9 +12,13 @@ $tableCountries = "countries";
 // Open content
 $content = <<<END
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">Add a new country</div>
-        <div class="panel-body">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add a new country</h3>
+            </div>
+            <div class="panel-body">
 END;
 
 // There is data in POST, the form has been filled in
@@ -30,7 +34,9 @@ if(!empty($_POST)) {
                 || $_FILES["geom"]["type"] != "application/json") ? false : true;
     $flag = (!file_exists($_FILES['flag']['tmp_name'])
                 || $_FILES['flag']['error'] > 0
-                || $_FILES["flag"]["type"] != "image/png") ? false : true;
+                || ($_FILES['flag']["type"] != "image/png"
+                    && $_FILES['flag']["type"] != "image/jpg"
+                    && $_FILES['flag']["type"] != "image/jpeg")) ? false : true;
     $feedback = "Please check the file(s): ";
     $feedback .= !$geom ? "`geometry` " : "";
     $feedback .= !$flag ? "`flag`" : "";
@@ -40,7 +46,7 @@ if(!empty($_POST)) {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
-        $content .= "<p>" . $feedback . "</p>";
+        $content .= "<p>" . $feedback . "</p><hr>";
         $content .= getForm($name, $popu);
 
     // If everything is fine, we can proceed to the query
@@ -51,7 +57,8 @@ if(!empty($_POST)) {
 
 
         // Prepare flag data
-        $flagName    = $flag ? $name . ".png" : "";
+        $ext = end((explode(".", $_FILES['flag']['name'])));
+        $flagName    = $flag ? $name . "." . $ext : "";
 
         // Prevent SQL injections and encore UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));
@@ -86,15 +93,17 @@ END;
 // The user hasn't filled in the form yet
 } else {
 
-    $content .= "<p>Fill all the mandatory fields.</p>";
+    $content .= "<p>Fill all the mandatory fields.</p><hr>";
     $content .= getForm();
 
 }
 
 // Close content
 $content .= <<<END
+            </div>
         </div>
     </div>
+    <div class="col-md-3"></div>
 </div>
 END;
 
@@ -112,21 +121,19 @@ function getForm($name = "", $popu = "") {
     <form role="form" action="add-country.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name (*):</label>
-            <input type="text" class="form-control" name="name" id="name" value="{$name}"><br>
+            <input type="text" class="form-control" name="name" id="name" value="{$name}">
         </div>
         <div class="form-group">
             <label for="popu">Population:</label>
-            <input type="number" class="form-control" name="popu" id="popu" value="{$popu}"><br>
+            <input type="number" class="form-control" name="popu" id="popu" value="{$popu}">
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="geom">Geometry (*):</label>
-            <input type="file" name="geom" id="geom"><br>
-            <p class="help-block">GeoJSON with .json extension</p>
+            <input type="file" name="geom" id="geom">
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="flag">Flag:</label>
-            <input type="file" name="flag" id="flag"><br>
-            <p class="help-block">PNG file</p>
+            <input type="file" name="flag" id="flag">
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
     </form>
