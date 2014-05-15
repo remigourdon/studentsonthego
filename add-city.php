@@ -1,8 +1,7 @@
 <?php
 
 /**
- * This page allows an administrator to add a new elements to the specified
- * country.
+ * This page allows an administrator to add a new city to the specified country.
  */
 
 include_once("inc/HTMLTemplate.php");
@@ -19,7 +18,7 @@ $content = <<<END
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Add a new element</h3>
+                <h3 class="panel-title">Add a new city</h3>
             </div>
             <div class="panel-body">
 END;
@@ -65,7 +64,6 @@ $res->close();
 if(!empty($_POST)) {
 
     // Get the data from POST
-    $type = isset($_POST['type']) ? $_POST['type'] : "";
     $name = isset($_POST['name']) ? $_POST['name'] : "";
     $desc = isset($_POST['desc']) ? $_POST['desc'] : "";
     $lati = isset($_POST['lati']) ? $_POST['lati'] : "";
@@ -105,24 +103,13 @@ if(!empty($_POST)) {
         // Prepare coordinates in wkt
         $wkt = "POINT({$lati} {$long})";
 
-        if($type == "city") {
-
-            $query = <<<END
-            --
-            -- Inserts a new city in the database
-            --
-            INSERT INTO {$tableCities}(name, description, coordinates, picture, countryID)
-            VALUES('{$name}', '{$desc}', PointFromText('{$wkt}'), '{$pictName}', '{$id}');
+        $query = <<<END
+        --
+        -- Inserts a new city in the database
+        --
+        INSERT INTO {$tableCities}(name, description, coordinates, picture, countryID)
+        VALUES('{$name}', '{$desc}', PointFromText('{$wkt}'), '{$pictName}', '{$id}');
 END;
-
-        } else {
-
-            // Unvalid type
-            // Redirect the user
-            header("Location: index.php");
-            exit();
-
-        }
 
         // Performs query
         $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
@@ -168,13 +155,7 @@ function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
     $name = htmlspecialchars($name);
 
     $html = <<<END
-    <form role="form" action="add-element.php?id={$id}" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="type">Type (*):</label>
-            <select class="form-control" name="type" id="type">
-                <option value="city" selected>City</option>
-            </select>
-        </div>
+    <form role="form" action="add-city.php?id={$id}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name (*):</label>
             <input type="text" class="form-control" name="name" id="name" value="{$name}">
