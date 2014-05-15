@@ -34,7 +34,9 @@ if(!empty($_POST)) {
                 || $_FILES["geom"]["type"] != "application/json") ? false : true;
     $flag = (!file_exists($_FILES['flag']['tmp_name'])
                 || $_FILES['flag']['error'] > 0
-                || $_FILES["flag"]["type"] != "image/png") ? false : true;
+                || ($_FILES['flag']["type"] != "image/png"
+                    && $_FILES['flag']["type"] != "image/jpg"
+                    && $_FILES['flag']["type"] != "image/jpeg")) ? false : true;
     $feedback = "Please check the file(s): ";
     $feedback .= !$geom ? "`geometry` " : "";
     $feedback .= !$flag ? "`flag`" : "";
@@ -55,7 +57,8 @@ if(!empty($_POST)) {
 
 
         // Prepare flag data
-        $flagName    = $flag ? $name . ".png" : "";
+        $ext = end((explode(".", $_FILES['flag']['name'])));
+        $flagName    = $flag ? $name . "." . $ext : "";
 
         // Prevent SQL injections and encore UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));

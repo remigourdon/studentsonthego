@@ -74,7 +74,9 @@ if(!empty($_POST)) {
     // Check for the files
     $pict = (!file_exists($_FILES['pict']['tmp_name'])
                 || $_FILES['pict']['error'] > 0
-                || $_FILES['pict']["type"] != "image/png") ? false : true;
+                || ($_FILES['pict']["type"] != "image/png"
+                    && $_FILES['pict']["type"] != "image/jpg"
+                    && $_FILES['pict']["type"] != "image/jpeg")) ? false : true;
     $feedback = "Please check the file(s): ";
     $feedback .= !$pict ? "`picture` " : "";
 
@@ -91,8 +93,9 @@ if(!empty($_POST)) {
 
         include_once("inc/conversions.php");
 
-        // Prepare flag data
-        $pictName    = $pict ? $name . ".png" : "";
+        // Prepare pict data
+        $ext = end((explode(".", $_FILES['pict']['name'])));
+        $pictName    = $pict ? $name . "." . $ext : "";
 
         // Prevent SQL injections and encode UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));
