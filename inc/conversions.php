@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Implements convenient methods for conversion of JSON to and from WKT.
+ * Implements convenient methods for conversion of JSON and WKT.
  */
 
 function json_to_wkt($json) {
@@ -34,6 +34,15 @@ function json_to_wkt($json) {
     }
 
     return substr($wkt, 0, -1) . ")";
+}
+
+
+
+function point_to_coord($wkt) {
+    $coord = explode("(", $wkt)[1];
+    $coord = explode(")", $coord)[0];
+
+    return explode(" ", $coord);
 }
 
 ?>
