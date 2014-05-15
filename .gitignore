@@ -1,6 +1,6 @@
 # Ignore all content files
-content;
-content/*;
+#content;
+#content/*;
 
 # emacs backup file
 *.php~
