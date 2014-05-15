@@ -1,0 +1,16 @@
+<?php
+   include_once("inc/HTMLTemplate.php");
+
+$intro=<<<END
+<br><br><br><br>
+<div class="row">
+<div class="col-lg-12">
+<p>Welcome on <em>students on the go</em>, a tool made <strong>by</strong> students <strong>for</strong> students !</p>
+</div>
+END;
+
+
+echo $header;
+echo $intro;
+echo $footer;
+?>
