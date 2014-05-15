@@ -112,20 +112,20 @@ function getForm($name = "", $popu = "") {
     <form role="form" action="add-country.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name (*):</label>
-            <input type="text" class="form-control" name="name" id="name" value="{$name}"><br>
+            <input type="text" class="form-control" name="name" id="name" value="{$name}">
         </div>
         <div class="form-group">
             <label for="popu">Population:</label>
-            <input type="number" class="form-control" name="popu" id="popu" value="{$popu}"><br>
+            <input type="number" class="form-control" name="popu" id="popu" value="{$popu}">
         </div>
         <div class="form-group">
             <label for="geom">Geometry (*):</label>
-            <input type="file" name="geom" id="geom"><br>
+            <input type="file" name="geom" id="geom">
             <p class="help-block">GeoJSON with .json extension</p>
         </div>
         <div class="form-group">
             <label for="flag">Flag:</label>
-            <input type="file" name="flag" id="flag"><br>
+            <input type="file" name="flag" id="flag">
             <p class="help-block">PNG file</p>
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
