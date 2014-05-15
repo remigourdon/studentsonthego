@@ -1,3 +1,3 @@
-# Ignore all content files
-content;
-content/*;
+# emacs backup file
+*.php~
+*.html~
