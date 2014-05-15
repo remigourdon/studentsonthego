@@ -129,7 +129,7 @@ END;
             move_uploaded_file($_FILES['pict']['tmp_name'], "content/picts/" . $pictName);
 
         // Redirect the user
-        header("Location: add-country.php?id={$id}");
+        header("Location: add-country.php");
         exit();
 
     }
