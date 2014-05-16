@@ -32,10 +32,11 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
     if(!empty($_POST)) {
 
         // Get the data from POST
-        $name = isset($_POST['name']) ? $_POST['name'] : "";
-        $desc = isset($_POST['desc']) ? $_POST['desc'] : "";
-        $lati = isset($_POST['lati']) ? $_POST['lati'] : "";
-        $long = isset($_POST['long']) ? $_POST['long'] : "";
+        $_name  = isset($_POST['_name']) ? $_POST['_name'] : ""; // Previous name
+        $name   = isset($_POST['name']) ? $_POST['name'] : "";
+        $desc   = isset($_POST['desc']) ? $_POST['desc'] : "";
+        $lati   = isset($_POST['lati']) ? $_POST['lati'] : "";
+        $long   = isset($_POST['long']) ? $_POST['long'] : "";
 
         // Check for the files
         $pict = (!file_exists($_FILES['pict']['tmp_name'])
@@ -77,13 +78,17 @@ END;
             $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
             if($mysqli->affected_rows >= 1) {
 
-                // Query was successful, we can save the files
+                // Query was successful
+
+                // Rename the content directory
+                $_path  = "./content/cities/{$_name}/"; // Previous path
+                $path   = "./content/cities/{$name}/";
+                rename($_path, $path);
+
+                // Save the files
                 if($pict) {
                     // Gets extension
                     $pictExt    = "." . end((explode(".", $_FILES['pict']['name'])));
-
-                    // Gets the directory path
-                    $path = "./content/cities/{$name}/";
 
                     move_uploaded_file($_FILES['pict']['tmp_name'], $path . "picture" . $pictExt);
                 }
@@ -182,6 +187,7 @@ function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
         <div class="form-group">
             <label for="name">Name (*):</label>
             <input type="text" class="form-control" name="name" id="name" value="{$name}">
+            <input type="text" class="form-control" name="_name" id="_name" value="{$name}" style="display:none">
         </div>
         <div class="form-group">
             <label for="desc">Description (*):</label>
