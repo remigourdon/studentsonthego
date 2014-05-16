@@ -31,8 +31,9 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
     if(!empty($_POST)) {
 
         // Get the data from POST
-        $name = isset($_POST['name']) ? $_POST['name'] : "";
-        $popu = isset($_POST['popu']) ? $_POST['popu'] : "";
+        $_name  = isset($_POST['_name']) ? $_POST['_name'] : ""; // Previous name
+        $name   = isset($_POST['name']) ? $_POST['name'] : "";
+        $popu   = isset($_POST['popu']) ? $_POST['popu'] : "";
 
         // Check for the files
         $geom = (!file_exists($_FILES['geom']['tmp_name'])
@@ -60,13 +61,8 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
 
             include_once("inc/conversions.php");
 
-            // Prepare flag data
-            $ext = end((explode(".", $_FILES['flag']['name'])));
-            $flagName    = $flag ? $name . "." . $ext : "";
-
             // Prevent SQL injections and encode UTF-8 characters
             $name       = utf8_encode($mysqli->real_escape_string($name));
-            $flagName   = utf8_encode($mysqli->real_escape_string($flagName));
 
             // Prepare data and SQL for geometry
             $geomSQL = "geometry = geometry";
@@ -76,15 +72,14 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
             }
 
             // Prepare SQL for non mandatory fields
-            $popuSQL = ($popu != "") ? "population = '{$popu}'" : "population = population";
-            $flagSQL = $flag ? "flag = '{$flagName}'" : "flag = flag";
+            $popuSQL = ($popu != "") ? "population = '{$popu}'" : "population = NULL";
 
             $query = <<<END
             --
             -- Updates country in the database
             --
             UPDATE {$tableCountries}
-            SET name = '{$name}', {$popuSQL}, {$geomSQL}, {$flagSQL}
+            SET name = '{$name}', {$popuSQL}, {$geomSQL}
             WHERE ID = {$id};
 END;
 
@@ -92,9 +87,20 @@ END;
             $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
             if($mysqli->affected_rows >= 1) {
 
-                // Query was successful, we can save the files
-                if($flag)
-                    move_uploaded_file($_FILES['flag']['tmp_name'], "content/flags/" . $flagName);
+                // Query was successful
+
+                // Rename the content directory
+                $_path  = "./content/countries/{$_name}/"; // Previous path
+                $path   = "./content/countries/{$name}/";
+                rename($_path, $path);
+
+                // Save the files
+                if($pict) {
+                    // Gets extension
+                    $pictExt    = "." . end((explode(".", $_FILES['pict']['name'])));
+
+                    move_uploaded_file($_FILES['pict']['tmp_name'], $path . "picture" . $pictExt);
+                }
 
                 // Redirect the user
                 header("Location: add-country.php");

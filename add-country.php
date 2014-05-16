@@ -55,25 +55,22 @@ if(!empty($_POST)) {
         include_once("inc/conversions.php");
         include_once("inc/connstring.php");
 
-
-        // Prepare flag data
-        $ext = end((explode(".", $_FILES['flag']['name'])));
-        $flagName    = $flag ? $name . "." . $ext : "";
-
         // Prevent SQL injections and encore UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));
-        $flagname   = utf8_encode($mysqli->real_escape_string($flagName));
 
         // Prepare data and SQL for geometry
         $wkt        = json_to_wkt(file_get_contents($_FILES['geom']['tmp_name']));
         $geomSQL    = "GeomFromText('{$wkt}')";
 
+        // Prepare SQL for non mandatory fields
+        $popuSQL = ($popu != "") ? "{$popu}" : "NULL";
+
         $query = <<<END
         --
         -- Inserts a new country in the database
         --
-        INSERT INTO {$tableCountries}(name, population, geometry, flag)
-        VALUES('{$name}', '{$popu}', {$geomSQL}, '{$flagName}');
+        INSERT INTO {$tableCountries}(name, population, geometry)
+        VALUES('{$name}', $popuSQL, {$geomSQL});
 END;
 
         // Performs query
@@ -81,8 +78,16 @@ END;
         $mysqli->close();
 
         // Query was successful, we can save the files
-        if($flag)
-            move_uploaded_file($_FILES['flag']['tmp_name'], "content/flags/" . $flagName);
+        if($flag) {
+            // Gets extension
+            $flagExt    = "." . end((explode(".", $_FILES['flag']['name'])));
+
+            // Creates the directory
+            $path = "./content/countries/{$name}/";
+            mkdir($path, 0777, true);   // Recursive
+
+            move_uploaded_file($_FILES['flag']['tmp_name'], $path . "flag" . $pictExt);
+        }
 
         // Redirect the user
         header("Location: add-country.php");
