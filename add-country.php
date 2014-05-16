@@ -86,7 +86,7 @@ END;
             $path = "./content/countries/{$name}/";
             mkdir($path, 0777, true);   // Recursive
 
-            move_uploaded_file($_FILES['flag']['tmp_name'], $path . "flag" . $pictExt);
+            move_uploaded_file($_FILES['flag']['tmp_name'], $path . "flag" . $flagExt);
         }
 
         // Redirect the user
