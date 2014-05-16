@@ -6,6 +6,9 @@
 
 /**
  * Converts geojson into wkt (polygon or multipolygon).
+ *
+ * We consider only the externar linear rings.
+ *
  * @param  string $json the geojson data
  * @return string       the wkt data
  */
@@ -17,36 +20,34 @@ function json_to_wkt($json) {
 
     if($geometry->{"type"} == "Polygon") {
 
-        $wkt = "POLYGON(";
-        foreach ($coordinates as $linearRing) {
-            $wkt .= "(";
-            foreach($linearRing as $point) {
+        $wkt = "POLYGON((";
 
-                $wkt .= $point[0] . " " . $point[1] . ",";
+        $extRing = $coordinates[0]; // Consider only the external ring
 
-            }
-            $wkt = substr($wkt, 0, -1) . "),";
+        foreach ($extRing as $point) {
+
+            $wkt .= $point[0] . " " . $point[1] . ",";
 
         }
+
+        $wkt = substr($wkt, 0, -1) . "),";
 
     } else if($geometry->{"type"} == "MultiPolygon") {
 
         $wkt = "MULTIPOLYGON(";
         foreach ($coordinates as $polygon) {
 
-            $wkt .= "(";
-            foreach ($polygon as $linearRing) {
+            $extRing = $polygon[0]; // Consider only the external ring
 
-                $wkt .= "(";
-                foreach ($linearRing as $point) {
+            $wkt .= "((";
 
-                    $wkt .= $point[0] . " " . $point[1] . ",";
+            foreach ($extRing as $point) {
 
-                }
-                $wkt = substr($wkt, 0, -1) . "),";
+                $wkt .= $point[0] . " " . $point[1] . ",";
 
             }
-            $wkt = substr($wkt, 0, -1) . "),";
+
+            $wkt = substr($wkt, 0, -1) . ")),";
 
         }
 
