@@ -91,14 +91,9 @@ if(!empty($_POST)) {
 
         include_once("inc/conversions.php");
 
-        // Prepare pict data
-        $ext = end((explode(".", $_FILES['pict']['name'])));
-        $pictName    = $pict ? $name . "." . $ext : "";
-
         // Prevent SQL injections and encode UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));
         $desc       = utf8_encode($mysqli->real_escape_string($desc));
-        $pictName   = utf8_encode($mysqli->real_escape_string($pictName));
 
         // Prepare coordinates in wkt
         $wkt = "POINT({$lati} {$long})";
@@ -107,16 +102,24 @@ if(!empty($_POST)) {
         --
         -- Inserts a new city in the database
         --
-        INSERT INTO {$tableCities}(name, description, coordinates, picture, countryID)
-        VALUES('{$name}', '{$desc}', PointFromText('{$wkt}'), '{$pictName}', '{$id}');
+        INSERT INTO {$tableCities}(name, description, coordinates, countryID)
+        VALUES('{$name}', '{$desc}', PointFromText('{$wkt}'), '{$id}');
 END;
 
         // Performs query
         $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
         // Query was successful, we can save the files
-        if($pict)
-            move_uploaded_file($_FILES['pict']['tmp_name'], "content/picts/" . $pictName);
+        if($pict) {
+            // Gets extension
+            $pictExt    = "." . end((explode(".", $_FILES['pict']['name'])));
+
+            // Creates the directory
+            $path = "./content/cities/{$name}/";
+            mkdir($path, 0777, true);   // Recursive
+
+            move_uploaded_file($_FILES['pict']['tmp_name'], $path . "picture" . $pictExt);
+        }
 
         // Redirect the user
         header("Location: add-country.php");

@@ -5,6 +5,7 @@
  */
 
 include_once("inc/HTMLTemplate.php");
+include_once("inc/functions.php");
 
 // Tables
 $tableCities    = "cities";

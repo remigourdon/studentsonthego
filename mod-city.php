@@ -57,27 +57,19 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
         // If everything is fine, we can proceed to the query
         } else {
 
-            // Prepare pict data
-            $ext = end((explode(".", $_FILES['pict']['name'])));
-            $pictName    = $pict ? $name . "." . $ext : "";
-
             // Prevent SQL injections and encode UTF-8 characters
             $name       = utf8_encode($mysqli->real_escape_string($name));
             $desc       = utf8_encode($mysqli->real_escape_string($desc));
-            $pictName   = utf8_encode($mysqli->real_escape_string($pictName));
 
             // Prepare coordinates in wkt
             $wkt = "POINT({$lati} {$long})";
-
-            // Prepare SQL for non mandatory fields
-            $pictSQL = $pict ? "picture = '{$pictName}'" : "picture = picture";
 
             $query = <<<END
             --
             -- Updates city in the database
             --
             UPDATE {$tableCities}
-            SET name = '{$name}', description = '{$desc}', coordinates = PointFromText('{$wkt}'), {$pictSQL}
+            SET name = '{$name}', description = '{$desc}', coordinates = PointFromText('{$wkt}')
             WHERE ID = {$id};
 END;
 
@@ -86,8 +78,15 @@ END;
             if($mysqli->affected_rows >= 1) {
 
                 // Query was successful, we can save the files
-                if($pict)
-                    move_uploaded_file($_FILES['pict']['tmp_name'], "content/picts/" . $pictName);
+                if($pict) {
+                    // Gets extension
+                    $pictExt    = "." . end((explode(".", $_FILES['pict']['name'])));
+
+                    // Gets the directory path
+                    $path = "./content/cities/{$name}/";
+
+                    move_uploaded_file($_FILES['pict']['tmp_name'], $path . "picture" . $pictExt);
+                }
 
                 // Redirect the user
                 header("Location: add-country.php");
