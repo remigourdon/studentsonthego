@@ -42,7 +42,7 @@ if(!empty($_POST)) {
     $feedback .= !$flag ? "`flag`" : "";
 
     // If some mandatory fields aren't filled in
-    if($name == "" || !$geom) {
+    if($name == "" || !$geom || !$flag) {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
@@ -137,7 +137,7 @@ function getForm($name = "", $popu = "") {
             <input type="file" name="geom" id="geom">
         </div>
         <div class="form-group col-md-6">
-            <label for="flag">Flag:</label>
+            <label for="flag">Flag (*):</label>
             <input type="file" name="flag" id="flag">
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
