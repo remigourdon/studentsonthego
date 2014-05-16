@@ -1,5 +1,8 @@
-# Ignore content directory
-content/;
+# Ignore data
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.json
 
 # Ignore all emacs backup files
 *~
