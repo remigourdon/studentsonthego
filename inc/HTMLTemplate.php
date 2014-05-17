@@ -126,7 +126,7 @@ $footer = <<<END
  <!-- FIRST HALF -->
       <div class="container">
         <div class="col-md-2">
-        <a id="adminButton" href="add-country.php" >Admin</a>
+        <a id="adminButton" href="admin.php" >Admin</a>
         </div><!-- col-md-2 -->
 
         <div class="col-md-8"></div> <!-- separator -->

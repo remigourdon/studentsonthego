@@ -9,7 +9,6 @@ $content = <<<END
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
          <img style="width:100%;" src="img/free_map.jpg" alt="Map of Europe" />
-         <p>Hey hey hey !</p>
     </div><!-- Europe Image -->
 
 
