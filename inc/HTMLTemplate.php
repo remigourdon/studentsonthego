@@ -1,6 +1,5 @@
 <?php
 
-
 $header=<<<END
 <!DOCTYPE html>
 <html lang="en">
@@ -85,8 +84,8 @@ $header=<<<END
 
   </div> <!-- container -->
 
-</div> <!-- navbar -->
--->
+
+
 <br><br><br><br> <!-- ugly -->
 END;
 
