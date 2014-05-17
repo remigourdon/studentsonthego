@@ -55,7 +55,7 @@ $adminForm = <<<END
 END;
 
 
-// if the user hit empty
+// if the user hit submit
 if(! empty($_POST)){
 
     include_once("inc/connstring.php");
