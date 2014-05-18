@@ -44,7 +44,7 @@ $header=<<<END
 
     <style>
        #adminButton{
-           color:#191919;// Hidden
+           color:#191919;//Hide it!
        }
     </style>
 
@@ -119,8 +119,8 @@ $footer = <<<END
 
  <!-- FIRST HALF -->
       <div class="container">
-        <div class="col-md-2">
-        <a id="adminButton" href="admin.php" >Admin</a>
+        <div class="col-md-2 col-md-offset-0">
+            <a id="adminButton" href="admin.php" >Admin</a>
         </div><!-- col-md-2 -->
 
         <div class="col-md-8"></div> <!-- separator -->
@@ -145,5 +145,6 @@ $footer = <<<END
   </body>
 </html> 
 END;
+
 
 ?>
