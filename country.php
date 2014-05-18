@@ -138,87 +138,90 @@ $content=<<<END
 			</div>
 		</div>
 		
-	</div><!-- container -->
-
 END;
 
 $calcform=<<<END
 
-<!--<div class"container">-->
     <div class="row"><br></div> <!-- separator -->
  
-		<div class="row">
-			<div id="bloc1" class="col-md-5 col-md-offset-1"><!-- left bloc -->
-				<img style="width:100%;" src="img/free_map.jpg" alt="Map of Europe" />
+	<div class="row">
+		<div id="bloc1" class="col-md-12">
+			<div class="col-md-5"><!-- left bloc -->
+				<img style="width:100%;" src="img/free_map.jpg" alt="Photo map of Europe" />
 			</div><!-- left bloc -->
 
-			<div id="bloc1" class="col-md-5 col-md-offset-1"><!-- right bloc -->
-			<form class="form-horizontal" role="form" action="country.php" method="post">
-			
-				<br> <!-- ugly  -->
-				<div class="row">
-
-				  <div class="col-md-9 col-md-offset-2" >
-					<legend class="formLegend">Estimate the price of your stay !</legend>
+			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
+				<form id="subbloc" class="form-horizontal" role="form" action="country.php" method="post">
+				
 					<br>
-				</div>
+					<div class="row">
 
-				<div class="row">
-				  <div class="col-md-1" ></div>
-				</div>
-
-				</div>
-				<div class="row"> <!-- ------FIRST ROW------  -->
-				  <div class="col-md-4" >
-					  <label for="select">Country : </label>
-				  </div>
-				  <div class="col-md-5">
-				  <select id="select" class="form-control" name="countryForm">
-					<option>France</option>
-					<option>Greece</option>
-					<option>Austria</option>
-					<option>Germany</option>
-					<!-- See that later -->
-				  </select>
-				  </div>
-				  <br>
-				</div>
-
-				<div class="row">
-				  <div class="col-md-1" ></div>
-				</div>
-
-				<div class="row"> <!-- ------SECOND ROW------  -->
-				  <div class="col-md-4">
-					  <label for="select">Duration of the stay (months) : </label>
-				  </div>
-				  <div class="col-md-5">
-                  
-                  <div class="input-group">
-                     <input name="monthsForm" type="text" class="form-control" placeholder="4.5">
-                     <span class="input-group-addon">months</span>
-                  </div>
-
-				  </div>
-				</div>
-
-				<div class="row">
-				  <div class="col-md-1" ><br></div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-2 col-md-offset-5">
-					   <button type="submit" class="btn btn-default">Submit</button>
-                       <br><br>
+					  <div class="col-md-10 col-md-offset-2" >
+						<legend class="formLegend">Estimate the price of your stay !</legend>
+						<br>
 					</div>
-				</div>
-		    
-			</form>
-$feedback
 
+					<div class="row">
+					  <div class="col-md-1" ></div>
+					</div>
+
+					</div>
+					<div class="row"> <!-- ------FIRST ROW------  -->
+					  <div class="col-md-4 col-md-offset-1" >
+						  <label for="select">Country : </label>
+					  </div>
+					  <div class="col-md-5">
+					  <select id="select" class="form-control" name="countryForm">
+						<option>$country</option>
+						<option>Greece</option>
+						<option>Austria</option>
+						<option>Germany</option>
+						<!-- See that later -->
+					  </select>
+					  </div>
+					  <br>
+					</div>
+
+					<div class="row">
+					  <div class="col-md-1" ></div>
+					</div>
+
+					<div class="row"> <!-- ------SECOND ROW------  -->
+					  <div class="col-md-4 col-md-offset-1">
+						  <label for="select">Duration of the stay : </label>
+					  </div>
+					  <div class="col-md-5">
+					  
+					  <div class="input-group">
+						 <input name="monthsForm" type="text" class="form-control" placeholder="4.5">
+						 <span class="input-group-addon">months</span>
+					  </div>
+
+					  </div>
+					</div>
+
+					<div class="row">
+					  <div class="col-md-1" ><br></div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-2 col-md-offset-5">
+						   <button type="submit" class="btn btn-default">Submit</button>
+						   <br><br><br>
+						</div>
+					</div>
+				
+				</form>
+			
+			$feedback
+		
 		</div><!-- col-md-5 -->
+		</div><!-- col-md-11 col-md-offset-1 -->
 	</div><!-- row -->
-<!--</div><!-- container -->
+</div><!-- container -->
+
+
+
 END;
 
 
