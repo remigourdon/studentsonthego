@@ -26,7 +26,7 @@ $monthsForm="";
 if(!empty($_GET)) {
 
     include_once("inc/connstring.php");
-    $table="studentsonthego";
+    $table="countries";
 
     $id=$_GET['id'];
 
@@ -36,9 +36,9 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT id
-FROM $table
-WHERE id = "{$id}";
+SELECT name, currency, language, population, capital
+FROM {$table}
+WHERE id = {$id};
 
 END;
 
@@ -48,12 +48,15 @@ END;
 
     // if it match with a country in the DB
     if($res->num_rows == 1){
+    	$row = $res->fetch_object();
         // retrieve each properties of the country
-        $country = $num->country;
-        $currency = $num->currency;
-        $lang = $num->language;
-        $primeMin = $num->primeMinister;
-        $capital = $num->capital;
+        $country = $row->name;
+        $currency = $row->currency;
+        $lang = $row->language;
+        $popul = $row->population;
+        //$primeMin = $row->primeMinister;
+        $capital = $row->capital;
+        $primeMin = "";
     }
 }
 
@@ -83,67 +86,67 @@ $content=<<<END
 
 	<div class="container">
 		<div class="row">
-		
+
 			<!-- INFO BLOC -->
 			<div class="col-md-5" id ="bloc1">
 				<p>$country </p>
-				
+
 				<div class="row" id = "bloc1"> <!-- new info line -->
 					<div class="col-md-3 col-md-offset-1">
 						<p>Language :</p>
 					</div>
-					
+
 					<div class="col-md-3 col-md-offset-1">
-						<p>$lang.</p>
+						<p>$lang</p>
 					</div>
 				</div>
-				
+
 				<div class="row" id = "bloc1"> <!-- new info line -->
 					<div class="col-md-3 col-md-offset-1">
 						<p>Capital :</p>
 					</div>
-					
+
 					<div class="col-md-3 col-md-offset-1">
-						<p>$capital.</p>
+						<p>$capital</p>
 					</div>
 				</div>
-				
+
 				<div class="row" id = "bloc1"> <!-- new info line -->
 					<div class="col-md-3 col-md-offset-1">
 						<p>Prime minister :</p>
 					</div>
-					
+
 					<div class="col-md-3 col-md-offset-1">
-						<p>$primeMin.</p>
+						<p>$primeMin</p>
 					</div>
 				</div>
-				
+
 			</div><!-- col-md-5 -->
-			
+
 
 			<!-- ---- MAP ---- -->
 
 			<div class="col-md-6 col-md-offset-1" id ="bloc1">
 				<p>Add map here.</p>
 			</div><!-- col-md-5 col-md-offset-1 -->
-		
+
 		</div><!-- row -->
 
 		<div class="row"><br></div><!-- SEPARATOR -->
-		
+
 		<!-- additional content -->
 		<div class="row" id = "bloc1"> <!-- new info line -->
 			<div class="col-md-11 col-md-offset-1">
 				<p>Additional content here if necessary</p>
 			</div>
 		</div>
-		
+
 END;
 
 $calcform=<<<END
 
     <div class="row"><br></div> <!-- separator -->
- 
+
 	<div class="row">
 		<div id="bloc1" class="col-md-12">
 			<div class="col-md-5"><!-- left bloc -->
@@ -152,7 +155,7 @@ $calcform=<<<END
 
 			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
 				<form id="subbloc" class="form-horizontal" role="form" action="country.php" method="post">
-				
+
 					<br>
 					<div class="row">
 
@@ -191,7 +194,7 @@ $calcform=<<<END
 						  <label for="select">Duration of the stay : </label>
 					  </div>
 					  <div class="col-md-5">
-					  
+
 					  <div class="input-group">
 						 <input name="monthsForm" type="text" class="form-control" placeholder="4.5">
 						 <span class="input-group-addon">months</span>
@@ -210,11 +213,11 @@ $calcform=<<<END
 						   <br><br><br>
 						</div>
 					</div>
-				
+
 				</form>
-			
+
 			$feedback
-		
+
 		</div><!-- col-md-5 -->
 		</div><!-- col-md-11 col-md-offset-1 -->
 	</div><!-- row -->
