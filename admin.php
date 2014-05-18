@@ -9,16 +9,16 @@ $adminForm = <<<END
 <div class="container">
    <div class="col-md-6 col-md-offset-3" >
       <div id="login-form-container">
-         <form action="admin.php" method="post" id="login-form">
+         <form id="adminLabel"action="admin.php" method="post" id="login-form">
 
          <div class="row">
-            <div class="col-md-6 col-md-offset-3" >
+            <div id="adminWidget" class="col-md-6 col-md-offset-3" >
                <legend>Admin login</legend>
             </div>
          </div>
 
          <div class="row">
-            <div class="col-md-4 col-md-offset-3"
+            <div id="adminLabel" class="col-md-4 col-md-offset-4"
                <label for="username">Username: </label><br> <!-- 1st ROW  -->
             </div>
          </div>
@@ -31,19 +31,19 @@ $adminForm = <<<END
          
 
          <div class="row">
-            <div class="col-md-4 col-md-offset-3"
+            <div id="adminLabel" class="col-md-4 col-md-offset-4"
                <label for="username">Password: </label><br><!-- 3rd ROW  -->
             </div>
          </div>
 
          <div class="col-md-4 col-md-offset-4">
-            <input type="password" class="form-control input-sm" name="password" placeholder="Password"/><br><!-- 4th ROW  -->
+             <input type="password" class="form-control input-sm" name="password" placeholder="Password"/><br><!-- 4th ROW  -->
          </div>
          
          <br>
 
          <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div id="adminWidget" class="col-md-6 col-md-offset-3">
                <button type="submit" class="btn btn-default">Submit</button>
             </div>
          </div>
@@ -101,21 +101,41 @@ END;
 
             // if the encrypt given psw corresponds to the encrypt psw in the DB
             if($row->password == $pswMD5) {
-                header("Location: index.php");
+                // the user is an admin
+
+                // it would be better if we redirect him on an adminIndex.php
+                // adminIndex.php would be and "index advanced",
+                //with the possibility to add/del countries/cities.
+                header("Location: adminIndex.php");
                 die();
-                $feedback = "<p>Welcome !</p>";
-                
             }
             else{
-                $feedback = "<p>Wrong password</p>";
+                $feedback=<<<END
+<br>
+<div class="col-md-4 col-md-offset-4">
+   <div class="alert alert-danger">
+      <p>Wrong password.</p>
+   </div>
+</div>
+
+END;
+                
             }
             $res->close();
         }
         else {
-            $feedback = "<p>Wrong username</p>";
+            $feedback=<<<END
+<br>
+<div class="col-md-4 col-md-offset-4">
+   <div class="alert alert-danger">
+      <p>Wrong username.</p>
+   </div>
+</div>
+END;
+
         }
         $mysqli->close();
-
+        
     }
 
 }
