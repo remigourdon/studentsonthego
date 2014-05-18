@@ -5,10 +5,12 @@ colors   = d3.scale.category20b();
 duration = 200;
 style    = "position: absolute;\
             text-align: center;\
-            width: 130px;\
-            height: 17px;\
+            width: 220px;\
+            height: 35px;\
             padding: 8px;\
             font: 14px sans-serif;\
+            font-weight: bold;\
+            color: black;\
             background: #ddd;\
             border: solid 1px #aaa;\
             border-radius: 2px;\
@@ -28,8 +30,7 @@ d3.json("content/data.json", function (error, data) {
                 .attr("height", height);
 
     // Creates tooltip
-    tooltip = d3.select("body").append("div")
-                    .attr("class", "tooltip")
+    tooltip = d3.select("#map").append("div")
                     .style("opacity", 0)
                     .attr("style", style);
 
@@ -85,8 +86,8 @@ d3.json("content/data.json", function (error, data) {
     function moveTooltip() {
         tooltip
             .style({
-                "left"  : (d3.event.pageX - 130) + "px",
-                "top"   : (d3.event.pageY - 50) + "px"});
+                "left"  : (d3.event.pageX - 220) + "px",
+                "top"   : (d3.event.pageY - 35) + "px"});
     }
 
     function hideTooltip() {

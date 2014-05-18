@@ -1,6 +1,32 @@
 <?php
    include_once("inc/HTMLTemplate.php");
 
+// Query database for countries informations
+include_once("inc/connstring.php");
+include_once("inc/conversions.php");
+
+$query = "SELECT ID, name, population, AsText(geometry) FROM countries";
+
+$res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
+
+$data = array();
+
+while($row = $res->fetch_array()) {
+
+    $properties = array(
+        "ID" => $row['ID'],
+        "name" => $row['name'],
+        "population" => $row['population']);
+
+    $country = array($row['AsText(geometry)'] => $properties);
+
+    $data = array_merge($data, $country);
+
+}
+
+file_put_contents("./content/data.json", wkt_to_json($data));
+
+
 // Welcome panel
 $welcPanel=<<<END
 <main class="_head" id="content" role="main">
@@ -9,11 +35,8 @@ $welcPanel=<<<END
 </main>
 END;
 
-// map
+// Map
 $map= "<div id='map'></div>";
-
-
-
 
 echo $header;
 echo $welcPanel;

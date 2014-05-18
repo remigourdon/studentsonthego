@@ -143,6 +143,7 @@ $footer = <<<END
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="js/d3.min.js"></script>
+    <script src="js/global-map.js"></script>
   </body>
 </html>
 END;

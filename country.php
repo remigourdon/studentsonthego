@@ -38,7 +38,7 @@ if(!empty($_GET)) {
 --
 SELECT name, currency, language, population, capital
 FROM {$table}
-WHERE id = {$id};
+WHERE ID = {$id};
 
 END;
 
