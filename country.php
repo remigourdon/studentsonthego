@@ -25,7 +25,6 @@ $monthsForm="";
 // Retrieve country name
 if(!empty($_GET)) {
 
-    include_once("inc/connstring.php");
     $table="countries";
 
     $id=$_GET['id'];
