@@ -65,7 +65,7 @@ $header=<<<END
         <div class="collapse navbar-collapse">
            <ul class="nav navbar-nav">
               <li class="active"><a href="about.php">About</a></li>
-           </ul>        
+           </ul>
 
            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -132,7 +132,7 @@ $footer = <<<END
 
       </div><!-- container -->
 
-     
+
   </div><!-- col-md-12 -->
 </div><!-- row  -->
 
@@ -142,8 +142,9 @@ $footer = <<<END
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/d3.min.js"></script>
   </body>
-</html> 
+</html>
 END;
 
 
