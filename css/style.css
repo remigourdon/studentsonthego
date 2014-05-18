@@ -26,6 +26,10 @@ html, body {
     text-align:center;
 }
 
+#logoutButton{
+    color:red;
+}
+
 .lead {
     font-size:220%;
 }

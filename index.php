@@ -1,5 +1,5 @@
 <?php
-   include_once("inc/HTMLTemplate.php");
+include_once("inc/HTMLTemplate.php");
 
 // Query database for countries informations
 include_once("inc/connstring.php");
@@ -31,7 +31,7 @@ file_put_contents("./content/data.json", wkt_to_json($data));
 $welcPanel=<<<END
 <main class="_head" id="content" role="main">
     <p class="lead">You will soon study abroad and you want to know how much it will cost you ? <br>You're in the right place !<p>
-    <p style="text-align:right;  "><em>Students on the go</em>. <strong>By</strong> students <strong>for</strong> students.</p>
+    <p style="text-align:right;"><em>Students on the go</em>. <strong>By</strong> students <strong><a href="#map">for</a></strong> students.</p>
 </main>
 END;
 
