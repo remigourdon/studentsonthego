@@ -89,7 +89,9 @@ $header=<<<END
 END;
 
 
-$footer = <<<END
+function footer($map = "") {
+
+  return <<<END
 
 <div id="footer"> <!-- FIRST row of the footer  -->
 <div class="row">
@@ -143,10 +145,10 @@ $footer = <<<END
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <script src="js/d3.min.js"></script>
-    <script src="js/global-map.js"></script>
+    <script src="js/{$map}-map.js"></script>
   </body>
 </html>
 END;
-
+}
 
 ?>

@@ -67,6 +67,6 @@ END;
 // Display
 echo $header;
 echo $content;
-echo $footer;
+echo footer();
 
 ?>

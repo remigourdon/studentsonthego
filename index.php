@@ -41,5 +41,5 @@ $map= "<div id='map'></div>";
 echo $header;
 echo $welcPanel;
 echo $map;
-echo $footer;
+echo footer("global");
 ?>

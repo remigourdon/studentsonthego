@@ -36,7 +36,7 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capital
+SELECT name, currency, language, population, capital, AsText(geometry)
 FROM {$table}
 WHERE ID = {$id};
 
@@ -48,15 +48,20 @@ END;
 
     // if it match with a country in the DB
     if($res->num_rows == 1){
-    	$row = $res->fetch_object();
+    	$row = $res->fetch_array();
         // retrieve each properties of the country
-        $country = $row->name;
-        $currency = $row->currency;
-        $lang = $row->language;
-        $popul = $row->population;
-        //$primeMin = $row->primeMinister;
-        $capital = $row->capital;
+        $country = $row['name'];
+        $currency = $row['currency'];
+        $lang = $row['language'];
+        $popul = $row['population'];
+        //$primeMin = $row['primeMinister'];
+        $capital = $row['capital'];
         $primeMin = "";
+
+        // Deliver json file
+        include_once("inc/conversions.php");
+        $properties = ["ID" => $id, "name" => $country, "population" => $popul];
+        file_put_contents("./content/data.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
     }
 }
 
@@ -126,7 +131,7 @@ $content=<<<END
 
 			<!-- ---- MAP ---- -->
 
-			<div class="col-md-6 col-md-offset-1" id ="bloc1">
+			<div class="col-md-6 col-md-offset-1" id ="map">
 				<p>Add map here.</p>
 			</div><!-- col-md-5 col-md-offset-1 -->
 
@@ -232,6 +237,6 @@ END;
 echo $header;
 echo $content;
 echo $calcform;
-echo $footer;
+echo footer("country");
 
 ?>
