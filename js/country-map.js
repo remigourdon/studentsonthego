@@ -1,7 +1,14 @@
 // Fixed parameters
-width    = 800;
+width    = 400;
 height   = width;
-colors   = d3.scale.category20b();
+colors   = ["#393b79", "#5254a3", "#6b6ecf", "#9c9ede", "#637939",
+            "#8ca252", "#b5cf6b", "#cedb9c", "#8c6d31", "#bd9e39",
+            "#e7ba52", "#e7cb94", "#843c39", "#ad494a", "#d6616b",
+            "#e7969c", "#7b4173", "#a55194", "#ce6dbd", "#de9ed6",
+            "#3182bd", "#6baed6", "#9ecae1", "#c6dbef", "#e6550d",
+            "#fd8d3c", "#fdae6b", "#fdd0a2", "#31a354", "#74c476",
+            "#a1d99b", "#c7e9c0", "#756bb1", "#9e9ac8", "#bcbddc",
+            "#dadaeb", "#636363", "#969696", "#bdbdbd", "#d9d9d9"];
 
 // Creates projection
 var projection = d3.geo.mercator()
@@ -29,5 +36,5 @@ d3.json("content/data.json", function (error, data) {
         .data(data.features)
         .enter().append("path")
         .attr("d", path)
-        .style("fill", function (d) { return colors(d.properties['ID'] % 20); })
+        .style("fill", function (d) { return colors[parseInt(d.properties['ID']) % 40]; });
 });
