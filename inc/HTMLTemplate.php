@@ -17,6 +17,7 @@ $header=<<<END
 
     <!-- Search engine tags -->
     <meta name="description" content="Students on the go, a place where future travelling students can estimate the price of their stay.">
+    <meta name="keywords" content="Europe, student, exchange, Erasmus, abroad, university">
 
     <!-- Authors  -->
     <meta name="author" content="Hichame Moriceau - Rémi Gourdon">
@@ -70,27 +71,42 @@ $header=<<<END
            </ul>
 END;
 
-// load the country list dynamically
-
-
-
+// Build the country dropdown
 $header.=<<<END
            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Countries <b class="caret"></b></a>
-
-
-
                  <ul class="dropdown-menu">
-                    <li><a href="#">France</a></li>
-                    <li><a href="#">Italy</a></li>
-                    <li><a href="#">Slovakia</a></li>
-                    <li><a href="#">...</a></li>
+
+END;
+
+
+$query =<<<END
+    SELECT ID, name
+    FROM countries;
+END;
+
+$res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
+
+$cpt=0;
+
+// display the first 20 ountries of the DB
+while( ( $row = $res->fetch_array() ) AND ($cpt < 20) ){
+    $header .= "<li><a href='country.php?id={$row['ID']}'>{$row['name']}</a></li>";
+    $cpt = $cpt + 1;
+}
+
+$header.=<<<END
+                  <li class="divider"></li>
+                  <li><a id="mapButton" href="#map"><span class="glyphicon glyphicon-globe"></span> Map</a></li>
+
+
                 </ul><!-- dropdown-menu -->
              </li> <!-- dropdown -->
            </ul><!-- nav navbar-nav navbar-right -->
 END;
 
+// admin session
 session_start();
 $admin="";
 
@@ -99,9 +115,6 @@ if(isset($_GET["log"])) {
     session_unset();
     session_destroy();
 }
-
-
-
 
 // Admin panel
 if(isset($_SESSION["username"])) {
@@ -123,8 +136,6 @@ if(isset($_SESSION["username"])) {
        </ul>
 END;
 }
-
-// fill the dropdown country menu with a loop
 
 $header.=<<<END
 
@@ -155,7 +166,7 @@ function footer($map = "") {
 
       <!-- SECOND HALF -->
         <div class="col-md-2">
-        <p class="text-muted">Add W3C Validation</p>
+        <p class="text-muted">Halmstad's university</p>
        </div><!-- col-md-2 -->
 
       </div><!-- container -->
