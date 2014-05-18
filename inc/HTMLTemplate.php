@@ -1,6 +1,5 @@
 <?php
 
-
 $header=<<<END
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +44,7 @@ $header=<<<END
 
     <style>
        #adminButton{
-           color:#191919;// Hidden
+           color:#191919;//Hide it!
        }
     </style>
 
@@ -64,34 +63,29 @@ $header=<<<END
 
         <!-- Navigator's buttons  -->
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
+           <ul class="nav navbar-nav">
+              <li class="active"><a href="about.php">About</a></li>
+           </ul>        
 
-            <li class="active"><a href="about.php">About</a></li>
-          </ul>        
+           <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Countries <b class="caret"></b></a>
+                 <ul class="dropdown-menu">
+                    <li><a href="#">France</a></li>
+                    <li><a href="#">Italy</a></li>
+                    <li><a href="#">Slovakia</a></li>
+                    <li><a href="#">...</a></li>
+                </ul><!-- dropdown-menu -->
+             </li> <!-- dropdown -->
+           </ul><!-- nav navbar-nav navbar-right -->
 
-     <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Countries <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">France</a></li>
-            <li><a href="#">Italy</a></li>
-            <li><a href="#">Slovakia</a></li>
-            <li><a href="#">...</a></li>
-
-<!--
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-
-          </ul>
-        </li> <!-- dropdown -->
-      </ul><!-- nav navbar-nav navbar-right -->
-     </div> <!-- collapse navbar collapse -->
+       </div> <!-- collapse navbar collapse -->
     </div><!-- nav-bar header -->
 
   </div> <!-- container -->
 
-</div> <!-- navbar -->
--->
+
+
 <br><br><br><br> <!-- ugly -->
 END;
 
@@ -125,8 +119,8 @@ $footer = <<<END
 
  <!-- FIRST HALF -->
       <div class="container">
-        <div class="col-md-2">
-        <a id="adminButton" href="add-country.php" >Admin</a>
+        <div class="col-md-2 col-md-offset-0">
+            <a id="adminButton" href="admin.php" >Admin</a>
         </div><!-- col-md-2 -->
 
         <div class="col-md-8"></div> <!-- separator -->
@@ -151,5 +145,6 @@ $footer = <<<END
   </body>
 </html> 
 END;
+
 
 ?>

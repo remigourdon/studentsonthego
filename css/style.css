@@ -1,13 +1,29 @@
 /**/
+#bloc1 {
+    background-color:rgba(0, 162, 135, 0.8);
+    border-radius:2px;
+}
+
+#subbloc{
+//    border:2px solid red;
+}
+
+.formLegend {
+
+}
 
 html, body {
     height:100%;
     width:100%;
 }
 
-.col-md-12 , .col-md-3 , .col-md-1 , .col-md-6 , col-md-2{
-    text-align:center;
+#adminLabel {
+    text-align:left;
+ //   border:2px solid yellow;
+}
 
+#adminWidget {
+    text-align:center;
 }
 
 .lead {
@@ -22,7 +38,7 @@ html, body {
     text-align:left;
 
 
-    background-color:/*#004B38*/#99E4D1;
+    background-color:#99E4D1;
 
 }
 
