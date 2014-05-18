@@ -174,7 +174,7 @@ END;
 // Display
 echo $header;
 echo $content;
-echo $footer;
+echo footer();
 
 
 function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {

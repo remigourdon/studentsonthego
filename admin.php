@@ -28,7 +28,7 @@ $adminForm = <<<END
                <input type="text" class="form-control input-sm" id="username" name="username" placeholder="Username"/><br><!-- 2nd ROW  -->
             </div>
          </div>
-         
+
 
          <div class="row">
             <div id="adminLabel" class="col-md-4 col-md-offset-4"
@@ -39,7 +39,7 @@ $adminForm = <<<END
          <div class="col-md-4 col-md-offset-4">
              <input type="password" class="form-control input-sm" name="password" placeholder="Password"/><br><!-- 4th ROW  -->
          </div>
-         
+
          <br>
 
          <div class="row">
@@ -119,7 +119,7 @@ END;
 </div>
 
 END;
-                
+
             }
             $res->close();
         }
@@ -135,7 +135,7 @@ END;
 
         }
         $mysqli->close();
-        
+
     }
 
 }
@@ -143,6 +143,6 @@ END;
 echo $header;
 echo $adminForm;
 echo $feedback;
-echo $footer;
+echo footer();
 
 ?>

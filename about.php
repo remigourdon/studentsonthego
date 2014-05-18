@@ -8,7 +8,7 @@ $content = <<<END
 
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-         
+
     </div><!-- Europe Image -->
 
 
@@ -66,5 +66,5 @@ END;
 
 echo $header;
 echo $content;
-echo $footer;
+echo footer();
 ?>
