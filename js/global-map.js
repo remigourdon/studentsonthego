@@ -28,7 +28,7 @@ var projection = d3.geo.mercator()
         .scale(1)
         .translate([0, 0]);
 
-d3.json("content/data.json", function (error, data) {
+d3.json("content/json/country_global.json", function (error, data) {
     if(error) return console.error(error);
 
     // Add SVG to the DOM

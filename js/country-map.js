@@ -15,7 +15,9 @@ var projection = d3.geo.mercator()
         .scale(1)
         .translate([0, 0]);
 
-d3.json("content/data.json", function (error, data) {
+file = "content/json/country_" + getUrlValue("id") + ".json"
+
+d3.json(file, function (error, data) {
     if(error) return console.error(error);
 
     // Add SVG to the DOM
@@ -38,3 +40,14 @@ d3.json("content/data.json", function (error, data) {
         .attr("d", path)
         .style("fill", function (d) { return colors[parseInt(d.properties['ID']) % 40]; });
 });
+
+function getUrlValue(s){
+    var searchString = window.location.search.substring(1);
+    var array = searchString.split('&');
+    for(var i = 0; i < array.length; i++){
+        var keyValue = array[i].split('=');
+        if(keyValue[0] == s){
+            return keyValue[1];
+        }
+    }
+}

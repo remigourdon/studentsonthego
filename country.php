@@ -36,7 +36,7 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capital, AsText(geometry)
+SELECT name, currency, language, population, capitalID, AsText(geometry)
 FROM {$table}
 WHERE ID = {$id};
 
@@ -55,13 +55,15 @@ END;
         $lang = $row['language'];
         $popul = $row['population'];
         //$primeMin = $row['primeMinister'];
-        $capital = $row['capital'];
+        $capitalID = $row['capitalID'];
         $primeMin = "";
+
+
 
         // Deliver json file
         include_once("inc/conversions.php");
-        $properties = ["ID" => $id, "name" => $country, "population" => $popul];
-        file_put_contents("./content/data.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
+        $properties = ["ID" => $id, "name" => $country, "capitalID" => $capitalID];
+        file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
     }
 }
 
@@ -108,16 +110,6 @@ $content=<<<END
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
 					<div class="col-md-3 col-md-offset-1">
-						<p>Capital :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>$capital</p>
-					</div>
-				</div>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-3 col-md-offset-1">
 						<p>Prime minister :</p>
 					</div>
 
@@ -132,7 +124,6 @@ $content=<<<END
 			<!-- ---- MAP ---- -->
 
 			<div class="col-md-6 col-md-offset-1" id ="map">
-				<p>Add map here.</p>
 			</div><!-- col-md-5 col-md-offset-1 -->
 
 		</div><!-- row -->

@@ -24,7 +24,7 @@ while($row = $res->fetch_array()) {
 
 }
 
-file_put_contents("./content/data.json", wkt_to_json($data));
+file_put_contents("./content/json/country_global.json", wkt_to_json($data));
 
 
 // Welcome panel
