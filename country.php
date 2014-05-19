@@ -82,7 +82,7 @@ if(!empty($_POST)){
 
 END;
 }
-$lang = conv_lang($row['language']);
+//$lang = conv_lang($row['language']);
 
 // display the page corresponding
 // to the wanted country
