@@ -50,7 +50,7 @@ END;
     if($res->num_rows == 1){
     	$row = $res->fetch_array();
         // retrieve each properties of the country
-        $country = $row['name'];
+        $country = utf8_decode($row['name']);
         $currency = $row['currency'];
         $lang = $row['language'];
         $popul = $row['population'];
@@ -78,7 +78,7 @@ END;
 
                 $propCities = array(
                     "ID"            => $rowCity['ID'],
-                    "name"          => $rowCity['name'],
+                    "name"          => utf8_decode($rowCity['name']),
                     "population"    => $rowCity['population']);
                 $city = array($rowCity['AsText(coordinates)'] => $propCities);
                 $dataCities = array_merge($dataCities, $city);
@@ -88,7 +88,7 @@ END;
         // Deliver json files
         include_once("inc/conversions.php");
         // Country file
-        $properties = ["ID" => $id, "name" => $country, "capitalID" => $capitalID];
+        $properties = ["ID" => $id, "name" => $country, "population" => $popul, "capitalID" => $capitalID];
         file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
         // Cities file
         file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
