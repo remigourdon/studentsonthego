@@ -34,11 +34,40 @@ $welcPanel=<<<END
 </main>
 END;
 
-// Map
-$map= "<div id='map'></div>";
+$welcPanel=<<<END
+<div id="homeBanner" class="jumbotron">
+  <h1>Want to study abroad ?</h1>
+  <p><em>Students on the go</em> aim to help future exchange students by gathering some usefull informations about the country they want to study into.</p>
+  <br>
+  <p><a href="#map" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-globe"></span> Pick a country</a></p>
+</div>
+END;
+
+
+// Map : center
+$map=<<<END
+<div class="col-md-6 col-md-offset-2">
+   <div id='map'></div>
+</div>
+END;
+
+$mapButtons=<<<END
+<br>
+<br>
+<div class="row">
+   <div class="col-md-3 col-md-offset-5">
+      <div class="btn-toolbar">
+         <a class="btn btn-primary" href="add-country.php">Add a country</a>
+         <a class="btn btn-primary" href="del-country.php">Remove a country</a>
+      </div>
+   </div>
+</div>
+END;
+
 
 echo $header;
 echo $welcPanel;
 echo $map;
+echo $mapButtons;
 echo footer("global");
 ?>

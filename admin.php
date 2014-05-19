@@ -32,7 +32,7 @@ $adminForm = <<<END
 
          <div class="row">
             <div id="adminLabel" class="col-md-4 col-md-offset-4"
-               <label for="username">Password: </label><br><!-- 3rd ROW  -->
+               <label for="password">Password: </label><br><!-- 3rd ROW  -->
             </div>
          </div>
 
@@ -82,7 +82,7 @@ if(! empty($_POST)){
         -- Seek the corresponding username
         -- and password in the DB
         --
-        SELECT name, password, id
+        SELECT name, password, ID
         FROM $table
         WHERE name = "{$username}";
 END;

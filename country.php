@@ -16,7 +16,13 @@ $currency="";
 $lang="";
 $primeMin="";
 $capital="";
-
+$capitalID="";
+$callCode="";
+$popul="";
+$fastfood="";
+$fitness="";
+$cinema="";
+$rent="";
 // form variables
 $feedback="";
 $countryForm="";
@@ -58,6 +64,11 @@ END;
         //$primeMin = $row['primeMinister'];
         $capitalID = $row['capitalID'];
         $primeMin = "";
+        $callCode = $row['callingCode'];
+        $fitness=$row['fitness'];
+        $fastfood=$row['fastfood'];
+        $rent=$row['rent'];
+        $cinema=$row['cinema'];
 
         // Get the cities associated to the country
         $queryCities = <<<END
@@ -98,7 +109,7 @@ END;
                                         "rent"       => $row['rent'],
                                         "fastfood"   => $row['fastfood'],
                                         "internet"   => $row['internet'],
-                                        "transports" => $row['transporst'],
+                                        "transports" => $row['transports'],
                                         "cinema"     => $row['cinema'],
                                         "fitness"    => $row['fitness']]];
 
@@ -107,26 +118,6 @@ END;
         file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
     }
 }
-
-// if the form has been filled up
-if(!empty($_POST)){
-    $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
-    $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
-
-    // dummy algorythm
-    $res=1000*$monthsForm;
-
-    $feedback=<<<END
-
-
-    <div class="col-md-6 col-md-offset-3">
-        <p class="text-info">The cost of your stay is estimated to : {$res} ¤</p>
-    </div>
-
-END;
-}
-
-
 
 // display the page corresponding
 // to the wanted country
@@ -137,11 +128,12 @@ $content=<<<END
 
 			<!-- INFO BLOC -->
 			<div class="col-md-5" id ="bloc1">
-				<p><strong>$country</strong></p>
+				<p style="font-size:130%; text-align:center;"><strong>$country</strong></p>
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-3 col-md-offset-1">
-						<p>Language :</p>
+                    <br>
+					<div class="col-md-4 col-md-offset-1">
+						<p>Language(s) :</p>
 					</div>
 
 					<div class="col-md-3 col-md-offset-1">
@@ -150,33 +142,104 @@ $content=<<<END
 				</div>
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-3 col-md-offset-1">
-						<p>Prime minister :</p>
+
+					<div class="col-md-4 col-md-offset-1">
+						<p>Capital :</p>
 					</div>
 
 					<div class="col-md-3 col-md-offset-1">
-						<p>$primeMin</p>
+						<p>$capitalID</p>
 					</div>
 				</div>
 
-			</div><!-- col-md-5 -->
+				<div class="row" id = "bloc1"> <!-- new info line -->
+					<div class="col-md-4 col-md-offset-1">
+						<p> Inhabitants :</p>
+					</div>
 
+					<div class="col-md-3 col-md-offset-1">
+						<p>$popul</p>
+					</div>
+				</div>
+
+				<div class="row" id = "bloc1"> <!-- new info line -->
+					<div class="col-md-4 col-md-offset-1">
+						<p>Currency :</p>
+					</div>
+
+					<div class="col-md-3 col-md-offset-1">
+						<p>$currency</p>
+					</div>
+                </div>
+
+				<div class="row" id = "bloc1"> <!-- new info line -->
+					<div class="col-md-4 col-md-offset-1">
+						<p>Calling code :</p>
+					</div>
+
+					<div class="col-md-3 col-md-offset-1">
+						<p>+$callCode</p>
+					</div>
+                </div>
+                <br>
+			</div><!-- col-md-5 -->
 
 			<!-- ---- MAP ---- -->
 			<div class="col-md-6 col-md-offset-1" id ="map"></div>
 
 		</div><!-- row -->
 
-		<div class="row"><br></div><!-- SEPARATOR -->
+            <div class="col-md-5 col-md-offset-7">
+                <div class="btn-toolbar" role="toolbar">
+                   <a class="btn btn-primary" href="add-city.php">Add a city</a>
+                   <a class="btn btn-primary" href="del-city.php">Remove a city</a></div>
+                </div>
+            </div>
 
-		<!-- additional content -->
-		<div class="row" id = "bloc1"> <!-- new info line -->
-			<div class="col-md-11 col-md-offset-1">
-				<p>Additional content here if necessary</p>
-			</div>
-		</div>
+		<div class="row"><br></div><!-- SEPARATOR -->
+END;
+
+// if the form has been filled up
+if(!empty($_POST)){
+    $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
+    $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
+
+        // define query
+        $quer = <<<END
+        --
+        -- Seek the corresponding country
+        --
+        --
+        SELECT fitness, cinema, rent, fastfood, ID
+        FROM countries
+        WHERE name = "{$countryForm}";
+END;
+
+
+        $resu = $mysqli->query($quer) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
+
+
+
+    $row = $resu->fetch_array();
+
+    // Dummy algorythm
+    $fitness = rand(20, 50);
+    $fastfood = rand(5, 13);
+    $rent = rand(150, 450);
+    $cinema = rand(3,15);
+    $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
+
+    $feedback=<<<END
+
+
+    <div class="col-md-6 col-md-offset-4">
+        <p>Cost : {$result} â‚¬</p>
+    </div>
 
 END;
+}
+
+
 
 $calcform=<<<END
 
@@ -189,7 +252,7 @@ $calcform=<<<END
 			</div><!-- left bloc -->
 
 			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
-				<form id="subbloc" class="form-horizontal" role="form" action="country.php" method="post">
+				<form id="subbloc" class="form-horizontal" role="form" action="country.php?id=$id" method="post">
 
 					<br>
 					<div class="row">
@@ -210,11 +273,37 @@ $calcform=<<<END
 					  </div>
 					  <div class="col-md-5">
 					  <select id="select" class="form-control" name="countryForm">
-						<option>$country</option>
-						<option>Greece</option>
-						<option>Austria</option>
-						<option>Germany</option>
-						<!-- See that later -->
+END;
+
+$query =<<<END
+    SELECT ID, name
+    FROM countries;
+END;
+
+$res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
+
+// memorize the last passed country at the head of the combobox
+if(!empty($_POST)){
+    $calcform.="<option>$countryForm</option>";
+}
+else{// but if the user open the page for first time
+    // just display the name of the country page
+    $calcform.="<option>$country</option>";
+}
+
+while( $row = $res->fetch_array() ) {
+
+    $nom=$row['name'];
+
+    // don't display again the country at the head of the combobox
+    if(isset($_POST) && $nom != $countryForm){
+        $calcform.=<<<END
+				   	<option>{$nom}</option>
+END;
+    }
+}
+$calcform.=<<<END
+
 					  </select>
 					  </div>
 					  <br>
@@ -243,7 +332,7 @@ $calcform=<<<END
 					</div>
 
 					<div class="row">
-						<div class="col-md-2 col-md-offset-5">
+						<div class="col-md-2 col-md-offset-4">
 						   <button type="submit" class="btn btn-default">Submit</button>
 						   <br><br><br>
 						</div>
@@ -258,15 +347,13 @@ $calcform=<<<END
 	</div><!-- row -->
 </div><!-- container -->
 
-
-
 END;
-
 
 
 echo $header;
 echo $content;
 echo $calcform;
 echo footer("country");
+
 
 ?>

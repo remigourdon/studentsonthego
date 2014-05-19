@@ -7,8 +7,8 @@ $header=<<<END
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!-- choose what version of IE the page should be rendered as -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -20,7 +20,7 @@ $header=<<<END
     <meta name="keywords" content="Europe, student, exchange, Erasmus, abroad, university">
 
     <!-- Authors  -->
-    <meta name="author" content="Hichame Moriceau - R�mi Gourdon">
+    <meta name="author" content="Hichame Moriceau - Rémi Gourdon">
 
     <!-- Favicon  -->
     <link rel="icon" type="image/png" href="img/studyabroad.ico">
@@ -67,7 +67,7 @@ $header=<<<END
         <!-- Navigator's buttons  -->
         <div class="collapse navbar-collapse">
            <ul class="nav navbar-nav">
-              <li class="active"><a href="about.php">About</a></li>
+                <!-- add new stuff to the nav here -->
            </ul>
 END;
 
@@ -88,17 +88,18 @@ END;
 
 $res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
+// row counter
 $cpt=0;
 
 // display the first 20 ountries of the DB
-while( ( $row = $res->fetch_array() ) AND ($cpt < 20) ){
+while( ( $row = $res->fetch_array() ) AND ($cpt < 15) ){
     $header .= "<li><a href='country.php?id={$row['ID']}'>{$row['name']}</a></li>";
     $cpt = $cpt + 1;
 }
 
 $header.=<<<END
                   <li class="divider"></li>
-                  <li><a id="mapButton" href="#map"><span class="glyphicon glyphicon-globe"></span> Map</a></li>
+                  <li><a id="mapButton" href="index.php#map"><span class="glyphicon glyphicon-globe"></span> Map</a></li>
 
 
                 </ul><!-- dropdown-menu -->
@@ -125,11 +126,6 @@ if(isset($_SESSION["username"])) {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>$admin</strong> <b class="caret"></b></a>
          <ul class="dropdown-menu">
-          <li><a href="add-country.php">Add a country</a></li>
-          <li><a href="del-country.php">Remove a country</a></li>
-          <li><a href="add-city.php">Add a city</a></li>
-          <li><a href="del-city.php">Remove a city</a></li>
-          <li class="divider"></li>
           <li><a id="logoutButton" href="index.php?log=out"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
          </ul>
         </li>
@@ -158,16 +154,17 @@ function footer($map = "") {
 
       <!-- FIRST HALF -->
       <div class="container">
-        <div class="col-md-2">
-        <p class="text-muted"><span class="glyphicon glyphicon-copyright-mark"></span> Copyright</p>
-        </div><!-- col-md-2 -->
+        <div class="col-md-3">
+        <p class="text-muted">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2014 <br>Rémi Gourdon & Hichame Moriceau. All rights reserved.</p>
+        </div><!-- col-md-3 -->
 
-        <div class="col-md-8"></div> <!-- separator -->
+        <div class="col-md-6"></div> <!-- separator -->
 
       <!-- SECOND HALF -->
-        <div class="col-md-2">
-        <p class="text-muted">Halmstad's university</p>
-       </div><!-- col-md-2 -->
+        <div class="col-md-3">
+           <p class="text-muted">Web System Fundamentals<br>University of Halmstad/Sweden <a id="adminButton" href="admin.php" >Admin</a></p>
+           
+       </div><!-- col-md-3 -->
 
       </div><!-- container -->
 
@@ -180,14 +177,14 @@ function footer($map = "") {
  <!-- FIRST HALF -->
       <div class="container">
         <div class="col-md-2 col-md-offset-0">
-            <a id="adminButton" href="admin.php" >Admin</a>
+            
         </div><!-- col-md-2 -->
 
         <div class="col-md-8"></div> <!-- separator -->
 
       <!-- SECOND HALF -->
         <div class="col-md-2">
-        <p></p>
+           
        </div><!-- col-md-2 -->
 
       </div><!-- container -->

@@ -1,6 +1,8 @@
 // Fixed parameters
-width    = 800;
-height   = width;
+var width = $("#map").width(),
+    aspect = 500 / 950
+    height = width * aspect;
+
 duration = 200;
 style    = "position: absolute;\
             text-align: center;\
@@ -34,7 +36,16 @@ d3.json("content/json/country_global.json", function (error, data) {
     // Add SVG to the DOM
     var svg = d3.select("#map").append("svg")
                 .attr("width", width)
-                .attr("height", height);
+                .attr("height", height)
+                .attr("viewBox", "0 0 " + width + " " + height)
+                .attr("preserveAspectRatio", "xMidYMid");
+
+    // Dynamic resizingt of the svg
+    $(window).resize(function() {
+      var width = $("#map").width();
+      svg.attr("width", width);
+      svg.attr("height", width * aspect);
+    });
 
     // Creates tooltip
     tooltip = d3.select("#map").append("div")

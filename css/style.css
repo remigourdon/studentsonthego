@@ -38,16 +38,18 @@ html, body {
     font-size:220%;
 }
 
-/* Homepage banner */
+/* Homepage banner
 ._head {
     position:relative;
     padding:120px 50px;
-    color:rgba(0,0,0,1);
+    
     text-align:left;
+}
+*/
 
-
+#homeBanner {
     background-color:#99E4D1;
-
+    color:rgba(0,0,0,1);
 }
 
 body {
@@ -56,13 +58,10 @@ body {
 
 #footer {
     background-color:#191919;
-    margin-top:8%;
+    margin-top:20%;
+    padding-top:5%;
     text-align:left;
 
-    // added
-    position:absolute;
-    bottom:0;
-    left:0;
 }
 
 .text-muted {
@@ -79,3 +78,4 @@ body {
     color:#0CE3AC;
     text-decoration:none;
 }
+

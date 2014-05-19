@@ -7,6 +7,12 @@
 include_once("inc/HTMLTemplate.php");
 include_once("inc/connstring.php");
 
+// if user isn't admin
+if( ! isset($_SESSION["username"])){
+    // redirect to home page
+    header("Location: index.php");
+}
+
 // Tables
 $tableCountries = "countries";
 $tableCities    = "cities";
@@ -31,6 +37,8 @@ if(!isset($_GET['id']) || $_GET['id'] == "") {
     exit();
 
 }
+
+
 
 // We now verify if the id matches a country in the database
 $id = $_GET['id'];
