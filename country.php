@@ -103,7 +103,7 @@ if(!empty($_POST)){
     $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
 
     // dummy algorythm
-    $result=(265 * $monthsForm);
+    $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
 
     $feedback=<<<END
 
@@ -186,7 +186,7 @@ $content=<<<END
 
 		</div><!-- row -->
 
-            <div class="">
+            <div class="col-md-5 col-md-offset-7">
                 <div class="btn-toolbar" role="toolbar">
                    <a class="btn btn-primary" href="add-city.php">Add a city</a>
                    <a class="btn btn-primary" href="del-city.php">Remove a city</a></div>
