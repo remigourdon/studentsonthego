@@ -23,6 +23,7 @@ $fastfood="";
 $fitness="";
 $cinema="";
 $rent="";
+$capitalName="";
 // form variables
 $feedback="";
 $countryForm="";
@@ -94,6 +95,10 @@ END;
                     "population"    => $rowCity['population']);
                 $city = array($rowCity['AsText(coordinates)'] => $propCities);
                 $dataCities = array_merge($dataCities, $city);
+
+                if($capitalID == $rowCity['ID']){
+                    $capitalName = $rowCity['name'];
+                }
             }
         }
 
@@ -122,7 +127,6 @@ END;
 // display the page corresponding
 // to the wanted country
 $content=<<<END
-
 	<div class="container">
 		<div class="row">
 
@@ -148,7 +152,7 @@ $content=<<<END
 					</div>
 
 					<div class="col-md-3 col-md-offset-1">
-						<p>$capitalID</p>
+						<p>$capitalName</p>
 					</div>
 				</div>
 
@@ -188,17 +192,23 @@ $content=<<<END
 			<div class="col-md-6 col-md-offset-1" id ="map"></div>
 
 		</div><!-- row -->
+END;
+// if user isn't admin
+if( isset($_SESSION["username"])){ 
 
+$content.=<<<END
             <div class="col-md-5 col-md-offset-7">
                 <div class="btn-toolbar" role="toolbar">
                    <a class="btn btn-primary" href="add-city.php">Add a city</a>
                    <a class="btn btn-primary" href="del-city.php">Remove a city</a></div>
                 </div>
             </div>
-
 		<div class="row"><br></div><!-- SEPARATOR -->
 END;
-
+}
+else {
+    $content.="<div class='row'><br></div><!-- SEPARATOR -->";
+}
 // if the form has been filled up
 if(!empty($_POST)){
     $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
@@ -252,8 +262,7 @@ $calcform=<<<END
 			</div><!-- left bloc -->
 
 			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
-				<form id="subbloc" class="form-horizontal" role="form" action="country.php?id=$id" method="post">
-
+				<form id="dynamicForm" class="form-horizontal" role="form" action="country.php?id=$id" method="post">
 					<br>
 					<div class="row">
 
