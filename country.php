@@ -82,7 +82,7 @@ if(!empty($_POST)){
 
 END;
 }
-//$lang = conv_lang($row['language']);
+
 
 // display the page corresponding
 // to the wanted country
@@ -291,62 +291,5 @@ echo $content;
 echo $calcform;
 echo footer("country");
 
-
-/*
- * Convert language format 2 letters to full name
- * ex : "en" becomes "English"
- */
-function conv_lang($LANG){
-
-    $ref = array(
-        "fr" => "French",
-        "en" => "English",
-        "sv" => "Swedish",
-        "da" => "Danish",
-        "sk" => "Slovak",
-        "hr" => "Croatian",
-        "pt" => "Portuguese",
-        "bg" => "Bulgarian",
-        "sq" => "Albanian",
-        "uk" => "Ukrainian",
-        "pl" => "Polish",
-        "sl" => "Slovenian",
-        "ro" => "Romanian",
-        "de" => "German",
-        "be" => "Belarussian",
-        "nl" => "Dutch",
-        "lv" => "Latvian",
-        "lb" => "Luxembourgish"
-    );
-
-    $nbLang = substr_count($LANG,',') + 1 ; // counts the nb of corresponding languages
-
-    // if the input contains just one language
-    if($nbLang == 1 ){
-
-        //return its full name
-        return($ref[$LANG]);
-    }
-    else{
-        $Languages = "";
-
-        // for the corresponding number of languages
-        for($i = 0 ; $i < $nbLang ; $i++){
-
-             // extract the interesting couple of letters
-             $str = substr($LANG, 0+$i*4 , -strlen($LANG)+2+(4*$i));
-
-             $Languages .= "".$ref[$str]." .";
-
-
-
-        }
-            return($Languages);
-        
-        
-        
-    }
-    
-}
 
 ?>
