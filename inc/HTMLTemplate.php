@@ -1,11 +1,14 @@
 <?php
 
+include_once("inc/connstring.php");
+
+
 $header=<<<END
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-
+    
     <!-- choose what version of IE the page should be rendered as -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -14,6 +17,7 @@ $header=<<<END
 
     <!-- Search engine tags -->
     <meta name="description" content="Students on the go, a place where future travelling students can estimate the price of their stay.">
+    <meta name="keywords" content="Europe, student, exchange, Erasmus, abroad, university">
 
     <!-- Authors  -->
     <meta name="author" content="Hichame Moriceau - Rémi Gourdon">
@@ -41,7 +45,6 @@ $header=<<<END
     <!-- Search engine robots's tags -->
     <meta name="robots" content="index, follow">
 
-
     <style>
        #adminButton{
            color:#191919;//Hide it!
@@ -66,27 +69,82 @@ $header=<<<END
            <ul class="nav navbar-nav">
               <li class="active"><a href="about.php">About</a></li>
            </ul>
+END;
 
+// Build the country dropdown
+$header.=<<<END
            <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Countries <b class="caret"></b></a>
                  <ul class="dropdown-menu">
-                    <li><a href="#">France</a></li>
-                    <li><a href="#">Italy</a></li>
-                    <li><a href="#">Slovakia</a></li>
-                    <li><a href="#">...</a></li>
+
+END;
+
+
+$query =<<<END
+    SELECT ID, name
+    FROM countries;
+END;
+
+$res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
+
+$cpt=0;
+
+// display the first 20 ountries of the DB
+while( ( $row = $res->fetch_array() ) AND ($cpt < 20) ){
+    $header .= "<li><a href='country.php?id={$row['ID']}'>{$row['name']}</a></li>";
+    $cpt = $cpt + 1;
+}
+
+$header.=<<<END
+                  <li class="divider"></li>
+                  <li><a id="mapButton" href="#map"><span class="glyphicon glyphicon-globe"></span> Map</a></li>
+
+
                 </ul><!-- dropdown-menu -->
              </li> <!-- dropdown -->
            </ul><!-- nav navbar-nav navbar-right -->
+END;
+
+// admin session
+session_start();
+$admin="";
+
+if(isset($_GET["log"])) {
+    $_SESSION = array();
+    session_unset();
+    session_destroy();
+}
+
+// Admin panel
+if(isset($_SESSION["username"])) {
+    $admin="{$_SESSION["username"]}";
+    $header.=<<<END
+
+       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>$admin</strong> <b class="caret"></b></a>
+         <ul class="dropdown-menu">
+          <li><a href="add-country.php">Add a country</a></li>
+          <li><a href="del-country.php">Remove a country</a></li>
+          <li><a href="add-city.php">Add a city</a></li>
+          <li><a href="del-city.php">Remove a city</a></li>
+          <li class="divider"></li>
+          <li><a id="logoutButton" href="index.php?log=out"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+         </ul>
+        </li>
+       </ul>
+END;
+}
+
+$header.=<<<END
+
 
        </div> <!-- collapse navbar collapse -->
     </div><!-- nav-bar header -->
 
   </div> <!-- container -->
-
-
-
-<br><br><br><br> <!-- ugly -->
+<br><br><br><br>
 END;
 
 
@@ -108,7 +166,7 @@ function footer($map = "") {
 
       <!-- SECOND HALF -->
         <div class="col-md-2">
-        <p class="text-muted">Add W3C Validation</p>
+        <p class="text-muted">Halmstad's university</p>
        </div><!-- col-md-2 -->
 
       </div><!-- container -->
@@ -144,6 +202,7 @@ function footer($map = "") {
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
+
     <script src="js/d3.min.js"></script>
     <script src="js/{$map}-map.js"></script>
   </body>

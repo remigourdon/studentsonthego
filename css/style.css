@@ -26,6 +26,14 @@ html, body {
     text-align:center;
 }
 
+#logoutButton{
+    color:red;
+}
+
+#mapButton {
+    color:blue;
+}
+
 .lead {
     font-size:220%;
 }
@@ -42,11 +50,19 @@ html, body {
 
 }
 
+body {
+    height:100%;
+}
+
 #footer {
     background-color:#191919;
     margin-top:8%;
-
     text-align:left;
+
+    // added
+    position:absolute;
+    bottom:0;
+    left:0;
 }
 
 .text-muted {

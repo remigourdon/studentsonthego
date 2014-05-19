@@ -25,7 +25,6 @@ $monthsForm="";
 // Retrieve country name
 if(!empty($_GET)) {
 
-    include_once("inc/connstring.php");
     $table="countries";
 
     $id=$_GET['id'];
@@ -96,7 +95,7 @@ $content=<<<END
 
 			<!-- INFO BLOC -->
 			<div class="col-md-5" id ="bloc1">
-				<p>$country </p>
+				<p><strong>$country</strong></p>
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
 					<div class="col-md-3 col-md-offset-1">
@@ -122,9 +121,7 @@ $content=<<<END
 
 
 			<!-- ---- MAP ---- -->
-
-			<div class="col-md-6 col-md-offset-1" id ="map">
-			</div><!-- col-md-5 col-md-offset-1 -->
+			<div class="col-md-6 col-md-offset-1" id ="map"></div>
 
 		</div><!-- row -->
 

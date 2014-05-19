@@ -13,7 +13,7 @@ $adminForm = <<<END
 
          <div class="row">
             <div id="adminWidget" class="col-md-6 col-md-offset-3" >
-               <legend>Admin login</legend>
+               <legend>Admin</legend>
             </div>
          </div>
 
@@ -44,7 +44,7 @@ $adminForm = <<<END
 
          <div class="row">
             <div id="adminWidget" class="col-md-6 col-md-offset-3">
-               <button type="submit" class="btn btn-default">Submit</button>
+               <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-log-in"></span> Login</button>
             </div>
          </div>
 
@@ -82,7 +82,7 @@ if(! empty($_POST)){
         -- Seek the corresponding username
         -- and password in the DB
         --
-        SELECT name, password
+        SELECT name, password, id
         FROM $table
         WHERE name = "{$username}";
 END;
@@ -103,11 +103,13 @@ END;
             if($row->password == $pswMD5) {
                 // the user is an admin
 
-                // it would be better if we redirect him on an adminIndex.php
-                // adminIndex.php would be and "index advanced",
-                //with the possibility to add/del countries/cities.
-                header("Location: adminIndex.php");
-                die();
+                
+                session_regenerate_id();
+
+                $_SESSION["username"] = $username;
+                $_SESSION["userId"] = $row->id;
+                
+                header("Location: index.php");
             }
             else{
                 $feedback=<<<END
