@@ -35,7 +35,7 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capital, AsText(geometry)
+SELECT name, currency, language, population, capital, AsText(geometry), callingCode
 FROM {$table}
 WHERE ID = {$id};
 
@@ -56,6 +56,7 @@ END;
         //$primeMin = $row['primeMinister'];
         $capital = $row['capital'];
         $primeMin = "";
+        $callCode = $row['callingCode'];
 
         // Deliver json file
         include_once("inc/conversions.php");
@@ -81,8 +82,7 @@ if(!empty($_POST)){
 
 END;
 }
-
-
+$lang = conv_lang($row['language']);
 
 // display the page corresponding
 // to the wanted country
@@ -98,7 +98,7 @@ $content=<<<END
 				<div class="row" id = "bloc1"> <!-- new info line -->
                     <br>
 					<div class="col-md-4 col-md-offset-1">
-						<p>Language :</p>
+						<p>Language(s) :</p>
 					</div>
 
 					<div class="col-md-3 col-md-offset-1">
@@ -124,7 +124,39 @@ $content=<<<END
 					<div class="col-md-3 col-md-offset-1">
 						<p>$primeMin</p>
 					</div>
+
 				</div>
+
+
+				<div class="row" id = "bloc1"> <!-- new info line -->
+					<div class="col-md-4 col-md-offset-1">
+						<p> Inhabitants :</p>
+					</div>
+
+					<div class="col-md-3 col-md-offset-1">
+						<p>$popul</p>
+					</div>
+				</div>
+
+				<div class="row" id = "bloc1"> <!-- new info line -->
+					<div class="col-md-4 col-md-offset-1">
+						<p>Currency :</p>
+					</div>
+
+					<div class="col-md-3 col-md-offset-1">
+						<p>$currency</p>
+					</div>
+                </div>
+
+				<div class="row" id = "bloc1"> <!-- new info line -->
+					<div class="col-md-4 col-md-offset-1">
+						<p>Calling code :</p>
+					</div>
+
+					<div class="col-md-3 col-md-offset-1">
+						<p>+$callCode</p>
+					</div>
+                </div>
 
 			</div><!-- col-md-5 -->
 
@@ -251,15 +283,70 @@ $calcform.=<<<END
 	</div><!-- row -->
 </div><!-- container -->
 
-
-
 END;
-
 
 
 echo $header;
 echo $content;
 echo $calcform;
 echo footer("country");
+
+
+/*
+ * Convert language format 2 letters to full name
+ * ex : "en" becomes "English"
+ */
+function conv_lang($LANG){
+
+    $ref = array(
+        "fr" => "French",
+        "en" => "English",
+        "sv" => "Swedish",
+        "da" => "Danish",
+        "sk" => "Slovak",
+        "hr" => "Croatian",
+        "pt" => "Portuguese",
+        "bg" => "Bulgarian",
+        "sq" => "Albanian",
+        "uk" => "Ukrainian",
+        "pl" => "Polish",
+        "sl" => "Slovenian",
+        "ro" => "Romanian",
+        "de" => "German",
+        "be" => "Belarussian",
+        "nl" => "Dutch",
+        "lv" => "Latvian",
+        "lb" => "Luxembourgish"
+    );
+
+    $nbLang = substr_count($LANG,',') + 1 ; // counts the nb of corresponding languages
+
+    // if the input contains just one language
+    if($nbLang == 1 ){
+
+        //return its full name
+        return($ref[$LANG]);
+    }
+    else{
+        $Languages = "";
+
+        // for the corresponding number of languages
+        for($i = 0 ; $i < $nbLang ; $i++){
+
+             // extract the interesting couple of letters
+             $str = substr($LANG, 0+$i*4 , -strlen($LANG)+2+(4*$i));
+
+             $Languages .= "".$ref[$str]." .";
+
+
+
+        }
+            return($Languages);
+        
+        
+        
+    }
+    
+}
 
 ?>

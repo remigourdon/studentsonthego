@@ -88,10 +88,11 @@ END;
 
 $res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
+// row counter
 $cpt=0;
 
 // display the first 20 ountries of the DB
-while( ( $row = $res->fetch_array() ) AND ($cpt < 20) ){
+while( ( $row = $res->fetch_array() ) AND ($cpt < 10) ){
     $header .= "<li><a href='country.php?id={$row['ID']}'>{$row['name']}</a></li>";
     $cpt = $cpt + 1;
 }
