@@ -46,7 +46,7 @@ END;
 
 // Map : center
 $map=<<<END
-<div class="col-md-6 col-md-offset-2">
+<div class="col-md-10 col-md-offset-2">
    <div id='map'></div>
 </div>
 END;
@@ -68,6 +68,10 @@ END;
 echo $header;
 echo $welcPanel;
 echo $map;
-echo $mapButtons;
+// if user isn't admin
+if( isset($_SESSION["username"])){ 
+    echo $mapButtons;
+}
+
 echo footer("global");
 ?>
