@@ -159,8 +159,9 @@ function point_to_coord($wkt) {
 
     $coord = explode("(", $wkt)[1];
     $coord = explode(")", $coord)[0];
+    $coord = explode(" ", $coord);
 
-    return explode(" ", $coord);
+    return [$coord[1], $coord[0]];
 
 }
 
