@@ -7,8 +7,8 @@ $header=<<<END
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!-- choose what version of IE the page should be rendered as -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -20,7 +20,7 @@ $header=<<<END
     <meta name="keywords" content="Europe, student, exchange, Erasmus, abroad, university">
 
     <!-- Authors  -->
-    <meta name="author" content="Hichame Moriceau - R�mi Gourdon">
+    <meta name="author" content="Hichame Moriceau - Rémi Gourdon">
 
     <!-- Favicon  -->
     <link rel="icon" type="image/png" href="img/studyabroad.ico">
@@ -98,7 +98,7 @@ while( ( $row = $res->fetch_array() ) AND ($cpt < 20) ){
 
 $header.=<<<END
                   <li class="divider"></li>
-                  <li><a id="mapButton" href="#map"><span class="glyphicon glyphicon-globe"></span> Map</a></li>
+                  <li><a id="mapButton" href="index.php#map"><span class="glyphicon glyphicon-globe"></span> Map</a></li>
 
 
                 </ul><!-- dropdown-menu -->
@@ -158,16 +158,17 @@ function footer($map = "") {
 
       <!-- FIRST HALF -->
       <div class="container">
-        <div class="col-md-2">
-        <p class="text-muted"><span class="glyphicon glyphicon-copyright-mark"></span> Copyright</p>
-        </div><!-- col-md-2 -->
+        <div class="col-md-3">
+        <p class="text-muted">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2014 <br>Rémi Gourdon & Hichame Moriceau. All rights reserved.</p>
+        </div><!-- col-md-3 -->
 
-        <div class="col-md-8"></div> <!-- separator -->
+        <div class="col-md-6"></div> <!-- separator -->
 
       <!-- SECOND HALF -->
-        <div class="col-md-2">
-        <p class="text-muted">Halmstad's university</p>
-       </div><!-- col-md-2 -->
+        <div class="col-md-3">
+           <p class="text-muted">Web System Fundamentals<br>University of Halmstad/Sweden <a id="adminButton" href="admin.php" >Admin</a></p>
+           
+       </div><!-- col-md-3 -->
 
       </div><!-- container -->
 
@@ -180,14 +181,14 @@ function footer($map = "") {
  <!-- FIRST HALF -->
       <div class="container">
         <div class="col-md-2 col-md-offset-0">
-            <a id="adminButton" href="admin.php" >Admin</a>
+            
         </div><!-- col-md-2 -->
 
         <div class="col-md-8"></div> <!-- separator -->
 
       <!-- SECOND HALF -->
         <div class="col-md-2">
-        <p></p>
+           
        </div><!-- col-md-2 -->
 
       </div><!-- container -->

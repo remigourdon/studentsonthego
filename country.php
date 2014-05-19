@@ -70,13 +70,13 @@ if(!empty($_POST)){
     $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
 
     // dummy algorythm
-    $res=1000*$monthsForm;
+    $result=(265 * $monthsForm);
 
     $feedback=<<<END
 
 
-    <div class="col-md-6 col-md-offset-3">
-        <p class="text-info">The cost of your stay is estimated to : {$res} ¤</p>
+    <div class="col-md-6 col-md-offset-4">
+        <p>Cost : {$result} â‚¬</p>
     </div>
 
 END;
@@ -93,10 +93,11 @@ $content=<<<END
 
 			<!-- INFO BLOC -->
 			<div class="col-md-5" id ="bloc1">
-				<p><strong>$country</strong></p>
-
+				<p style="font-size:130%; text-align:center;"><strong>$country</strong></p>
+                
 				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-3 col-md-offset-1">
+                    <br>
+					<div class="col-md-4 col-md-offset-1">
 						<p>Language :</p>
 					</div>
 
@@ -106,7 +107,7 @@ $content=<<<END
 				</div>
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-3 col-md-offset-1">
+					<div class="col-md-4 col-md-offset-1">
 						<p>Capital :</p>
 					</div>
 
@@ -116,7 +117,7 @@ $content=<<<END
 				</div>
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-3 col-md-offset-1">
+					<div class="col-md-4 col-md-offset-1">
 						<p>Prime minister :</p>
 					</div>
 
@@ -176,11 +177,37 @@ $calcform=<<<END
 					  </div>
 					  <div class="col-md-5">
 					  <select id="select" class="form-control" name="countryForm">
-						<option>$country</option>
-						<option>Greece</option>
-						<option>Austria</option>
-						<option>Germany</option>
-						<!-- See that later -->
+END;
+
+$query =<<<END
+    SELECT ID, name
+    FROM countries;
+END;
+
+$res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
+
+// memorize the last passed country at the head of the combobox
+if(!empty($_POST)){
+    $calcform.="<option>$countryForm</option>";
+}
+else{// but if the user open the page for first time
+    // just display the name of the country page
+    $calcform.="<option>$country</option>";
+}
+
+while( $row = $res->fetch_array() ) {
+
+    $nom=$row['name'];
+
+    // don't display again the country at the head of the combobox
+    if(isset($_POST) && $nom != $countryForm){
+        $calcform.=<<<END
+				   	<option>{$nom}</option>
+END;
+    }
+}
+$calcform.=<<<END
+
 					  </select>
 					  </div>
 					  <br>
@@ -209,7 +236,7 @@ $calcform=<<<END
 					</div>
 
 					<div class="row">
-						<div class="col-md-2 col-md-offset-5">
+						<div class="col-md-2 col-md-offset-4">
 						   <button type="submit" class="btn btn-default">Submit</button>
 						   <br><br><br>
 						</div>

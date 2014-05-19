@@ -34,6 +34,16 @@ $welcPanel=<<<END
 </main>
 END;
 
+$welcPanel=<<<END
+<div id="homeBanner" class="jumbotron">
+  <h1>Want to study abroad ?</h1>
+  <p><em>Students on the go</em> aim to help future exchange students by gathering some usefull informations about the country they want to study into.</p>
+  <br>
+  <p><a href="#map" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-globe"></span> Pick a country</a></p>
+</div>
+END;
+
+
 // Map
 $map= "<div id='map'></div>";
 
