@@ -16,8 +16,13 @@ $currency="";
 $lang="";
 $primeMin="";
 $capital="";
+$capitalID="";
 $callCode="";
 $popul="";
+$fastfood="";
+$fitness="";
+$cinema="";
+$rent="";
 // form variables
 $feedback="";
 $countryForm="";
@@ -37,7 +42,7 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capitalID, AsText(geometry), callingCode
+SELECT name, currency, language, population, capitalID, AsText(geometry), callingCode, fastfood, fitness, cinema, rent
 FROM {$tableCountries}
 WHERE ID = {$id};
 
@@ -59,6 +64,10 @@ END;
         $capitalID = $row['capitalID'];
         $primeMin = "";
         $callCode = $row['callingCode'];
+        $fitness=$row['fitness'];
+        $fastfood=$row['fastfood'];
+        $rent=$row['rent'];
+        $cinema=$row['cinema'];
 
         // Get the cities associated to the country
         $queryCities = <<<END
@@ -96,25 +105,6 @@ END;
         file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
     }
 }
-
-// if the form has been filled up
-if(!empty($_POST)){
-    $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
-    $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
-
-    // dummy algorythm
-    $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
-
-    $feedback=<<<END
-
-
-    <div class="col-md-6 col-md-offset-4">
-        <p>Cost : {$result} €</p>
-    </div>
-
-END;
-}
-
 
 // display the page corresponding
 // to the wanted country
@@ -194,8 +184,49 @@ $content=<<<END
             </div>
 
 		<div class="row"><br></div><!-- SEPARATOR -->
+END;
+
+// if the form has been filled up
+if(!empty($_POST)){
+    $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
+    $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
+
+        // define query
+        $quer = <<<END
+        --
+        -- Seek the corresponding country
+        -- 
+        --
+        SELECT fitness, cinema, rent, fastfood, ID
+        FROM countries
+        WHERE name = "{$countryForm}";
+END;
+
+
+        $resu = $mysqli->query($quer) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
+    
+    
+
+    $row = $resu->fetch_array();
+
+    // Dummy algorythm
+    $fitness = rand(20, 50);
+    $fastfood = rand(5, 13);
+    $rent = rand(150, 450);
+    $cinema = rand(3,15);
+    $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
+
+    $feedback=<<<END
+
+
+    <div class="col-md-6 col-md-offset-4">
+        <p>Cost : {$result} €</p>
+    </div>
 
 END;
+}
+
+
 
 $calcform=<<<END
 
@@ -208,7 +239,7 @@ $calcform=<<<END
 			</div><!-- left bloc -->
 
 			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
-				<form id="subbloc" class="form-horizontal" role="form" action="country.php" method="post">
+				<form id="subbloc" class="form-horizontal" role="form" action="country.php?id=$id" method="post">
 
 					<br>
 					<div class="row">
