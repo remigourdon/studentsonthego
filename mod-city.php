@@ -34,7 +34,6 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
         // Get the data from POST
         $_name  = isset($_POST['_name']) ? $_POST['_name'] : ""; // Previous name
         $name   = isset($_POST['name']) ? $_POST['name'] : "";
-        $desc   = isset($_POST['desc']) ? $_POST['desc'] : "";
         $lati   = isset($_POST['lati']) ? $_POST['lati'] : "";
         $long   = isset($_POST['long']) ? $_POST['long'] : "";
 
@@ -48,19 +47,18 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
         $feedback .= !$pict ? "`picture` " : "";
 
         // If some mandatory fields aren't filled in
-        if($name == "" || $desc == "" || $lati == "" || $long == "") {
+        if($name == "" || $lati == "" || $long == "") {
 
             // Give information
             $content .= "<p>Please complete all the mandatory fields.</p>";
             $content .= "<p>" . $feedback . "</p><hr>";
-            $content .= getForm($id, $name, $desc, $lati, $long);
+            $content .= getForm($id, $name, $lati, $long);
 
         // If everything is fine, we can proceed to the query
         } else {
 
             // Prevent SQL injections and encode UTF-8 characters
             $name       = utf8_encode($mysqli->real_escape_string($name));
-            $desc       = utf8_encode($mysqli->real_escape_string($desc));
 
             // Prepare coordinates in wkt
             $wkt = "POINT({$lati} {$long})";
@@ -70,7 +68,7 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
             -- Updates city in the database
             --
             UPDATE {$tableCities}
-            SET name = '{$name}', description = '{$desc}', coordinates = PointFromText('{$wkt}')
+            SET name = '{$name}', coordinates = PointFromText('{$wkt}')
             WHERE ID = {$id};
 END;
 
@@ -102,7 +100,7 @@ END;
 
                 // Provide new form and feedback
                 $content .= "<p>Please try again.</p><hr>";
-                $content .= getForm($id, $name, $desc, $lati, $long);
+                $content .= getForm($id, $name, $lati, $long);
 
             }
 
@@ -116,7 +114,7 @@ END;
         --
         -- Gets the current values in the database for the city
         --
-        SELECT name, description, AsText(coordinates)
+        SELECT name, AsText(coordinates)
         FROM {$tableCities}
         WHERE id = {$id};
 END;
@@ -136,14 +134,13 @@ END;
 
             $city    = $res->fetch_object();
             $name    = utf8_decode($city->name);
-            $desc    = utf8_decode($city->description);
 
             // Decode wkt
             $array  = get_object_vars($city);
             $coord  = point_to_coord($array["AsText(coordinates)"]);
 
             $content .= "<p>Fill all the mandatory fields.</p><hr>";
-            $content .= getForm($id, $name, $desc, $coord[0], $coord[1]);
+            $content .= getForm($id, $name, $coord[0], $coord[1]);
 
         }
 
@@ -177,10 +174,9 @@ echo $content;
 echo footer();
 
 
-function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
+function getForm($id = "", $name = "", $lati = "", $long = "") {
 
     $name = htmlspecialchars($name);
-    $desc = htmlspecialchars($desc);
 
     $html = <<<END
     <form role="form" action="mod-city.php?id={$id}" method="post" enctype="multipart/form-data">
@@ -188,10 +184,6 @@ function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
             <label for="name">Name (*):</label>
             <input type="text" class="form-control" name="name" id="name" value="{$name}">
             <input type="text" class="form-control" name="_name" id="_name" value="{$name}" style="display:none">
-        </div>
-        <div class="form-group">
-            <label for="desc">Description (*):</label>
-            <textarea class="form-control" name="desc" id="desc">{$desc}</textarea>
         </div>
         <div class="form-group col-md-6">
             <label for="lati">Latitude (*):</label>

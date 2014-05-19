@@ -7,6 +7,12 @@
 include_once("inc/HTMLTemplate.php");
 include_once("inc/connstring.php");
 
+// if user isn't admin
+if( ! isset($_SESSION["username"])){
+    // redirect to home page
+    header("Location: index.php");
+}
+
 // Tables
 $tableCountries = "countries";
 $tableCities    = "cities";
@@ -31,6 +37,8 @@ if(!isset($_GET['id']) || $_GET['id'] == "") {
     exit();
 
 }
+
+
 
 // We now verify if the id matches a country in the database
 $id = $_GET['id'];
@@ -65,7 +73,6 @@ if(!empty($_POST)) {
 
     // Get the data from POST
     $name = isset($_POST['name']) ? $_POST['name'] : "";
-    $desc = isset($_POST['desc']) ? $_POST['desc'] : "";
     $lati = isset($_POST['lati']) ? $_POST['lati'] : "";
     $long = isset($_POST['long']) ? $_POST['long'] : "";
 
@@ -79,12 +86,12 @@ if(!empty($_POST)) {
     $feedback .= !$pict ? "`picture` " : "";
 
     // If some mandatory fields aren't filled in
-    if($name == "" || $desc == "" || $lati == "" || $long == "" || !$pict) {
+    if($name == "" || $lati == "" || $long == "" || !$pict) {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
         $content .= "<p>" . $feedback . "</p><hr>";
-        $content .= getForm($id, $name, $desc, $lati, $long);
+        $content .= getForm($id, $name, $lati, $long);
 
     // If everything is fine, we can proceed to the query
     } else {
@@ -93,7 +100,6 @@ if(!empty($_POST)) {
 
         // Prevent SQL injections and encode UTF-8 characters
         $name       = utf8_encode($mysqli->real_escape_string($name));
-        $desc       = utf8_encode($mysqli->real_escape_string($desc));
 
         // Prepare coordinates in wkt
         $wkt = "POINT({$lati} {$long})";
@@ -102,8 +108,8 @@ if(!empty($_POST)) {
         --
         -- Inserts a new city in the database
         --
-        INSERT INTO {$tableCities}(name, description, coordinates, countryID)
-        VALUES('{$name}', '{$desc}', PointFromText('{$wkt}'), '{$id}');
+        INSERT INTO {$tableCities}(name, coordinates, countryID)
+        VALUES('{$name}', PointFromText('{$wkt}'), '{$id}');
 END;
 
         // Performs query
@@ -153,20 +159,15 @@ echo $content;
 echo footer();
 
 
-function getForm($id = "", $name = "", $desc = "", $lati = "", $long = "") {
+function getForm($id = "", $name = "", $lati = "", $long = "") {
 
     $name = htmlspecialchars($name);
-    $desc = htmlspecialchars($desc);
 
     $html = <<<END
     <form role="form" action="add-city.php?id={$id}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name (*):</label>
             <input type="text" class="form-control" name="name" id="name" value="{$name}">
-        </div>
-        <div class="form-group">
-            <label for="desc">Description (*):</label>
-            <textarea class="form-control" name="desc" id="desc">{$desc}</textarea>
         </div>
         <div class="form-group col-md-6">
             <label for="lati">Latitude (*):</label>

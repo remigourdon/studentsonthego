@@ -58,7 +58,8 @@ body {
 
 #footer {
     background-color:#191919;
-    margin-top:18%;
+    margin-top:20%;
+    padding-top:5%;
     text-align:left;
 
 }
@@ -77,3 +78,4 @@ body {
     color:#0CE3AC;
     text-decoration:none;
 }
+

@@ -23,7 +23,7 @@ while($row = $res->fetch_array()) {
 
 }
 
-file_put_contents("./content/data.json", wkt_to_json($data));
+file_put_contents("./content/json/country_global.json", wkt_to_json($data));
 
 
 // Welcome panel
@@ -44,11 +44,30 @@ $welcPanel=<<<END
 END;
 
 
-// Map
-$map= "<div id='map'></div>";
+// Map : center
+$map=<<<END
+<div class="col-md-6 col-md-offset-2">
+   <div id='map'></div>
+</div>
+END;
+
+$mapButtons=<<<END
+<br>
+<br>
+<div class="row">
+   <div class="col-md-3 col-md-offset-5">
+      <div class="btn-toolbar">
+         <a class="btn btn-primary" href="add-country.php">Add a country</a>
+         <a class="btn btn-primary" href="del-country.php">Remove a country</a>
+      </div>
+   </div>
+</div>
+END;
+
 
 echo $header;
 echo $welcPanel;
 echo $map;
+echo $mapButtons;
 echo footer("global");
 ?>

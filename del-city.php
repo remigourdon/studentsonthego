@@ -7,6 +7,14 @@
 include_once("inc/HTMLTemplate.php");
 include_once("inc/functions.php");
 
+
+// if user isn't admin
+if( ! isset($_SESSION["username"])){
+    // redirect to home page
+    header("Location: index.php");
+}
+
+
 // Tables
 $tableCities    = "cities";
 

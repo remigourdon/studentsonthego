@@ -16,7 +16,8 @@ $currency="";
 $lang="";
 $primeMin="";
 $capital="";
-
+$callCode="";
+$popul="";
 // form variables
 $feedback="";
 $countryForm="";
@@ -25,7 +26,8 @@ $monthsForm="";
 // Retrieve country name
 if(!empty($_GET)) {
 
-    $table="countries";
+    $tableCountries = "countries";
+    $tableCities = "cities";
 
     $id=$_GET['id'];
 
@@ -35,8 +37,8 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capital, AsText(geometry), callingCode
-FROM {$table}
+SELECT name, currency, language, population, capitalID, AsText(geometry), callingCode
+FROM {$tableCountries}
 WHERE ID = {$id};
 
 END;
@@ -49,19 +51,49 @@ END;
     if($res->num_rows == 1){
     	$row = $res->fetch_array();
         // retrieve each properties of the country
-        $country = $row['name'];
+        $country = utf8_decode($row['name']);
         $currency = $row['currency'];
         $lang = $row['language'];
         $popul = $row['population'];
         //$primeMin = $row['primeMinister'];
-        $capital = $row['capital'];
+        $capitalID = $row['capitalID'];
         $primeMin = "";
         $callCode = $row['callingCode'];
 
-        // Deliver json file
+        // Get the cities associated to the country
+        $queryCities = <<<END
+        --
+        -- Get the cities data associated to the country
+        --
+        SELECT ID, name, population, AsText(coordinates)
+        FROM {$tableCities}
+        WHERE countryID = {$id};
+END;
+
+        // Performs query
+        $resCities = $mysqli->query($queryCities) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
+        if($resCities->num_rows >= 1) {
+
+            $dataCities = array();
+
+            while($rowCity = $resCities->fetch_array()) {
+
+                $propCities = array(
+                    "ID"            => $rowCity['ID'],
+                    "name"          => utf8_decode($rowCity['name']),
+                    "population"    => $rowCity['population']);
+                $city = array($rowCity['AsText(coordinates)'] => $propCities);
+                $dataCities = array_merge($dataCities, $city);
+            }
+        }
+
+        // Deliver json files
         include_once("inc/conversions.php");
-        $properties = ["ID" => $id, "name" => $country, "population" => $popul];
-        file_put_contents("./content/data.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
+        // Country file
+        $properties = ["ID" => $id, "name" => $country, "population" => $popul, "capitalID" => $capitalID];
+        file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
+        // Cities file
+        file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
     }
 }
 
@@ -107,26 +139,15 @@ $content=<<<END
 				</div>
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
+
 					<div class="col-md-4 col-md-offset-1">
 						<p>Capital :</p>
 					</div>
 
 					<div class="col-md-3 col-md-offset-1">
-						<p>$capital</p>
+						<p>$capitalID</p>
 					</div>
 				</div>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-4 col-md-offset-1">
-						<p>Prime minister :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>$primeMin</p>
-					</div>
-
-				</div>
-
 
 				<div class="row" id = "bloc1"> <!-- new info line -->
 					<div class="col-md-4 col-md-offset-1">
@@ -157,23 +178,22 @@ $content=<<<END
 						<p>+$callCode</p>
 					</div>
                 </div>
-
+                <br>
 			</div><!-- col-md-5 -->
-
 
 			<!-- ---- MAP ---- -->
 			<div class="col-md-6 col-md-offset-1" id ="map"></div>
 
 		</div><!-- row -->
 
-		<div class="row"><br></div><!-- SEPARATOR -->
+            <div class="">
+                <div class="btn-toolbar" role="toolbar">
+                   <a class="btn btn-primary" href="add-city.php">Add a city</a>
+                   <a class="btn btn-primary" href="del-city.php">Remove a city</a></div>
+                </div>
+            </div>
 
-		<!-- additional content -->
-		<div class="row" id = "bloc1"> <!-- new info line -->
-			<div class="col-md-11 col-md-offset-1">
-				<p>Additional content here if necessary</p>
-			</div>
-		</div>
+		<div class="row"><br></div><!-- SEPARATOR -->
 
 END;
 

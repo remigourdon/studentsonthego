@@ -67,7 +67,7 @@ $header=<<<END
         <!-- Navigator's buttons  -->
         <div class="collapse navbar-collapse">
            <ul class="nav navbar-nav">
-              <li class="active"><a href="about.php">About</a></li>
+                <!-- add new stuff to the nav here -->
            </ul>
 END;
 
@@ -92,7 +92,7 @@ $res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno
 $cpt=0;
 
 // display the first 20 ountries of the DB
-while( ( $row = $res->fetch_array() ) AND ($cpt < 10) ){
+while( ( $row = $res->fetch_array() ) AND ($cpt < 15) ){
     $header .= "<li><a href='country.php?id={$row['ID']}'>{$row['name']}</a></li>";
     $cpt = $cpt + 1;
 }
@@ -126,11 +126,6 @@ if(isset($_SESSION["username"])) {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong>$admin</strong> <b class="caret"></b></a>
          <ul class="dropdown-menu">
-          <li><a href="add-country.php">Add a country</a></li>
-          <li><a href="del-country.php">Remove a country</a></li>
-          <li><a href="add-city.php">Add a city</a></li>
-          <li><a href="del-city.php">Remove a city</a></li>
-          <li class="divider"></li>
           <li><a id="logoutButton" href="index.php?log=out"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
          </ul>
         </li>
