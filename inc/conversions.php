@@ -68,51 +68,67 @@ function wkt_to_json($data) {
     // Go through each country
     foreach ($data as $wkt => $properties) {
 
-        // Get polygons from wkt
-        preg_match_all("/\(\(([0-9\.\s,-]*)\)\)/", $wkt, $matches);
-        $mPolygons = $matches[1];
+        if(strpos($wkt, "POINT") !== FALSE) { // If it is a point
 
-        // Prepare coordinates array for JSON
-        $coordinates = array();
+            $type           = "Point";
+            $coordinates    = point_to_coord($wkt);
 
-        // Go through each polygon
-        foreach ($mPolygons as $mPolygon) {
+            // Convert the coordinates to floats
+            $coordinates[0] = (float) $coordinates[0];
+            $coordinates[1] = (float) $coordinates[1];
 
-            // Get all points from the polygon
-            preg_match_all("/([0-9\.-]*\s[0-9\.-]*)/", $mPolygon, $matches);
-            $mPoints = $matches[1];
 
-            // Prepare linear ring array for JSON (we consider only one)
-            $linearRing = array();
+        } else {
 
-            // Go through each point
-            foreach ($mPoints as $mPoint) {
+                // Get polygons from wkt
+            preg_match_all("/\(\(([0-9\.\s,-]*)\)\)/", $wkt, $matches);
+            $mPolygons = $matches[1];
 
-                // Get the coordinates in an array [latitude, longitude]
-                $coord = explode(" ", $mPoint);
+            // Prepare coordinates array for JSON
+            $coordinates = array();
 
-                // Convert the coordinates to floats
-                $coord[0] = (float) $coord[0];
-                $coord[1] = (float) $coord[1];
+            // Go through each polygon
+            foreach ($mPolygons as $mPolygon) {
 
-                // Push new coordinates into the linear ring
-                $linearRing = array_merge($linearRing, array($coord));
+                // Get all points from the polygon
+                preg_match_all("/([0-9\.-]*\s[0-9\.-]*)/", $mPolygon, $matches);
+                $mPoints = $matches[1];
+
+                // Prepare linear ring array for JSON (we consider only one)
+                $linearRing = array();
+
+                // Go through each point
+                foreach ($mPoints as $mPoint) {
+
+                    // Get the coordinates in an array [latitude, longitude]
+                    $coord = explode(" ", $mPoint);
+
+                    // Convert the coordinates to floats
+                    $coord[0] = (float) $coord[0];
+                    $coord[1] = (float) $coord[1];
+
+                    // Push new coordinates into the linear ring
+                    $linearRing = array_merge($linearRing, array($coord));
+
+                }
+
+                // Prepare polygon array for JSON (we consider one polygon == one linear ring)
+                $polygon = array($linearRing);
+
+                // Push new polygon into the coordinates
+                if(count($mPolygons) > 1)
+                    $coordinates = array_merge($coordinates, array($polygon));
+                else
+                    $coordinates = $polygon;
 
             }
 
-            // Prepare polygon array for JSON (we consider one polygon == one linear ring)
-            $polygon = array($linearRing);
-
-            // Push new polygon into the coordinates
-            if(count($mPolygons) > 1)
-                $coordinates = array_merge($coordinates, array($polygon));
-            else
-                $coordinates = $polygon;
+            $type = (count($mPolygons) > 1) ? "MultiPolygon" : "Polygon";
 
         }
 
+
         // Prepare the geometry associative array for JSON
-        $type = (count($mPolygons) > 1) ? "MultiPolygon" : "Polygon";
         $geometry = array("type" => $type, "coordinates" => $coordinates);
 
         // Prepare the feature associative array for JSON

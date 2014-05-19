@@ -25,7 +25,8 @@ $monthsForm="";
 // Retrieve country name
 if(!empty($_GET)) {
 
-    $table="countries";
+    $tableCountries = "countries";
+    $tableCities = "cities";
 
     $id=$_GET['id'];
 
@@ -36,7 +37,7 @@ if(!empty($_GET)) {
 -- Look for the given country
 --
 SELECT name, currency, language, population, capitalID, AsText(geometry)
-FROM {$table}
+FROM {$tableCountries}
 WHERE ID = {$id};
 
 END;
@@ -57,12 +58,40 @@ END;
         $capitalID = $row['capitalID'];
         $primeMin = "";
 
+        // Get the cities associated to the country
+        $queryCities = <<<END
+        --
+        -- Get the cities data associated to the country
+        --
+        SELECT ID, name, population, AsText(coordinates)
+        FROM {$tableCities}
+        WHERE countryID = {$id};
+END;
 
+        // Performs query
+        $resCities = $mysqli->query($queryCities) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
+        if($resCities->num_rows >= 1) {
 
-        // Deliver json file
+            $dataCities = array();
+
+            while($rowCity = $resCities->fetch_array()) {
+
+                $propCities = array(
+                    "ID"            => $rowCity['ID'],
+                    "name"          => $rowCity['name'],
+                    "population"    => $rowCity['population']);
+                $city = array($rowCity['AsText(coordinates)'] => $propCities);
+                $dataCities = array_merge($dataCities, $city);
+            }
+        }
+
+        // Deliver json files
         include_once("inc/conversions.php");
+        // Country file
         $properties = ["ID" => $id, "name" => $country, "capitalID" => $capitalID];
         file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
+        // Cities file
+        file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
     }
 }
 
