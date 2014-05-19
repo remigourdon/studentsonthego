@@ -36,7 +36,8 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capitalID, AsText(geometry)
+SELECT name, currency, language, population, capitalID, AsText(geometry),
+        rent, fastfood, internet, transports, cinema, fitness
 FROM {$tableCountries}
 WHERE ID = {$id};
 
@@ -88,7 +89,19 @@ END;
         // Deliver json files
         include_once("inc/conversions.php");
         // Country file
-        $properties = ["ID" => $id, "name" => $country, "population" => $popul, "capitalID" => $capitalID];
+        $properties = [
+                "ID"            => $id,
+                "name"          => $country,
+                "population"    => $popul,
+                "capitalID"     => $capitalID,
+                "prices"        => [
+                                        "rent"       => $row['rent'],
+                                        "fastfood"   => $row['fastfood'],
+                                        "internet"   => $row['internet'],
+                                        "transports" => $row['transporst'],
+                                        "cinema"     => $row['cinema'],
+                                        "fitness"    => $row['fitness']]];
+
         file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
         // Cities file
         file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
