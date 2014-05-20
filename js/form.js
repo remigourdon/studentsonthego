@@ -38,7 +38,7 @@ $(function () {
 
     var arc = d3.svg.arc()
         .outerRadius(radius)
-        .innerRadius(radius * 0.55);
+        .innerRadius(radius * 0.6);
 
     var pie = d3.layout.pie()
         .sort(null)
@@ -96,16 +96,27 @@ $(function () {
 
             result = !isNaN(result * inputs['duration']) ? result * inputs['duration'] : 0;
 
-            result = Math.round(result).toFixed(2);
+            result = result.toFixed(2);
 
             $('#result').text("Total: " + result + "$");
 
-            plot(categories);
+            plot(result, categories);
         }
 
-        function plot(categories) {
+        function plot(result, categories) {
             // Remove previous graph
-            svg.selectAll(".arc").remove();
+            svg.selectAll(".arc, text").remove();
+
+            // Prepare information display
+            info = svg.append("text")
+                    .attr("y", 15)
+                    .style({
+                    "text-anchor"   : "middle",
+                    "font-size"     : "2em",
+                    "font-weight"   : "bold",
+                    "fill"          : "white"
+                    })
+                    .text(result + "$");
 
             g = svg.selectAll(".arc").data(pie(categories))
                 .enter().append("g")
@@ -115,28 +126,28 @@ $(function () {
                 .attr("d", arc)
                 .style("fill", function (d, i) { return color(i); })
                 .on("mouseover", function (d, i) {
+                    // Fade in
                     d3.select(this).transition()
                         .duration(duration)
                         .style("fill", d3.rgb(color(i)).brighter(0.3));
 
-                    svg.append("text")
-                        .attr("y", 15)
-                        .style({
-                            "text-anchor"   : "middle",
-                            "font-size"     : "30px",
-                            "font-weight"   : "bold",
-                            "fill"          : "white"
-                            })
-                        .text(function () { return categories[i].label +
-                                            "\n" + categories[i].value; });
+                    // Display category information
+                    info
+                        .text(function () {
+                            value = categories[i].value.toFixed(2);
+                            return categories[i].label + " (" + value + "$)";
+                        })
+                        .style("font-size", "1.6em");
                 })
                 .on("mouseout", function(d, i) {
+                    // Fade out
                     d3.select(this).transition()
                         .delay(delay)
                         .duration(duration)
                         .style("fill", color(i));
 
-                    svg.selectAll("text").remove();
+                    // Swith back to result display
+                    info.text(result + "$").style("font-size", "2em");
                 });
         }
 
