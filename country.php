@@ -168,7 +168,7 @@ $dataCountry=<<<END
        <td>$currency</td>
    </tr>
    <tr>
-       <td>inhabitants</td>
+       <td>Inhabitants</td>
        <td>$popul</td>
    </tr>
    <tr>
@@ -221,8 +221,7 @@ $calcform=<<<END
 	<div class="row">
 		<div id="contentBlocs" class="col-md-12">
 
-		    	<div id="resGraph" class="col-md-5 col-offset-3"><!-- left bloc -->
-<br><br><br>
+		    	<div id="resGraph" class="col-md-5"><!-- left bloc -->
 			      	<div id="resultGraph"></div>
 			   </div><!-- left bloc -->
 
@@ -234,10 +233,6 @@ $calcform=<<<END
 					  <div class="col-md-10 col-md-offset-2" >
 						<legend id="EstimationFormLegend" class="formLegend">Estimate the price of your stay !</legend>
 						<br>
-					</div>
-
-					<div class="row">
-					  <div class="col-md-1" ></div>
 					</div>
 END;
 
