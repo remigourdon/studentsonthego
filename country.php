@@ -204,9 +204,9 @@ $content.=<<<END
 
             <div class="col-md-6 col-md-offset-6">
                 <div class="btn-toolbar" role="toolbar">
-                   <a class="btn btn-primary" href="add-city.php">Add city</a>
-                   <a class="btn btn-primary" href="del-country.php">Remove country</a>
-                   <a class="btn btn-primary" href="mod-country.php">Modify country</a>
+                   <a class="btn btn-primary" href="add-city.php?id={$id}">Add city</a>
+                   <a class="btn btn-primary" href="del-country.php?id={$id}">Remove country</a>
+                   <a class="btn btn-primary" href="mod-country.php?id={$id}">Modify country</a>
                 </div>
             </div>
 

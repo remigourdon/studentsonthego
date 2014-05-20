@@ -103,7 +103,7 @@ END;
                 }
 
                 // Redirect the user
-                header("Location: add-country.php");
+                header("Location: country.php?id={$id}");
                 exit();
 
             // There was a problem during the update

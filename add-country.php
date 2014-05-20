@@ -97,7 +97,7 @@ END;
         }
 
         // Redirect the user
-        header("Location: add-country.php");
+        header("Location: index.php");
         exit();
 
     }

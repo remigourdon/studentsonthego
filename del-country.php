@@ -58,7 +58,7 @@ END;
         $mysqli->query($queryCities) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
         // Redirect the user
-        header("Location: add-country.php");
+        header("Location: index.php");
         exit();
 
     // There was a problem
@@ -70,7 +70,7 @@ END;
 } else {
 
     // Redirect the user
-    header("Location: add-country.php");
+    header("Location: index.php");
     exit();
 
 }
