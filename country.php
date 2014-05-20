@@ -43,7 +43,8 @@ if(!empty($_GET)) {
 --
 -- Look for the given country
 --
-SELECT name, currency, language, population, capitalID, AsText(geometry), callingCode, fastfood, fitness, cinema, rent
+SELECT name, currency, language, population, capitalID, AsText(geometry),
+        rent, fastfood, internet, transports, cinema, fitness
 FROM {$tableCountries}
 WHERE ID = {$id};
 
@@ -104,7 +105,19 @@ END;
         // Deliver json files
         include_once("inc/conversions.php");
         // Country file
-        $properties = ["ID" => $id, "name" => $country, "population" => $popul, "capitalID" => $capitalID];
+        $properties = [
+                "ID"            => $id,
+                "name"          => $country,
+                "population"    => $popul,
+                "capitalID"     => $capitalID,
+                "prices"        => [
+                                        "rent"       => $row['rent'],
+                                        "fastfood"   => $row['fastfood'],
+                                        "internet"   => $row['internet'],
+                                        "transports" => $row['transports'],
+                                        "cinema"     => $row['cinema'],
+                                        "fitness"    => $row['fitness']]];
+
         file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
         // Cities file
         file_put_contents("content/json/country_{$id}_cities.json", wkt_to_json($dataCities));
@@ -120,7 +133,7 @@ $content=<<<END
 			<!-- INFO BLOC -->
 			<div class="col-md-5" id ="bloc1">
 				<p style="font-size:130%; text-align:center;"><strong>$country</strong></p>
-                
+
 				<div class="row" id = "bloc1"> <!-- new info line -->
                     <br>
 					<div class="col-md-4 col-md-offset-1">
@@ -205,7 +218,7 @@ if(!empty($_POST)){
         $quer = <<<END
         --
         -- Seek the corresponding country
-        -- 
+        --
         --
         SELECT fitness, cinema, rent, fastfood, ID
         FROM countries
@@ -214,8 +227,8 @@ END;
 
 
         $resu = $mysqli->query($quer) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
-    
-    
+
+
 
     $row = $resu->fetch_array();
 
