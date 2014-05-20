@@ -130,7 +130,7 @@ $content=<<<END
    <div class="row">
 
 	  <!-- INFO BLOC -->
-      <div class="col-md-5" id ="bloc1">
+      <div class="col-md-5" id="contentBlocs">
 END;
 
 $infoBloc.=<<<END
@@ -219,12 +219,14 @@ $calcform=<<<END
     <div class="row"><br></div> <!-- separator -->
 
 	<div class="row">
-		<div id="bloc1" class="col-md-12">
-			<div class="col-md-5"><!-- left bloc -->
-				<div id="resultGraph"></div>
-			</div><!-- left bloc -->
+		<div id="contentBlocs" class="col-md-12">
 
-			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
+		    	<div id="resGraph" class="col-md-5 col-offset-3"><!-- left bloc -->
+<br><br><br>
+			      	<div id="resultGraph"></div>
+			   </div><!-- left bloc -->
+
+			<div id="contentBlocs" class="col-md-6 col-md-offset-1"><!-- right bloc -->
 				<form id="dynamicForm" class="form-horizontal" role="form" action="country.php?id=$id" method="post">
 					<br>
 					<div class="row">
@@ -260,7 +262,7 @@ $calcform.=<<<END
 
                     <div class="row"><!-- 2nd row -->
 					  <div class="col-md-4 col-md-offset-1">
-                         <label for="select">Number of fast food eating (per month) : </label>
+                         <label for="select">How many fast food restaurants will you eat at ? <span class="formIndicator">(per month)</span></label>
 					  </div>
 
                       <div class="col-md-7">
@@ -276,7 +278,7 @@ $calcform.=<<<END
 
                     <div class="row"><!-- 3rd row -->
 					  <div class="col-md-4 col-md-offset-1">
-                         <label for="select">Consumption of beers (per month) : </label>
+                         <label for="select">Number of beers you might drink :<span class="formIndicator">(per month) </label>
 					  </div>
 
                       <div class="col-md-7">
@@ -397,21 +399,13 @@ $calcform.=<<<END
 					<div class="row">
 					  <div class="col-md-1" ><br></div>
 					</div>
-<!--
-					<div class="row">
-						<div class="col-md-2 col-md-offset-4">
-						   <button type="submit" class="btn btn-default">Submit</button>
-						   <br><br><br>
-						</div>
-					</div>
--->
 
 				</form>
 
 
 
-                <div class="col-md-6 col-md-offset-4">
-                   <div class="panel panel-default">
+                <div class="col-md-7 col-md-offset-2">
+                   <div id="costResultPanel" class="panel panel-default">
                       <div class="panel-body">
                          <p id="result"></p>
                       </div>
