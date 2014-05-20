@@ -9,8 +9,10 @@ $(function () {
     // Fixed parameters
     var width   = $("#resultGraph").width(),
         aspect  = 800 / 800,
-        height  = width * aspect
-        radius  = Math.min(width, height) / 2 - 30,
+        height  = width * aspect,
+        duration        = 400,
+        delay           = 10,
+        radius  = Math.min(width, height) / 2 - 20,
         color   = d3.scale.ordinal()
                     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b",
                             "#a05d56", "#d0743c", "#ff8c00"]);
@@ -36,7 +38,7 @@ $(function () {
 
     var arc = d3.svg.arc()
         .outerRadius(radius)
-        .innerRadius(radius * 0.5);
+        .innerRadius(radius * 0.55);
 
     var pie = d3.layout.pie()
         .sort(null)
@@ -110,7 +112,30 @@ $(function () {
 
             g.append("path")
                 .attr("d", arc)
-                .style("fill", function (d, i) { return color(i); });
+                .style("fill", function (d, i) { return color(i); })
+                .on("mouseover", function (d, i) {
+                    d3.select(this).transition()
+                        .duration(duration)
+                        .style("fill", d3.rgb(color(i)).brighter(0.3));
+
+                    svg.append("text")
+                        .attr("y", 15)
+                        .style({
+                            "text-anchor"   : "middle",
+                            "font-size"     : "30px",
+                            "font-weight"   : "bold",
+                            "fill"          : "white"
+                            })
+                        .text(function () { return categories[i].label; });
+                })
+                .on("mouseout", function(d, i) {
+                    d3.select(this).transition()
+                        .delay(delay)
+                        .duration(duration)
+                        .style("fill", color(i));
+
+                    svg.selectAll("text").remove();
+                });
         }
 
     });
