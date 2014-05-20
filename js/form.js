@@ -71,7 +71,8 @@ $(function () {
                 {
                     "label":    "Food",
                     "value":    inputs["nbFastfood"]  * parseFloat(prices['fastfood']) +
-                                inputs["nbBeer"]      * parseFloat(prices['beer'])
+                                inputs["nbBeer"]      * parseFloat(prices['beer']) +
+                                300 // Food for the month (until finding good data source)
                 },
                 {
                     "label":    "Entertainment",
@@ -126,7 +127,8 @@ $(function () {
                             "font-weight"   : "bold",
                             "fill"          : "white"
                             })
-                        .text(function () { return categories[i].label; });
+                        .text(function () { return categories[i].label +
+                                            "\n" + categories[i].value; });
                 })
                 .on("mouseout", function(d, i) {
                     d3.select(this).transition()
