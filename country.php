@@ -410,10 +410,12 @@ $calcform.=<<<END
 
 
 
-                <div class="col-md-6 col-md-offset-4">
+                <div class="col-md-9 col-md-offset-1">
                    <div class="panel panel-default">
                       <div class="panel-body">
-                         <p id="result"></p>
+                         <p>Cost estimated to : 
+                            <p id="result"></p>
+                         </p>
                       </div>
                    </div>
                 </div>
