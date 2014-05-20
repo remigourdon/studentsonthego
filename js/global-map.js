@@ -43,9 +43,9 @@ d3.json("content/json/country_global.json", function (error, data) {
 
     // Dynamic resizingt of the svg
     $(window).resize(function() {
-      var width = $("#map").width();
-      svg.attr("width", width);
-      svg.attr("height", width * aspect);
+        var width = $("#map").width();
+        svg.attr("width", width);
+        svg.attr("height", width * aspect);
     });
 
     // Creates tooltip

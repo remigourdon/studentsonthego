@@ -1,6 +1,7 @@
 // Fixed parameters
-var width           = 400;
-var height          = width;
+var width = $("#map").width(),
+    aspect = 1,
+    height = width * aspect;
 var duration        = 200;
 var delay           = 100;
 var circlesRadius   = 5;
@@ -27,7 +28,16 @@ d3.json(countryFile, function (error, data) {
     // Add SVG to the DOM
     var svg = d3.select("#map").append("svg")
                 .attr("width", width)
-                .attr("height", height);
+                .attr("height", height)
+                .attr("viewBox", "0 0 " + width + " " + height)
+                .attr("preserveAspectRatio", "xMidYMid");
+
+    // Dynamic resizingt of the svg
+    $(window).resize(function() {
+        var width = $("#map").width();
+        svg.attr("width", width);
+        svg.attr("height", width * aspect);
+    });
 
     var country = svg.append("g");
 
