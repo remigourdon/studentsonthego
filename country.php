@@ -221,11 +221,12 @@ $calcform=<<<END
 	<div class="row">
 		<div id="contentBlocs" class="col-md-12">
 
-		    	<div id="resGraph" class="col-md-5"><!-- left bloc -->
+		    	<div id="resGraph" class="col-md-6 col-md-offset-0"><!-- left bloc -->
+                    <br><br>
 			      	<div id="resultGraph"></div>
 			   </div><!-- left bloc -->
 
-			<div id="contentBlocs" class="col-md-6 col-md-offset-1"><!-- right bloc -->
+			<div id="contentBlocs" class="col-md-6 col-md-offset-0"><!-- right bloc -->
 				<form id="dynamicForm" class="form-horizontal" role="form" action="country.php?id=$id" method="post">
 					<br>
 					<div class="row">
