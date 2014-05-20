@@ -202,6 +202,7 @@ function footer($map = "") {
 
     <script src="js/d3.min.js"></script>
     <script src="js/{$map}-map.js"></script>
+    <script src="js/form.js"></script>
   </body>
 </html>
 END;
