@@ -7,7 +7,7 @@ $breadcrumb=<<<END
 <div class="row">
    <div class="col-md-2 col-md-offset-1">
       <ol class="breadcrumb">
-        <li><a href="About.php">About</a></li>
+        <li><a href="about.php">About</a></li>
         <li class="active">Witness</li>
       </ol>
    </div>

@@ -36,7 +36,7 @@ $jumbotron=<<<END
           <p><a class="btn btn-default" href="witness.php" role="button">More details &raquo</a></p>
         </div>
       </div>
-
+   </div>
       <hr>
 END;
 
