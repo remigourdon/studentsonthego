@@ -252,7 +252,7 @@ $calcform=<<<END
 	<div class="row">
 		<div id="bloc1" class="col-md-12">
 			<div class="col-md-5"><!-- left bloc -->
-				<img style="width:100%;" src="img/free_map.jpg" alt="Photo map of Europe" />
+				<div id="resultGraph"></div>
 			</div><!-- left bloc -->
 
 			<div id="bloc1" class="col-md-6 col-md-offset-1"><!-- right bloc -->
@@ -347,7 +347,7 @@ $calcform.=<<<END
 
                     <!-- divider -->
                     <div class="row"><br></div>
-                      
+
 
                    <div class="row"><!-- 5th row -->
                       <div class="col-md-4 col-md-offset-1">

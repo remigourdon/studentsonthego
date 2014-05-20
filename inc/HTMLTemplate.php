@@ -24,9 +24,12 @@ $header=<<<END
 
     <!-- Favicon  -->
     <link rel="icon" type="image/png" href="img/studyabroad.ico">
+END;
+$filename=strlen($_SERVER['QUERY_STRING']) ? basename($_SERVER['PHP_SELF'])."?".$_SERVER['QUERY_STRING'] : basename($_SERVER['PHP_SELF']);;
 
-    <title>Students on the go !</title>
+$header.="<title>Students on the go - ".$filename." !</title>";
 
+$header.=<<<END
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 
@@ -59,7 +62,7 @@ $header=<<<END
       <div class="container">
         <div class="navbar-header">
 
-        <a class="navbar-brand" href="index.php">Students on the go</a>
+        <a class="navbar-brand" href="index.php#map">Students on the go</a>
 
         </div> <!-- navbar-header -->
 

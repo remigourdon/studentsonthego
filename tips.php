@@ -2,6 +2,19 @@
 
 include_once("inc/HTMLTemplate.php");
 
+$breadcrumb=<<<END
+<div class="container">
+<div class="row">
+   <div class="col-md-2 col-md-offset-1">
+      <ol class="breadcrumb">
+        <li><a href="About.php">About</a></li>
+        <li class="active">Witness</li>
+      </ol>
+   </div>
+</div>
+</div>
+END;
+
 
 $content=<<<END
 
@@ -9,7 +22,7 @@ $content=<<<END
    <br>
    <div class="col-md-8 col-md-offset-2">
       <h2>Advices & usefull links</h2>
-      <p>When you hear some students's stories that went abroad, you never hear anything about the paperwork, the deadlines neither the things they did to prepare it ! But I assure you, being well prepared make a true difference on how much you can appreciate this experience. </p>
+      <p>When you hear some students's stories that went abroad, you never hear anything about the paperwork, the deadlines neither the things they did to prepare it ! But I assure you, being well prepared make a true difference on how much you can appreciate this experience. Those tips are here to avoid some troubles and spendings you can quickly have. Because the more you prevent those surprises, the more time you'll have to enjoy this experience !</p>
 
       <h3>1 - Be informed !</h3>
       <p>The university you'll study in, the place you'll stay in but also the places you want to visit ! Get in touch with a student who 've been there if possible ! It surely will facilitate both the paperwork and your social life ! Do not forget to be aware of the social customs, otherwise it might lead you to some funny situations ! I would also add that you should be sure to get your passport/Visa quite early to avoid any stress. Moreover, you should also call your bank, to warn them that some transactions'll be made abroad. Also, to know if you'll be able to pay your rent without fees, those details can make your life a little easier.</p>
@@ -39,6 +52,7 @@ END;
 
 
 echo $header;
+echo $breadcrumb;
 echo $content;
 echo footer();
 
