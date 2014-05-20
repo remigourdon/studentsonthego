@@ -137,7 +137,7 @@ function getForm($name = "", $popu = "") {
         </div>
         <div class="form-group">
             <label for="popu">Population:</label>
-            <input type="number" class="form-control" name="popu" id="popu" value="{$popu}">
+            <input type="number" min="0" class="form-control" name="popu" id="popu" value="{$popu}">
         </div>
         <div class="form-group col-md-6">
             <label for="geom">Geometry (*):</label>
