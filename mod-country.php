@@ -49,7 +49,7 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
         $feedback .= !$flag ? "`flag`" : "";
 
         // If some mandatory fields aren't filled in
-        if($name == "") {
+        if($name == "" || $popu == "") {
 
             // Give information
             $content .= "<p>Please complete all the mandatory fields.</p>";
@@ -71,15 +71,12 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
                 $geomSQL    = "geometry = GeomFromText('{$wkt}')";
             }
 
-            // Prepare SQL for non mandatory fields
-            $popuSQL = ($popu != "") ? "population = '{$popu}'" : "population = NULL";
-
             $query = <<<END
             --
             -- Updates country in the database
             --
             UPDATE {$tableCountries}
-            SET name = '{$name}', {$popuSQL}, {$geomSQL}
+            SET name = '{$name}', '{$popu}', {$geomSQL}
             WHERE ID = {$id};
 END;
 

@@ -49,7 +49,7 @@ if(!empty($_POST)) {
     $feedback .= !$flag ? "`flag`" : "";
 
     // If some mandatory fields aren't filled in
-    if($name == "" || !$geom || !$flag) {
+    if($name == "" || $popu == "" || !$geom || !$flag) {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
@@ -69,15 +69,12 @@ if(!empty($_POST)) {
         $wkt        = json_to_wkt(file_get_contents($_FILES['geom']['tmp_name']));
         $geomSQL    = "GeomFromText('{$wkt}')";
 
-        // Prepare SQL for non mandatory fields
-        $popuSQL = ($popu != "") ? "{$popu}" : "NULL";
-
         $query = <<<END
         --
         -- Inserts a new country in the database
         --
         INSERT INTO {$tableCountries}(name, population, geometry)
-        VALUES('{$name}', $popuSQL, {$geomSQL});
+        VALUES('{$name}', '{$popu}', {$geomSQL});
 END;
 
         // Performs query
