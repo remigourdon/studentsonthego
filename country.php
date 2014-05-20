@@ -44,7 +44,7 @@ if(!empty($_GET)) {
 -- Look for the given country
 --
 SELECT name, currency, language, population, capitalID, AsText(geometry),
-        rent, fastfood, internet, transports, cinema, fitness, callingCode
+        rent, fastfood, internet, transports, cinema, fitness, callingCode, beer
 FROM {$tableCountries}
 WHERE ID = {$id};
 
@@ -296,7 +296,7 @@ $calcform.=<<<END
 
                       <div class="col-md-7">
 	    				 <div class="input-group">
-						    <input name="nbFastfood" type="number" class="form-control" placeholder="3">
+						    <input id="nbFastfood" type="number" class="form-control" placeholder="3">
                          </div>
                       </div>
                     </div> <!-- end of the row -->
