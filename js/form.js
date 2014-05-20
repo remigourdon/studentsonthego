@@ -1,8 +1,47 @@
 /**
- * Dynamic form to calculate an estimation of the price of the stay
+ * Dynamic form to calculate an estimation of the price of the stay.
+ *
+ * Display the result both as text and pie chart.
  */
 
 $(function () {
+
+    // Fixed parameters
+    var width   = $("#resultGraph").width(),
+        aspect  = 800 / 800,
+        height  = width * aspect
+        radius  = Math.min(width, height) / 2 - 30,
+        color   = d3.scale.ordinal()
+                    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b",
+                            "#a05d56", "#d0743c", "#ff8c00"]);
+
+    //
+    // Prepare the graph
+    //
+
+    // Add SVG to the DOM
+    var svg = d3.select("#resultGraph").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", "0 0 " + width + " " + height)
+                .attr("preserveAspectRatio", "xMidYMid")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    // Dynamic resizingt of the svg
+    $(window).resize(function() {
+      var width = $("#resultGraph").width();
+      svg.attr("width", width);
+      svg.attr("height", width * aspect);
+    });
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius)
+        .innerRadius(radius * 0.5);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.value; });
+
 
     // Get json data
     var file = "content/json/country_" + getUrlValue("id") + ".json";
@@ -11,16 +50,9 @@ $(function () {
 
         prices = json['features'][0]['properties']['prices'];
 
-        $('#nbCinema').change(compute);
-        $('#nbFastfood').change(compute);
-        $('#nbBeer').change(compute);
-        $('#gymYes').change(compute);
-        $('#gymNo').change(compute);
-        $('#transportYes').change(compute);
-        $('#transportNo').change(compute);
-        $('#internetYes').change(compute);
-        $('#internetNo').change(compute);
-        $('#durationStay').change(compute);
+        d3.selectAll("input").on("change", compute);
+
+        compute();
 
         function compute() {
             var inputs = {
@@ -31,30 +63,54 @@ $(function () {
                 "transport" : $('#transportYes').prop("checked") ? 1 : 0,
                 "internet"  : $('#internetYes').prop("checked") ? 1 : 0,
                 "duration"  : parseFloat($('#durationStay').val())
-            }
+            };
 
-            var categories = {
-                "food"          :   inputs["nbFastfood"]  * parseFloat(prices['fastfood']) +
-                                    inputs["nbBeer"]      * parseFloat(prices['beer']),
-                "entertainment" :   inputs["nbCinema"]    * parseFloat(prices['cinema']) +
-                                    inputs["fitness"]     * parseFloat(prices['fitness']),
-                "various"       :   inputs["internet"]    * parseFloat(prices['internet']),
-                "housing"       :   parseFloat(prices['rent'])
-            }
+            var categories = [
+                {
+                    "label":    "Food",
+                    "value":    inputs["nbFastfood"]  * parseFloat(prices['fastfood']) +
+                                inputs["nbBeer"]      * parseFloat(prices['beer'])
+                },
+                {
+                    "label":    "Entertainment",
+                    "value":    inputs["nbCinema"]    * parseFloat(prices['cinema']) +
+                                inputs["fitness"]     * parseFloat(prices['fitness'])
+                },
+                {
+                    "label":    "Housing",
+                    "value":    parseFloat(prices['rent'])
+                },
+                {
+                    "label":    "Various",
+                    "value":    inputs["internet"]    * parseFloat(prices['internet']) +
+                                inputs["transport"]   * parseFloat(prices['transports'])
+                }
+            ];
 
             var result = 0;
 
-            $.each(categories, function (k, v) { result += v; });
+            categories.forEach(function(d) { result += d.value; });
 
             result = !isNaN(result * inputs['duration']) ? result * inputs['duration'] : 0;
 
             result = Math.round(result).toFixed(2);
 
-            // console.log(prices);
-            // console.log(categories);
-            // console.log(result);
-
             $('#result').text("Total: " + result + "$");
+
+            plot(categories);
+        }
+
+        function plot(categories) {
+            // Remove previous graph
+            svg.selectAll(".arc").remove();
+
+            g = svg.selectAll(".arc").data(pie(categories))
+                .enter().append("g")
+                .attr("class", "arc");
+
+            g.append("path")
+                .attr("d", arc)
+                .style("fill", function (d, i) { return color(i); });
         }
 
     });
