@@ -76,15 +76,6 @@ if(!empty($_POST)) {
     $lati = isset($_POST['lati']) ? $_POST['lati'] : "";
     $long = isset($_POST['long']) ? $_POST['long'] : "";
 
-    // Check for the files
-    $pict = (!file_exists($_FILES['pict']['tmp_name'])
-                || $_FILES['pict']['error'] > 0
-                || ($_FILES['pict']["type"] != "image/png"
-                    && $_FILES['pict']["type"] != "image/jpg"
-                    && $_FILES['pict']["type"] != "image/jpeg")) ? false : true;
-    $feedback = "Please check the file(s): ";
-    $feedback .= !$pict ? "`picture` " : "";
-
     // If some mandatory fields aren't filled in
     if($name == "" || $lati == "" || $long == "" || !$pict) {
 
@@ -115,17 +106,7 @@ END;
         // Performs query
         $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
-        // Query was successful, we can save the files
-        if($pict) {
-            // Gets extension
-            $pictExt    = "." . end((explode(".", $_FILES['pict']['name'])));
-
-            // Creates the directory
-            $path = "./content/cities/{$name}/";
-            mkdir($path, 0777, true);   // Recursive
-
-            move_uploaded_file($_FILES['pict']['tmp_name'], $path . "picture" . $pictExt);
-        }
+        // Query was successful
 
         // Redirect the user
         header("Location: country.php?{$id}");
@@ -176,10 +157,6 @@ function getForm($id = "", $name = "", $lati = "", $long = "") {
         <div class="form-group col-md-6">
             <label for="long">Longitude (*):</label>
             <input type="number" class="form-control" name="long" id="long" step="0.0001" min="-180" max="+180" value="{$long}">
-        </div>
-        <div class="form-group">
-            <label for="pict">Picture:</label>
-            <input type="file" name="pict" id="pict">
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
     </form>

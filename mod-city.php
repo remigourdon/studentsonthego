@@ -37,15 +37,6 @@ if(isset($_GET['id']) && $_GET['id'] != "") {
         $lati   = isset($_POST['lati']) ? $_POST['lati'] : "";
         $long   = isset($_POST['long']) ? $_POST['long'] : "";
 
-        // Check for the files
-        $pict = (!file_exists($_FILES['pict']['tmp_name'])
-                    || $_FILES['pict']['error'] > 0
-                    || ($_FILES['pict']["type"] != "image/png"
-                        && $_FILES['pict']["type"] != "image/jpg"
-                        && $_FILES['pict']["type"] != "image/jpeg")) ? false : true;
-        $feedback = "Please check the file(s): ";
-        $feedback .= !$pict ? "`picture` " : "";
-
         // If some mandatory fields aren't filled in
         if($name == "" || $lati == "" || $long == "") {
 
@@ -77,19 +68,6 @@ END;
             if($mysqli->affected_rows >= 1) {
 
                 // Query was successful
-
-                // Rename the content directory
-                $_path  = "./content/cities/{$_name}/"; // Previous path
-                $path   = "./content/cities/{$name}/";
-                rename($_path, $path);
-
-                // Save the files
-                if($pict) {
-                    // Gets extension
-                    $pictExt    = "." . end((explode(".", $_FILES['pict']['name'])));
-
-                    move_uploaded_file($_FILES['pict']['tmp_name'], $path . "picture" . $pictExt);
-                }
 
                 // Redirect the user
                 header("Location: add-country.php");
@@ -192,10 +170,6 @@ function getForm($id = "", $name = "", $lati = "", $long = "") {
         <div class="form-group col-md-6">
             <label for="long">Longitude (*):</label>
             <input type="number" class="form-control" name="long" id="long" step="0.0001" min="-180" max="+180" value="{$long}">
-        </div>
-        <div class="form-group">
-            <label for="pict">Picture:</label>
-            <input type="file" name="pict" id="pict">
         </div>
         <button type="submit" class="btn btn-default">Insert</button>
     </form>
