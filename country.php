@@ -127,7 +127,8 @@ END;
 // display the page corresponding
 // to the wanted country
 $content=<<<END
-	<div class="container">
+
+    <div class="container">
 		<div class="row">
 
 			<!-- INFO BLOC -->
@@ -295,7 +296,7 @@ $calcform.=<<<END
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go to the gym ?</label>
                       </div>
-    
+
                       <div class="col-md-1"
                          <div class="input-group">
                             <span class="input-group-addon">

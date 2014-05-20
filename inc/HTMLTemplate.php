@@ -7,7 +7,7 @@ $header=<<<END
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    
+
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <!-- choose what version of IE the page should be rendered as -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -163,7 +163,7 @@ function footer($map = "") {
       <!-- SECOND HALF -->
         <div class="col-md-3">
            <p class="text-muted">Web System Fundamentals<br>University of Halmstad/Sweden <a id="adminButton" href="admin.php" >Admin</a></p>
-           
+
        </div><!-- col-md-3 -->
 
       </div><!-- container -->
@@ -177,14 +177,14 @@ function footer($map = "") {
  <!-- FIRST HALF -->
       <div class="container">
         <div class="col-md-2 col-md-offset-0">
-            
+
         </div><!-- col-md-2 -->
 
         <div class="col-md-8"></div> <!-- separator -->
 
       <!-- SECOND HALF -->
         <div class="col-md-2">
-           
+
        </div><!-- col-md-2 -->
 
       </div><!-- container -->
@@ -202,6 +202,7 @@ function footer($map = "") {
 
     <script src="js/d3.min.js"></script>
     <script src="js/{$map}-map.js"></script>
+    <script src="js/form.js"></script>
   </body>
 </html>
 END;
