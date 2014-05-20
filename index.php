@@ -43,11 +43,12 @@ $welcPanel=<<<END
 </div>
 END;
 
-
 // Map : center
 $map=<<<END
-<div class="col-md-10 col-md-offset-2">
-   <div id='map'></div>
+<div class="container">
+   <div class="col-md-12">
+      <div id='map'></div>
+   </div>
 </div>
 END;
 
@@ -66,7 +67,7 @@ END;
 
 
 echo $header;
-echo $welcPanel;
+
 echo $map;
 // if user isn't admin
 if( isset($_SESSION["username"])){ 
