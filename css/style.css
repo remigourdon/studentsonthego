@@ -1,5 +1,9 @@
-/**/
-#bloc1 {
+#resGraph {
+    border:3px solid black:
+}
+
+
+#contentBlocs {
     background-color:rgba(0, 162, 135, 0.8);
     border-radius:2px;
 }
@@ -29,6 +33,16 @@ td:first-child {
 #countryProperties > td {
     padding-bottom:15%;
 }
+
+#resultGraph {
+    
+}
+
+#costResultPanel {
+    text-align:center;
+    font-size:120%;
+}
+
 html, body {
     height:100%;
     width:100%;
@@ -55,22 +69,15 @@ html, body {
     font-size:220%;
 }
 
-/* Homepage banner
-._head {
-    position:relative;
-    padding:120px 50px;
-    
-    text-align:left;
-}
-*/
-
-#homeBanner {
-    background-color:#99E4D1;
-    color:rgba(0,0,0,1);
-}
-
 body {
     height:100%;
+}
+
+.formIndicator {
+    color:rgba(0, 0, 0, 0.6);
+    font-style:italic;
+    padding-top:5%;
+    padding-left:-15%;
 }
 
 #radioButton {
@@ -79,7 +86,7 @@ body {
 
 #footer {
     background-color:#191919;
-    margin-top:50%;
+    margin-top:15%;
     padding-top:0%;
     text-align:left;
 
