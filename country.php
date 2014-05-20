@@ -201,14 +201,18 @@ END;
 if( isset($_SESSION["username"])){
 
 $content.=<<<END
-            <div class="col-md-5 col-md-offset-7">
+
+            <div class="col-md-6 col-md-offset-6">
                 <div class="btn-toolbar" role="toolbar">
-                   <a class="btn btn-primary" href="add-city.php">Add a city</a>
-                   <a class="btn btn-primary" href="del-city.php">Remove a city</a></div>
+                   <a class="btn btn-primary" href="add-city.php">Add city</a>
+                   <a class="btn btn-primary" href="del-country.php">Remove country</a>
+                   <a class="btn btn-primary" href="mod-country.php">Modify country</a>
                 </div>
             </div>
-		<div class="row"><br></div><!-- SEPARATOR -->
+
+	 <div class="row"><br></div><!-- SEPARATOR -->
 END;
+
 }
 else {
     $content.="<div class='row'><br></div><!-- SEPARATOR -->";

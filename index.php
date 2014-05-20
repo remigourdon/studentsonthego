@@ -54,10 +54,9 @@ $mapButtons=<<<END
 <br>
 <br>
 <div class="row">
-   <div class="col-md-3 col-md-offset-5">
+   <div class="col-md-4 col-md-offset-5">
       <div class="btn-toolbar">
          <a class="btn btn-primary" href="add-country.php">Add a country</a>
-         <a class="btn btn-primary" href="del-country.php">Remove a country</a>
       </div>
    </div>
 </div>
