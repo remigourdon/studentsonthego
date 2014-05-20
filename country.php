@@ -116,7 +116,8 @@ END;
                                         "internet"   => $row['internet'],
                                         "transports" => $row['transports'],
                                         "cinema"     => $row['cinema'],
-                                        "fitness"    => $row['fitness']]];
+                                        "fitness"    => $row['fitness'],
+                                        "beer"       => $row['beer']]];
 
         file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
         // Cities file
@@ -332,12 +333,7 @@ $calcform.=<<<END
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go to the gym ?</label>
                       </div>
-<<<<<<< HEAD
-
-                      <div class="col-md-1"
-=======
-
-                      <div class="col-md-5"
+                      <div class="col-md-5">
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
 
@@ -364,8 +360,7 @@ $calcform.=<<<END
                          <label for="select">Will you go use the public transports ?</label>
                       </div>
 
-                      <div class="col-md-5"
->>>>>>> be106fa8625940dacb47abe2671e4fa3cf36c998
+                      <div class="col-md-5">
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
 
