@@ -43,11 +43,10 @@ $welcPanel=<<<END
 </div>
 END;
 
-
 // Map : center
 $map=<<<END
 <div class="container">
-   <div id='map'></div>
+      <div id='map'></div>
 </div>
 END;
 
@@ -66,7 +65,11 @@ END;
 
 
 echo $header;
+<<<<<<< HEAD
 //echo $welcPanel;
+=======
+
+>>>>>>> 6fbe97490cc872574ed8cba8d52c208ed0832e44
 echo $map;
 // if user isn't admin
 if( isset($_SESSION["username"])){

@@ -44,7 +44,7 @@ if(!empty($_GET)) {
 -- Look for the given country
 --
 SELECT name, currency, language, population, capitalID, AsText(geometry),
-        rent, fastfood, internet, transports, cinema, fitness
+        rent, fastfood, internet, transports, cinema, fitness, callingCode
 FROM {$tableCountries}
 WHERE ID = {$id};
 
@@ -214,6 +214,7 @@ if(!empty($_POST)){
     $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
     $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
 
+/*
         // define query
         $quer = <<<END
         --
@@ -228,8 +229,6 @@ END;
 
         $resu = $mysqli->query($quer) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
 
-
-
     $row = $resu->fetch_array();
 
     // Dummy algorythm
@@ -238,6 +237,7 @@ END;
     $rent = rand(150, 450);
     $cinema = rand(3,15);
     $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
+*/
 
     $feedback=<<<END
 
@@ -274,50 +274,41 @@ $calcform=<<<END
 					<div class="row">
 					  <div class="col-md-1" ></div>
 					</div>
-
-					</div>
-					<div class="row"> <!-- ------FIRST ROW------  -->
-					  <div class="col-md-4 col-md-offset-1" >
-						  <label for="select">Country : </label>
-					  </div>
-					  <div class="col-md-5">
-					  <select id="select" class="form-control" name="countryForm">
 END;
 
-$query =<<<END
-    SELECT ID, name
-    FROM countries;
-END;
 
-$res = $mysqli->query($query) or die("Could not query database" . $mysqli->errno . " : " . $mysqli->error);
-
-// memorize the last passed country at the head of the combobox
-if(!empty($_POST)){
-    $calcform.="<option>$countryForm</option>";
-}
-else{// but if the user open the page for first time
-    // just display the name of the country page
-    $calcform.="<option>$country</option>";
-}
-
-while( $row = $res->fetch_array() ) {
-
-    $nom=$row['name'];
-
-    // don't display again the country at the head of the combobox
-    if(isset($_POST) && $nom != $countryForm){
-        $calcform.=<<<END
-				   	<option>{$nom}</option>
-END;
-    }
-}
+// add more fields here
 $calcform.=<<<END
-
-					  </select>
+                    <div class="row"><!-- 1st row -->
+					  <div class="col-md-4 col-md-offset-1">
+                         <label for="select">Number of fast food eating (per month) : </label>
 					  </div>
-					  <br>
-					</div>
 
+
+					  <div class="input-group">
+						 <input name="nbFastfood" type="text" class="form-control" placeholder="3">
+                      </div>
+
+                    </div> <!-- end of the row -->
+
+                   <div class="row">
+                      <div class="col-md-4 col-md-offset-1">
+                         <label for="select">Will you go to the gym ?</label>
+                      </div>
+    
+                      <div class="col-md-1"
+                         <div class="input-group">
+                            <span class="input-group-addon">
+                              <input type="checkbox">
+                            </span>
+                         </div><!-- /input-group -->
+                     </div><!-- /.col-md-6 -->
+                  </div><!-- end of the row -->
+END;
+
+
+
+$calcform.=<<<END
 					<div class="row">
 					  <div class="col-md-1" ></div>
 					</div>

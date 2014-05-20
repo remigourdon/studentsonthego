@@ -67,7 +67,7 @@ $header=<<<END
         <!-- Navigator's buttons  -->
         <div class="collapse navbar-collapse">
            <ul class="nav navbar-nav">
-                <!-- add new stuff to the nav here -->
+              <li class="active"><a href="about.php">About</a></li>
            </ul>
 END;
 
