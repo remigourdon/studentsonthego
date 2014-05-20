@@ -99,6 +99,7 @@ END;
                 if($capitalID == $rowCity['ID']){
                     $capitalName = $rowCity['name'];
                 }
+                
             }
         }
 
