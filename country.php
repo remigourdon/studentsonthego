@@ -132,7 +132,7 @@ $content=<<<END
 	  <!-- INFO BLOC -->
       <div class="col-md-5" id="contentBlocs">
 END;
-
+$infoBloc = "";
 $infoBloc.=<<<END
                 <!-- head of the info bloc  -->
 <div id="countryHead" class="row">
@@ -144,7 +144,7 @@ $infoBloc.=<<<END
    </div>
 
    <div class="col-md-6 col-md-offset-0">
-      <img style="width:107%; padding-top:0%;" src="content/countries/{$country}/flag.png" alt="Flag">
+      <img style="width:100%;" src="content/countries/{$country}/flag.png" alt="Flag">
    </div>
 </div><!-- end of : head of the info bloc  -->
 <br>
@@ -407,9 +407,9 @@ $calcform.=<<<END
                       </div>
                    </div>
                 </div>
+                <br>
 
-
-		</div><!-- col-md-5 -->
+		   </div><!-- col-md-5 -->
 		</div><!-- col-md-11 col-md-offset-1 -->
 	</div><!-- row -->
 </div><!-- container -->
