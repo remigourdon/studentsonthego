@@ -135,7 +135,7 @@ END;
 
 $infoBloc.=<<<END
                 <!-- head of the info bloc  -->
-<div class="row">
+<div id="countryHead" class="row">
    <div class="col-md-4 col-md-offset-1">
       <br>
       <p style="font-size:200%;">
@@ -147,15 +147,38 @@ $infoBloc.=<<<END
       <img style="width:100%;" src="content/countries/{$country}/flag.png" alt="Flag">
    </div>
 </div><!-- end of : head of the info bloc  -->
-
+<br>
 
 END;
 
 $dataCountry=<<<END
-
-<ul>
-
-
+<div class="col-md-12">
+   <br>
+   <table id="countryProperties" style="width:300px">
+   <tr>
+      <td>Language(s)</td>
+      <td>$lang</td>
+   </tr>
+   <tr>
+      <td>Capital</td>
+      <td>$capitalName</td>
+   </tr>
+   <tr>
+       <td>Currency</td>
+       <td>$currency</td>
+   </tr>
+   <tr>
+       <td>inhabitants</td>
+       <td>$popul</td>
+   </tr>
+   <tr>
+       <td>Dialling code</td>
+       <td>+$callCode</td>
+   </tr>
+</table>
+<br>
+</div>
+<br>
 END;
 
 
@@ -190,40 +213,6 @@ END;
 else {
     $content.="<div class='row'><br></div><!-- SEPARATOR -->";
 }
-// if the form has been filled up
-if(!empty($_POST)){
-    $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
-    $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
-
-
-/*
-        // define query
-        $quer = <<<END
-        --
-        -- Seek the corresponding country
-        --
-        --
-        SELECT fitness, cinema, rent, fastfood, ID
-        FROM countries
-        WHERE name = "{$countryForm}";
-END;
-
-
-        $resu = $mysqli->query($quer) or die ("could not query database" . $mysqli->errno . " : " . $mysqli->error);
-
-    $row = $resu->fetch_array();
-
-    // Dummy algorythm
-    $fitness = rand(20, 50);
-    $fastfood = rand(5, 13);
-    $rent = rand(150, 450);
-    $cinema = rand(3,15);
-    $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
-*/
-
-}
-
-
 
 $calcform=<<<END
 
@@ -241,7 +230,7 @@ $calcform=<<<END
 					<div class="row">
 
 					  <div class="col-md-10 col-md-offset-2" >
-						<legend class="formLegend">Estimate the price of your stay !</legend>
+						<legend id="EstimationFormLegend" class="formLegend">Estimate the price of your stay !</legend>
 						<br>
 					</div>
 
