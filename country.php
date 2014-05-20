@@ -128,7 +128,7 @@ END;
 // to the wanted country
 $content=<<<END
 
-    <div class="container">
+	<div class="container">
 		<div class="row">
 
 			<!-- INFO BLOC -->
@@ -244,7 +244,7 @@ END;
 
 
     <div class="col-md-6 col-md-offset-4">
-        <p>Cost : {$result} €</p>
+        <p id="result"></p>
     </div>
 
 END;
@@ -282,30 +282,134 @@ END;
 $calcform.=<<<END
                     <div class="row"><!-- 1st row -->
 					  <div class="col-md-4 col-md-offset-1">
+    <label for="select">How many time will you go to the cinema :</label>
+					  </div>
+
+                      <div class="col-md-7">
+	    				 <div class="input-group">
+						    <input id="nbCinema" type="number" class="form-control" placeholder="2">
+                         </div>
+                      </div>
+                    </div> <!-- end of the row -->
+
+                    <!-- divider -->
+                    <div class="row"><br></div>
+
+
+                    <div class="row"><!-- 2nd row -->
+					  <div class="col-md-4 col-md-offset-1">
                          <label for="select">Number of fast food eating (per month) : </label>
 					  </div>
 
-
-					  <div class="input-group">
-						 <input name="nbFastfood" type="text" class="form-control" placeholder="3">
+                      <div class="col-md-7">
+	    				 <div class="input-group">
+						    <input name="nbFastfood" type="number" class="form-control" placeholder="3">
+                         </div>
                       </div>
-
                     </div> <!-- end of the row -->
 
-                   <div class="row">
+
+                    <!-- divider -->
+                    <div class="row"><br></div>
+
+                    <div class="row"><!-- 2nd row -->
+					  <div class="col-md-4 col-md-offset-1">
+                         <label for="select">Consumption of beers (per month) : </label>
+					  </div>
+
+                      <div class="col-md-7">
+	    				 <div class="input-group">
+						    <input id="nbBeer" name="beer" type="number" class="form-control" placeholder="10">
+                         </div>
+                      </div>
+                    </div> <!-- end of the row -->
+
+                    <!-- divider -->
+                    <div class="row"><br></div>
+
+
+                   <div class="row"><!-- 3rd row -->
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go to the gym ?</label>
                       </div>
+<<<<<<< HEAD
 
                       <div class="col-md-1"
+=======
+
+                      <div class="col-md-5"
                          <div class="input-group">
-                            <span class="input-group-addon">
-                              <input type="checkbox">
+                            <span id="radioButton" class="input-group-addon">
+
+                              <div class="col-md-1">
+                              <label for="select">Yes </label>
+                              <input id="gymYes" type="radio" name="gym" value="yes">
+                             </div>
+
+                              <div class="col-md-1 col-md-offset-4">
+                                 <label for="select">No </label>
+                                 <input id="gymNo" type="radio" name="gym" value="no">
+                              </div>
                             </span>
                          </div><!-- /input-group -->
-                     </div><!-- /.col-md-6 -->
+                       </div><!-- end of the row-->
+
+                    <!-- divider -->
+                    <div class="row"><br></div>
+
+
+
+                   <div class="row"><!-- 4th row -->
+                      <div class="col-md-4 col-md-offset-1">
+                         <label for="select">Will you go use the public transports ?</label>
+                      </div>
+
+                      <div class="col-md-5"
+>>>>>>> be106fa8625940dacb47abe2671e4fa3cf36c998
+                         <div class="input-group">
+                            <span id="radioButton" class="input-group-addon">
+
+                              <div class="col-md-1">
+                              <label for="select">Yes </label>
+                              <input id="transportYes" type="radio" name="publicTransport" value="yes">
+                             </div>
+
+                              <div class="col-md-1 col-md-offset-4">
+                                 <label for="select">No </label>
+                                 <input id="transportNo" type="radio" name="publicTransport" value="no">
+                              </div>
+                            </span>
+                         </div><!-- /input-group -->
+                     </div><!-- /.col-md-4 offset1 -->
+
+                    <!-- divider -->
+                    <div class="row"><br></div>
+
+
+                   <div class="row"><!-- 4th row -->
+                      <div class="col-md-4 col-md-offset-1">
+                         <label for="select">Will you subscribe to an internet acces ?</label>
+                      </div>
+
+                      <div class="col-md-5"
+                         <div class="input-group">
+                            <span id="radioButton" class="input-group-addon">
+
+                              <div class="col-md-1">
+                              <label for="select">Yes </label>
+                              <input id="internetYes" type="radio" name="publicTransport" value="yes">
+                             </div>
+
+                              <div class="col-md-1 col-md-offset-4">
+                                 <label for="select">No </label>
+                                 <input id="transportNo" type="radio" name="publicTransport" value="no">
+                              </div>
+                            </span>
+                         </div><!-- /input-group -->
+                     </div><!-- /.col-md-4 offset1 -->
                   </div><!-- end of the row -->
 END;
+
 
 
 
@@ -313,6 +417,10 @@ $calcform.=<<<END
 					<div class="row">
 					  <div class="col-md-1" ></div>
 					</div>
+
+                    <!-- divider -->
+                    <div class="row"><br></div>
+
 
 					<div class="row"> <!-- ------SECOND ROW------  -->
 					  <div class="col-md-4 col-md-offset-1">
@@ -331,13 +439,14 @@ $calcform.=<<<END
 					<div class="row">
 					  <div class="col-md-1" ><br></div>
 					</div>
-
+<!--
 					<div class="row">
 						<div class="col-md-2 col-md-offset-4">
 						   <button type="submit" class="btn btn-default">Submit</button>
 						   <br><br><br>
 						</div>
 					</div>
+-->
 
 				</form>
 
@@ -348,6 +457,7 @@ $calcform.=<<<END
 	</div><!-- row -->
 </div><!-- container -->
 
+
 END;
 
 
@@ -355,6 +465,5 @@ echo $header;
 echo $content;
 echo $calcform;
 echo footer("country");
-
 
 ?>
