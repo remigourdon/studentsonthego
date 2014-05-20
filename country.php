@@ -136,15 +136,15 @@ END;
 $infoBloc.=<<<END
                 <!-- head of the info bloc  -->
 <div id="countryHead" class="row">
-   <div class="col-md-4 col-md-offset-1">
+   <div class="col-md-6 col-md-offset-0">
       <br>
       <p style="font-size:200%;">
          <strong>$country</strong>
       </p>
    </div>
 
-   <div class="col-md-4 col-md-offset-1">
-      <img style="width:100%;" src="content/countries/{$country}/flag.png" alt="Flag">
+   <div class="col-md-6 col-md-offset-0">
+      <img style="width:107%; padding-top:0%;" src="content/countries/{$country}/flag.png" alt="Flag">
    </div>
 </div><!-- end of : head of the info bloc  -->
 <br>
@@ -262,7 +262,7 @@ $calcform.=<<<END
 
                     <div class="row"><!-- 2nd row -->
 					  <div class="col-md-4 col-md-offset-1">
-                         <label for="select">How many fast food restaurants will you eat at ? <span class="formIndicator">(per month)</span></label>
+                         <label for="select">How many fast food restaurants will you eat at ? <span class="formIndicator"> (per month)</span></label>
 					  </div>
 
                       <div class="col-md-7">
@@ -278,7 +278,7 @@ $calcform.=<<<END
 
                     <div class="row"><!-- 3rd row -->
 					  <div class="col-md-4 col-md-offset-1">
-                         <label for="select">Number of beers you might drink :<span class="formIndicator">(per month) </label>
+                         <label for="select">Number of beers you might drink : <span class="formIndicator"> (per month) </label>
 					  </div>
 
                       <div class="col-md-7">
