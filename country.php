@@ -44,7 +44,7 @@ if(!empty($_GET)) {
 -- Look for the given country
 --
 SELECT name, currency, language, population, capitalID, AsText(geometry),
-        rent, fastfood, internet, transports, cinema, fitness, callingCode
+        rent, fastfood, internet, transports, cinema, fitness, callingCode, beer
 FROM {$tableCountries}
 WHERE ID = {$id};
 
@@ -116,7 +116,8 @@ END;
                                         "internet"   => $row['internet'],
                                         "transports" => $row['transports'],
                                         "cinema"     => $row['cinema'],
-                                        "fitness"    => $row['fitness']]];
+                                        "fitness"    => $row['fitness'],
+                                        "beer"       => $row['beer']]];
 
         file_put_contents("content/json/country_{$id}.json", wkt_to_json(array($row['AsText(geometry)'] => $properties)));
         // Cities file
@@ -127,7 +128,6 @@ END;
 // display the page corresponding
 // to the wanted country
 $content=<<<END
-
 
 	<div class="container">
 		<div class="row">
@@ -296,7 +296,7 @@ $calcform.=<<<END
 
                       <div class="col-md-7">
 	    				 <div class="input-group">
-						    <input name="nbFastfood" type="number" class="form-control" placeholder="3">
+						    <input id="nbFastfood" type="number" class="form-control" placeholder="3">
                          </div>
                       </div>
                     </div> <!-- end of the row -->
@@ -325,7 +325,7 @@ $calcform.=<<<END
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go to the gym ?</label>
                       </div>
-    
+
                       <div class="col-md-5">
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
@@ -353,7 +353,7 @@ $calcform.=<<<END
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go use the public transports ?</label>
                       </div>
-    
+
                       <div class="col-md-5">
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
@@ -370,7 +370,7 @@ $calcform.=<<<END
                             </span>
                          </div><!-- /input-group -->
                      </div><!-- /.col-md-4 offset1 -->
-                    </div> 
+                    </div>
                     <!-- divider -->
                     <div class="row"><br></div>
 
@@ -379,7 +379,7 @@ $calcform.=<<<END
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you subscribe to an internet acces ?</label>
                       </div>
-    
+
                       <div class="col-md-5"
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
