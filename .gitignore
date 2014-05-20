@@ -1,9 +1,3 @@
-# Ignore data
-**/*.png
-**/*.jpg
-**/*.jpeg
-**/*.json
-
 # Ignore all emacs backup files
 *~
 .php#
