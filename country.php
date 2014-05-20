@@ -125,70 +125,49 @@ END;
     }
 }
 
+$content=<<<END
+<div class="container">
+   <div class="row">
+
+	  <!-- INFO BLOC -->
+      <div class="col-md-5" id ="bloc1">
+END;
+
+$infoBloc.=<<<END
+                <!-- head of the info bloc  -->
+<div class="row">
+   <div class="col-md-4 col-md-offset-1">
+      <br>
+      <p style="font-size:200%;">
+         <strong>$country</strong>
+      </p>
+   </div>
+
+   <div class="col-md-4 col-md-offset-1">
+      <img style="width:100%;" src="content/countries/{$country}/flag.png" alt="Flag">
+   </div>
+</div><!-- end of : head of the info bloc  -->
+
+
+END;
+
+$dataCountry=<<<END
+
+<ul>
+
+
+END;
+
+
+$content .= $infoBloc;
+$content .= $dataCountry;
+
+
 // display the page corresponding
 // to the wanted country
-$content=<<<END
+$content.=<<<END
 
-	<div class="container">
-		<div class="row">
-
-			<!-- INFO BLOC -->
-			<div class="col-md-5" id ="bloc1">
-				<p style="font-size:130%; text-align:center;"><strong>$country</strong></p>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-                    <br>
-					<div class="col-md-4 col-md-offset-1">
-						<p>Language(s) :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>$lang</p>
-					</div>
-				</div>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-
-					<div class="col-md-4 col-md-offset-1">
-						<p>Capital :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>$capitalName</p>
-					</div>
-				</div>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-4 col-md-offset-1">
-						<p> Inhabitants :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>$popul</p>
-					</div>
-				</div>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-4 col-md-offset-1">
-						<p>Currency :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>$currency</p>
-					</div>
-                </div>
-
-				<div class="row" id = "bloc1"> <!-- new info line -->
-					<div class="col-md-4 col-md-offset-1">
-						<p>Calling code :</p>
-					</div>
-
-					<div class="col-md-3 col-md-offset-1">
-						<p>+$callCode</p>
-					</div>
-                </div>
-                <br>
-			</div><!-- col-md-5 -->
+			</div><!-- close the dataCountry container -->
 
 			<!-- ---- MAP ---- -->
 			<div class="col-md-6 col-md-offset-1" id ="map"></div>
@@ -215,6 +194,7 @@ else {
 if(!empty($_POST)){
     $countryForm = isset($_POST["countryForm"]) ? $_POST["countryForm"] : '';
     $monthsForm = isset($_POST["monthsForm"]) ? $_POST["monthsForm"] : '';
+
 
 /*
         // define query
@@ -280,7 +260,7 @@ $calcform.=<<<END
 
                       <div class="col-md-7">
 	    				 <div class="input-group">
-						    <input id="nbCinema" type="number" class="form-control" placeholder="2">
+						    <input id="nbCinema" type="number" min="0" class="form-control" value="2">
                          </div>
                       </div>
                     </div> <!-- end of the row -->
@@ -296,7 +276,7 @@ $calcform.=<<<END
 
                       <div class="col-md-7">
 	    				 <div class="input-group">
-						    <input id="nbFastfood" type="number" class="form-control" placeholder="3">
+						    <input id="nbFastfood" name="fastfood" min="0" type="number" class="form-control" value="3">
                          </div>
                       </div>
                     </div> <!-- end of the row -->
@@ -312,7 +292,7 @@ $calcform.=<<<END
 
                       <div class="col-md-7">
 	    				 <div class="input-group">
-						    <input id="nbBeer" name="beer" type="number" class="form-control" placeholder="10">
+						    <input id="nbBeer" name="beer" type="number" min="0" class="form-control" value="10">
                          </div>
                       </div>
                     </div> <!-- end of the row -->
@@ -337,7 +317,7 @@ $calcform.=<<<END
 
                               <div class="col-md-1 col-md-offset-4">
                                  <label for="select">No </label>
-                                 <input id="gymNo" type="radio" name="gym" value="no">
+                                 <input id="gymNo" type="radio" name="gym" value="no" checked>
                               </div>
                             </span>
                           </div><!-- /input-group -->
@@ -365,7 +345,7 @@ $calcform.=<<<END
 
                               <div class="col-md-1 col-md-offset-4">
                                  <label for="select">No </label>
-                                 <input id="transportNo" type="radio" name="publicTransport" value="no">
+                                 <input id="transportNo" type="radio" name="publicTransport" value="no" checked>
                               </div>
                             </span>
                          </div><!-- /input-group -->
@@ -386,12 +366,12 @@ $calcform.=<<<END
 
                               <div class="col-md-1">
                               <label for="select">Yes </label>
-                              <input id="internetYes" type="radio" name="publicTransport" value="yes">
+                              <input id="internetYes" type="radio" name="internet_nb" value="yes">
                              </div>
 
                               <div class="col-md-1 col-md-offset-4">
                                  <label for="select">No </label>
-                                 <input id="internetNo" type="radio" name="publicTransport" value="no">
+                                 <input id="internetNo" type="radio" name="internet_nb" value="no" checked>
                               </div>
                             </span>
                          </div><!-- /input-group -->
@@ -418,7 +398,7 @@ $calcform.=<<<END
 					  <div class="col-md-5">
 
 					  <div class="input-group">
-						 <input id="durationStay" name="monthsForm" type="text" class="form-control" placeholder="4.5">
+						 <input id="durationStay" name="monthsForm" type="text" class="form-control" value="4.5">
 						 <span class="input-group-addon">months</span>
 					  </div>
 
@@ -442,7 +422,11 @@ $calcform.=<<<END
 
 
                 <div class="col-md-6 col-md-offset-4">
-                   <p id="result"></p>
+                   <div class="panel panel-default">
+                      <div class="panel-body">
+                         <p id="result"></p>
+                      </div>
+                   </div>
                 </div>
 
 
