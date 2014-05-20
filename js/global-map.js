@@ -1,6 +1,6 @@
 // Fixed parameters
 var width = $("#map").width(),
-    aspect = 500 / 950
+    aspect = 650 / 800,
     height = width * aspect;
 
 duration = 200;
@@ -15,7 +15,8 @@ style    = "position: absolute;\
             background: #ddd;\
             border: solid 1px #aaa;\
             border-radius: 2px;\
-            pointer-events: none;";
+            pointer-events: none;\
+            opacity: 0;";
 colors   = ["#393b79", "#5254a3", "#6b6ecf", "#9c9ede", "#637939",
             "#8ca252", "#b5cf6b", "#cedb9c", "#8c6d31", "#bd9e39",
             "#e7ba52", "#e7cb94", "#843c39", "#ad494a", "#d6616b",

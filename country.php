@@ -194,7 +194,7 @@ $content=<<<END
 		</div><!-- row -->
 END;
 // if user isn't admin
-if( isset($_SESSION["username"])){ 
+if( isset($_SESSION["username"])){
 
 $content.=<<<END
             <div class="col-md-5 col-md-offset-7">
