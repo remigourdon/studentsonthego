@@ -2,6 +2,18 @@
 
 include_once("inc/HTMLTemplate.php");
 
+$breadcrumb=<<<END
+<div class="container">
+<div class="row">
+   <div class="col-md-2 col-md-offset-1">
+      <ol class="breadcrumb">
+        <li><a href="About.php">About</a></li>
+        <li class="active">Witness</li>
+      </ol>
+   </div>
+</div>
+</div>
+END;
 
 $content=<<<END
 
@@ -22,6 +34,7 @@ END;
 
 
 echo $header;
+echo $breadcrumb;
 echo $content;
 echo footer();
 

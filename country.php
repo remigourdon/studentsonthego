@@ -241,14 +241,6 @@ END;
     $result=($fitness + 2*$fastfood + $cinema + $rent) * $monthsForm;
 */
 
-    $feedback=<<<END
-
-
-    <div class="col-md-6 col-md-offset-4">
-        <p id="result"></p>
-    </div>
-
-END;
 }
 
 
@@ -313,7 +305,7 @@ $calcform.=<<<END
                     <!-- divider -->
                     <div class="row"><br></div>
 
-                    <div class="row"><!-- 2nd row -->
+                    <div class="row"><!-- 3rd row -->
 					  <div class="col-md-4 col-md-offset-1">
                          <label for="select">Consumption of beers (per month) : </label>
 					  </div>
@@ -329,12 +321,12 @@ $calcform.=<<<END
                     <div class="row"><br></div>
 
 
-                   <div class="row"><!-- 3rd row -->
+                   <div class="row"><!-- 4th row -->
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go to the gym ?</label>
                       </div>
     
-                      <div class="col-md-5"
+                      <div class="col-md-5">
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
 
@@ -348,20 +340,21 @@ $calcform.=<<<END
                                  <input id="gymNo" type="radio" name="gym" value="no">
                               </div>
                             </span>
-                         </div><!-- /input-group -->
+                          </div><!-- /input-group -->
                        </div><!-- end of the row-->
+                     </div>
+
 
                     <!-- divider -->
                     <div class="row"><br></div>
-
                       
 
-                   <div class="row"><!-- 4th row -->
+                   <div class="row"><!-- 5th row -->
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you go use the public transports ?</label>
                       </div>
     
-                      <div class="col-md-5"
+                      <div class="col-md-5">
                          <div class="input-group">
                             <span id="radioButton" class="input-group-addon">
 
@@ -377,12 +370,12 @@ $calcform.=<<<END
                             </span>
                          </div><!-- /input-group -->
                      </div><!-- /.col-md-4 offset1 -->
-       
+                    </div> 
                     <!-- divider -->
                     <div class="row"><br></div>
 
 
-                   <div class="row"><!-- 4th row -->
+                   <div class="row"><!-- 6th row -->
                       <div class="col-md-4 col-md-offset-1">
                          <label for="select">Will you subscribe to an internet acces ?</label>
                       </div>
@@ -398,7 +391,7 @@ $calcform.=<<<END
 
                               <div class="col-md-1 col-md-offset-4">
                                  <label for="select">No </label>
-                                 <input id="transportNo" type="radio" name="publicTransport" value="no">
+                                 <input id="internetNo" type="radio" name="publicTransport" value="no">
                               </div>
                             </span>
                          </div><!-- /input-group -->
@@ -418,14 +411,14 @@ $calcform.=<<<END
                     <div class="row"><br></div>
 
 
-					<div class="row"> <!-- ------SECOND ROW------  -->
+					<div class="row"> <!-- ------last row------  -->
 					  <div class="col-md-4 col-md-offset-1">
 						  <label for="select">Duration of the stay : </label>
 					  </div>
 					  <div class="col-md-5">
 
 					  <div class="input-group">
-						 <input name="monthsForm" type="text" class="form-control" placeholder="4.5">
+						 <input id="durationStay" name="monthsForm" type="text" class="form-control" placeholder="4.5">
 						 <span class="input-group-addon">months</span>
 					  </div>
 
@@ -446,7 +439,12 @@ $calcform.=<<<END
 
 				</form>
 
-			$feedback
+
+
+                <div class="col-md-6 col-md-offset-4">
+                   <p id="result"></p>
+                </div>
+
 
 		</div><!-- col-md-5 -->
 		</div><!-- col-md-11 col-md-offset-1 -->
