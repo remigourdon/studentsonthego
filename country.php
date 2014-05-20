@@ -242,7 +242,7 @@ END;
 $calcform.=<<<END
                     <div class="row"><!-- 1st row -->
 					  <div class="col-md-4 col-md-offset-1">
-    <label for="select">How many time will you go to the cinema :</label>
+    <label for="select">How many time will you go to the cinema : <span class="formIndicator"> (per month)</span></label>
 					  </div>
 
                       <div class="col-md-7">
