@@ -73,16 +73,16 @@ if(!empty($_POST)) {
 
     // Get the data from POST
     $name = isset($_POST['name']) ? $_POST['name'] : "";
+    $popu = isset($_POST['popu']) ? $_POST['popu'] : "";
     $lati = isset($_POST['lati']) ? $_POST['lati'] : "";
     $long = isset($_POST['long']) ? $_POST['long'] : "";
 
     // If some mandatory fields aren't filled in
-    if($name == "" || $lati == "" || $long == "" || !$pict) {
+    if($name == "" || $popu == "" || $lati == "" || $long == "") {
 
         // Give information
         $content .= "<p>Please complete all the mandatory fields.</p>";
-        $content .= "<p>" . $feedback . "</p><hr>";
-        $content .= getForm($id, $name, $lati, $long);
+        $content .= getForm($id, $name, $popu, $lati, $long);
 
     // If everything is fine, we can proceed to the query
     } else {
@@ -99,8 +99,8 @@ if(!empty($_POST)) {
         --
         -- Inserts a new city in the database
         --
-        INSERT INTO {$tableCities}(name, coordinates, countryID)
-        VALUES('{$name}', PointFromText('{$wkt}'), '{$id}');
+        INSERT INTO {$tableCities}(name, population, coordinates, countryID)
+        VALUES('{$name}', '{$popu}', PointFromText('{$wkt}'), '{$id}');
 END;
 
         // Performs query
@@ -109,7 +109,7 @@ END;
         // Query was successful
 
         // Redirect the user
-        header("Location: country.php?{$id}");
+        header("Location: country.php?id={$id}");
         exit();
 
     }
@@ -140,7 +140,7 @@ echo $content;
 echo footer();
 
 
-function getForm($id = "", $name = "", $lati = "", $long = "") {
+function getForm($id = "", $name = "", $popu = "", $lati = "", $long = "") {
 
     $name = htmlspecialchars($name);
 
@@ -149,6 +149,10 @@ function getForm($id = "", $name = "", $lati = "", $long = "") {
         <div class="form-group">
             <label for="name">Name (*):</label>
             <input type="text" class="form-control" name="name" id="name" value="{$name}">
+        </div>
+        <div class="form-group">
+            <label for="popu">Population:</label>
+            <input type="number" min="0" class="form-control" name="popu" id="popu" value="{$popu}">
         </div>
         <div class="form-group col-md-6">
             <label for="lati">Latitude (*):</label>
