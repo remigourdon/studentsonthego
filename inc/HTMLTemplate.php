@@ -33,9 +33,6 @@ $header.=<<<END
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom styles for the basis template -->
-    <link href="starter-template.css" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="../../assets/js/html5shiv.js"></script>
@@ -201,7 +198,7 @@ function footer($map = "") {
     <!-- ===============Bootstrap core JavaScript================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <script src="js/d3.min.js"></script>
     <script src="js/{$map}-map.js"></script>
